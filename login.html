@@ -10,10 +10,124 @@
     <link rel="stylesheet" href="files/css/style.css">
 </head>
 <body>
-    <div>
-        <span class="">soy Login</span>
+    <img class="wave" src="images/wave.png">
+    <div class="container">
+        <div class="img">
+            <img src="images/logo3.png">
+        </div>
+        <div class="login-content">
+            <form action="index.html">
+                <img class="logo-innova" src="images/logo.png">
+                <h1 class="title">Bienvenido a Innova Clasificados</h1>
+                
+                <!-- Campo de Usuario -->
+                <div class="input-div lastname">
+                    <div class="i">
+                        <i class="fas fa-user"></i> <!-- Ícono de Usuario -->
+                    </div>
+                    <div class="div">
+                        <h5>Usuario</h5>
+                        <input type="text" class="input" required>
+                    </div>
+                </div>
+
+                <!-- Campo de Contraseña -->
+                <div class="input-div lastname">
+                    <div class="i">
+                        <i class="fas fa-lock"></i> <!-- Ícono de Contraseña -->
+                    </div>
+                    <div class="div">
+                        <h5>Contraseña</h5>
+                        <input type="password" class="input" required>
+                    </div>
+                </div>
+
+                <a href="#" data-bs-toggle="modal" data-bs-target="#registrationModal">¿No tienes Cuenta? Registrarse</a>
+                <input type="submit" class="btn" value="Iniciar Sesión">
+            </form>
+        </div>
     </div>
-    
+
+    <!-- Modal de Registro -->
+    <div class="modal fade" id="registrationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registrationModalLabel">Registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="input-div dni">
+                            <div class="i">
+                                <i class="fas fa-id-card"></i> <!-- Ícono de DNI -->
+                            </div>
+                            <div class="div">
+                                <h5>DNI o Carnet de Extranjería</h5>
+                                <input type="text" class="input" required>
+                            </div>
+                        </div>
+                        <div class="input-div lastname">
+                            <div class="i">
+                                <i class="fas fa-user"></i> <!-- Ícono de Nombre -->
+                            </div>
+                            <div class="div">
+                                <h5>Nombre</h5>
+                                <input type="text" class="input" required>
+                            </div>
+                        </div>
+                        <div class="input-div lastname">
+                            <div class="i">
+                                <i class="fas fa-user"></i> <!-- Ícono de Apellido -->
+                            </div>
+                            <div class="div">
+                                <h5>Apellido</h5>
+                                <input type="text" class="input" required>
+                            </div>
+                        </div>
+                        <div class="input-div lastname">
+                            <div class="i">
+                                <i class="fas fa-lock"></i> <!-- Ícono de Contraseña -->
+                            </div>
+                            <div class="div">
+                                <h5>Contraseña</h5>
+                                <input type="password" class="input" required>
+                            </div>
+                        </div>
+                        <div class="input-div birthdate">
+                            <div class="i">
+                                <i class="fas fa-calendar"></i> <!-- Ícono de Fecha de Nacimiento -->
+                            </div>
+                            <div class="div">
+                                <h5></h5>
+                                <input type="date" class="input" required>
+                            </div>
+                        </div>
+                        <div class="input-div email">
+                            <div class="i">
+                                <i class="fas fa-envelope"></i> <!-- Ícono de Correo Electrónico -->
+                            </div>
+                            <div class="div">
+                                <h5>Correo Electrónico</h5>
+                                <input type="email" class="input" required>
+                            </div>
+                        </div>
+                        <div class="input-div phone">
+                            <div class="i">
+                                <i class="fas fa-phone"></i> <!-- Ícono de Número de Teléfono -->
+                            </div>
+                            <div class="div">
+                                <h5>Número de Teléfono</h5>
+                                <input type="tel" class="input" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                    <button type="button" class="btn btn-primary">Registrarse</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
