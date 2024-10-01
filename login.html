@@ -6,51 +6,45 @@
     <title>Innova</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" integrity="sha512-xnP2tOaCJnzp2d2IqKFcxuOiVCbuessxM6wuiolT9eeEJCyy0Vhcwa4zQvdrZNVqlqaxXhHqsSV1Ww7T2jSCUQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="files/css/style.css">
 </head>
 <body>
     <img class="wave" src="images/wave.png">
     <div class="container">
         <div class="img">
-            <img src="images/logo3.png">
+            <img src="images/logo3.png" alt="Logo">
         </div>
         <div class="login-content">
-            <form action="index.html">
+            <form action="index.html" method="GET">
                 <img class="logo-innova" src="images/logo.png">
                 <h1 class="title">Bienvenido a Innova Clasificados</h1>
                 
                 <!-- Campo de Usuario -->
-                <div class="input-div lastname">
-                    <div class="i">
-                        <i class="fas fa-user"></i> <!-- Ícono de Usuario -->
-                    </div>
-                    <div class="div">
-                        <h5>Usuario</h5>
-                        <input type="text" class="input" required>
-                    </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Usuario</label>
+                    <input type="text" class="form-control" id="username" required>
                 </div>
 
                 <!-- Campo de Contraseña -->
-                <div class="input-div lastname">
-                    <div class="i">
-                        <i class="fas fa-lock"></i> <!-- Ícono de Contraseña -->
-                    </div>
-                    <div class="div">
-                        <h5>Contraseña</h5>
-                        <input type="password" class="input" required>
-                    </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Verificado</label>
                 </div>
 
                 <a href="#" data-bs-toggle="modal" data-bs-target="#registrationModal">¿No tienes Cuenta? Registrarse</a>
-                <input type="submit" class="btn" value="Iniciar Sesión">
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
             </form>
         </div>
     </div>
 
     <!-- Modal de Registro -->
     <div class="modal fade" id="registrationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="registrationModalLabel">Registro</h5>
@@ -58,73 +52,37 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="input-div dni">
-                            <div class="i">
-                                <i class="fas fa-id-card"></i> <!-- Ícono de DNI -->
-                            </div>
-                            <div class="div">
-                                <h5>DNI o Carnet de Extranjería</h5>
-                                <input type="text" class="input" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="dni" class="form-label">DNI o Carnet de Extranjería</label>
+                            <input type="text" class="form-control" id="dni" required>
                         </div>
-                        <div class="input-div lastname">
-                            <div class="i">
-                                <i class="fas fa-user"></i> <!-- Ícono de Nombre -->
-                            </div>
-                            <div class="div">
-                                <h5>Nombre</h5>
-                                <input type="text" class="input" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="firstname" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="firstname" required>
                         </div>
-                        <div class="input-div lastname">
-                            <div class="i">
-                                <i class="fas fa-user"></i> <!-- Ícono de Apellido -->
-                            </div>
-                            <div class="div">
-                                <h5>Apellido</h5>
-                                <input type="text" class="input" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="lastname" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="lastname" required>
                         </div>
-                        <div class="input-div lastname">
-                            <div class="i">
-                                <i class="fas fa-lock"></i> <!-- Ícono de Contraseña -->
-                            </div>
-                            <div class="div">
-                                <h5>Contraseña</h5>
-                                <input type="password" class="input" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
                         </div>
-                        <div class="input-div birthdate">
-                            <div class="i">
-                                <i class="fas fa-calendar"></i> <!-- Ícono de Fecha de Nacimiento -->
-                            </div>
-                            <div class="div">
-                                <h5></h5>
-                                <input type="date" class="input" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="birthdate" class="form-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="birthdate" required>
                         </div>
-                        <div class="input-div email">
-                            <div class="i">
-                                <i class="fas fa-envelope"></i> <!-- Ícono de Correo Electrónico -->
-                            </div>
-                            <div class="div">
-                                <h5>Correo Electrónico</h5>
-                                <input type="email" class="input" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="email" required>
                         </div>
-                        <div class="input-div phone">
-                            <div class="i">
-                                <i class="fas fa-phone"></i> <!-- Ícono de Número de Teléfono -->
-                            </div>
-                            <div class="div">
-                                <h5>Número de Teléfono</h5>
-                                <input type="tel" class="input" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Número de Teléfono</label>
+                            <input type="tel" class="form-control" id="phone" required>
                         </div>
                     </form>
                 </div>
-                    <button type="button" class="btn btn-primary">Registrarse</button>
-                </div>
+                <button type="button" class="btn btn-primary">Registrarse</button>
             </div>
         </div>
     </div>

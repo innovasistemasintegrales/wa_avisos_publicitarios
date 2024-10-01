@@ -1,272 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innova</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" integrity="sha512-xnP2tOaCJnzp2d2IqKFcxuOiVCbuessxM6wuiolT9eeEJCyy0Vhcwa4zQvdrZNVqlqaxXhHqsSV1Ww7T2jSCUQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Perfil de Publicista</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
 
-
-<div class="container bootstrap snippet">
-    <div class="row">
-  		<div class="col-sm-10"><h1>Perfil de Publicista</h1></div>
-    	<div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class=" img-responsive" src="images/logo.png"></a></div>
-    </div>
-    <div class="row">
-  		<div class="col-sm-3"><!--left col-->
-              
-
-      <div class="text-center">
-        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
-        <h6>Foto de Perfil</h6>
-        <input type="file" class="text-center center-block file-upload">
-      </div><br>
-
-           <!-- Panel para el Sitio Web -->
-<div class="panel panel-default">
-    <div class="panel-heading">Sitio Web <i class="fa fa-link fa-1x"></i></div>
-    <div class="panel-body" id="websitePanel">
-        <a href="http://bootnipets.com">bootnipets.com</a>
-        <br>
-        
-    </div>
-</div>
-          <ul class="list-group">
-            <li class="list-group-item text-muted">Actividad <i class="fa fa-dashboard fa-1x"></i></li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Compartidos</strong></span> 125</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
-          </ul> 
-               
-          <div class="panel panel-default">
-            <div class="panel-heading">Social Media</div>
-            <div class="panel-body">
+<body>
+    <div class="container-fluid container-md ">
+        <div class="row mb-3">
+            <div class="col-sm-10">
+                <h1>Perfil de Publicista</h1>
+            </div>
+            <div class="col-sm-2 text-end">
+                <img title="Profile Image" class="img-fluid" src="images/logo.png" alt="Logo">
+            </div>
+        </div>
+        <div class="row">
+            <!-- Panel Izquierdo -->
+            <div class="col-sm-3">
+                <div class="text-center">
+                    <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                    <h6>Foto de Perfil</h6>
+                    <input type="file" class="form-control text-center" id="profileImageUpload">
+                </div>
+                <br>
+                <!-- Panel de Sitio Web -->
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Sitio Web <i class="bi bi-link-45deg"></i></span>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addWebsiteModal">
+                            <span class="fs-8 d-none d-md-inline">Añadir Página Web</span>
+                            <span class="fs-10 d-inline d-md-none">+</span>                       
+                        </button>
+                    </div>
+                </div>
                 
-            	<i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
-            </div>
-          </div>
-          
-        </div><!--/col-3-->
-    	<div class="col-sm-9">
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#home">Datos</a></li>
-                <li><a data-toggle="tab" href="#messages">Publicaciones</a></li>
-                <li><a data-toggle="tab" href="#settings">Cambio de Plan</a></li>
-              </ul>
-
-              
-          <div class="tab-content">
-            <div class="tab-pane active" id="home">
-                <hr>
-                  <form class="form" action="##" method="post" id="registrationForm">
-                      <div class="form-group">
-                          
-                          <div class="col-xs-6">
-                              <label for="first_name"><h4>Nombre</h4></label>
-                              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Nombre" title="enter your first name if any.">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-xs-6">
-                            <label for="last_name"><h4>Apellido</h4></label>
-                              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Apellido" title="enter your last name if any.">
-                          </div>
-                      </div>
-          
-                      <div class="form-group">
-                          
-                          <div class="col-xs-6">
-                              <label for="phone"><h4>Telefono</h4></label>
-                              <input type="text" class="form-control" name="phone" id="phone" placeholder="Telefono" title="enter your phone number if any.">
-                          </div>
-                      </div>
-          
-                      <div class="form-group">
-                          <div class="col-xs-6">
-                             <label for="mobile"><h4>Movil</h4></label>
-                              <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Ingresa Numero Movil" title="enter your mobile number if any.">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-xs-6">
-                              <label for="email"><h4>Correo Electonico</h4></label>
-                              <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-xs-6">
-                              <label for="email"><h4>Direccion</h4></label>
-                              <input type="email" class="form-control" id="location" placeholder="somewhere" title="enter a location">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-xs-6">
-                            <label for="ocupacion"><h4>Ocupación</h4></label>
-                            <input type="text" class="form-control" name="ocupacion" id="ocupacion" placeholder="Ingresa tu ocupación" title="Ingresa tu ocupación.">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-6">
-                            <label for="estudios"><h4>Estudios</h4></label>
-                            <input type="text" class="form-control" name="estudios" id="estudios" placeholder="Ingresa tu nivel de estudios" title="Ingresa tu nivel de estudios.">
-                        </div>
-                    </div>
-                      <div class="form-group">
-                           <div class="col-xs-12">
-                                <br>
-                              	<button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                               	<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                <!-- Modal para añadir página web -->
+                <div class="modal fade" id="addWebsiteModal" tabindex="-1" aria-labelledby="addWebsiteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addWebsiteModalLabel">Añadir Página Web</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                      </div>
-              	</form>
-              
-              <hr>
-              
-             </div>
-             <!--/Campo para Publicaciones-->
-             <div class="tab-pane" id="messages">
-               
-               
-               
-             </div>
-             <!-- Espacio de Cambio de Plan -->
-<div class="tab-pane" id="settings">
-    <hr>
-    <div class="d-flex justify-content-center gap-5">
-        <!-- Tarjeta Gratis -->
-        <div class="card w-50 m-2 shadow-lg border-0 rounded-3">
-            <div class="card-body text-center">
-                <h2 class="card-title text-primary">Gratis</h2>
-                <h2 class="card-title text-success">S/0</h2>
-                <h4 class="card-title text-muted">soles/mes</h4>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Descubre como los avisos te ayudan a vender mas rapido </p>
+                            <div class="modal-body">
+                                <form id="addWebsiteForm">
+                                    <div class="mb-3">
+                                        <label for="websiteTitle" class="form-label">Título de la Página</label>
+                                        <input type="text" class="form-control" id="websiteTitle" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="websiteUrl" class="form-label">URL de la Página</label>
+                                        <input type="url" class="form-control" id="websiteUrl" placeholder="http://example.com" required>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id="saveWebsiteButton">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100">
-                    <i class="bi bi-star-fill"></i>
-                    <span class="fs-8 d-none d-md-inline">Tu Plan Actual</span>
-                    <span class="fs-10 d-inline d-md-none">Plan</span>
-                </a>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Título del anuncio</p>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Descripción</p>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Una imagen por Aviso</p>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Contacto</p>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Duración del Anuncio</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- Tarjeta Plus -->
-        <div class="card w-50 m-2 shadow-lg border-0 rounded-3">
-            <div class="card-body text-center">
-                <h2 class="card-title text-primary">Plus</h2>
-                <h2 class="card-title text-success">S/50</h2>
-                <h4 class="card-title text-muted">soles/mes</h4>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Mejora tu productividad con un acceso Ampliado</p>
-                </div>
-                <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100">
-                     <i class="bi bi-star-fill"></i>
-                    <span class="fs-5 d-none d-md-inline">Mejora tu plan a Premium</span>
-                    <span class="fs-10 d-inline d-md-none">Premium</span>
-                </a>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Colocar un maximo de 6 imagenes por Aviso</p>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Colocar un video por cada aviso</p>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Mayor tiempo de Publicacion</p>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Promocion en redes Sociales</p>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <p class="card-text">Busquedas Avanzadas</p>
-                </div>
-            </div>
-        </div>
-    </div>
+                <!-- Lista de Actividades -->
+                <ul class="list-group mb-3">
+                    <li class="list-group-item text-muted">Actividad <i class="bi bi-bar-chart-line"></i></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><strong>Compartidos</strong></span> <span>125</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><strong>Likes</strong></span> <span>13</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><strong>Posts</strong></span> <span>37</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><strong>Followers</strong></span> <span>78</span>
+                    </li>
+                </ul>
 
-    <!-- Tarjeta Escoge tus Beneficios -->
-    <div class="d-flex justify-content-center">
-        <div class="card w-50 m-2 shadow-lg border-0 rounded-3">
-            <div class="card-body text-center">
-                <h2 class="card-title">Escoge tus Beneficios</h2>
-                <h2 class="card-title text-success">S/0</h2>
-                <h4 class="card-title text-muted">soles/mes</h4>
-                <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100">
-                    <i class="bi bi-star-fill"></i>
-                    <span class="fs-7 d-none d-md-inline">Escogidos</span>
-                    <span class="fs-10 d-inline d-md-none">Plan</span>
-                </a>
-    
-                <!-- Elementos de la tarjeta con checkboxes -->
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkTitle">
-                        <label class="form-check-label" for="checkTitle">Colocar un video por cada aviso</label>
-                    </div>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkDescription">
-                        <label class="form-check-label" for="checkDescription">Colocar un maximode 6 imagenes por Aviso  </label>
-                    </div>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkImage">
-                        <label class="form-check-label" for="checkImage">Mayor tiempo de Publicacion<</label>
-                    </div>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkContact">
-                        <label class="form-check-label" for="checkContact">Promocion en redes Sociales</label>
-                    </div>
-                </div>
-                <div class="card p-3 mb-3 bg-light rounded-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkDuration">
-                        <label class="form-check-label" for="checkDuration">Busquedas Avanzadas</label>
+                <!-- Botones de Navegación (Tabs) -->
+                <ul class="nav flex-column mb-3">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button">Datos</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button">Publicaciones</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button">Cambio de Plan</button>
+                    </li>
+                </ul>
+
+                <!-- Redes Sociales -->
+                <div class="card">
+                    <div class="card-header">Social Media</div>
+                    <div class="card-body text-center">
+                        <i class="bi bi-facebook me-2"></i> 
+                        <i class="bi bi-github me-2"></i> 
+                        <i class="bi bi-twitter me-2"></i> 
+                        <i class="bi bi-pinterest me-2"></i> 
+                        <i class="bi bi-google"></i>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
+            <!-- Panel Principal de Contenido -->
+            <div class="col-sm-9">
+                <div class="tab-content mt-3" id="profileTabContent">
+                    <!-- Tab Datos -->
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <form class="form" id="registrationForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="first_name" class="form-label"><h5>Nombre</h5></label>
+                                    <input type="text" class="form-control" id="first_name" placeholder="Nombre">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="last_name" class="form-label"><h5>Apellido</h5></label>
+                                    <input type="text" class="form-control" id="last_name" placeholder="Apellido">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label"><h5>Telefono</h5></label>
+                                    <input type="text" class="form-control" id="phone" placeholder="Telefono">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label"><h5>Correo Electrónico</h5></label>
+                                    <input type="email" class="form-control" id="email" placeholder="you@email.com">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success me-2" id="saveButton">Guardar</button>
+                            <button type="reset" class="btn btn-secondary">Reiniciar</button>
+                        </form>
+                    </div>
 
-                      </div>
-              	</form>
-              </div>
-               
-            </div>
-          </div>
+                    <!-- Tab Publicaciones -->
+                    <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                        <h4>Sección de Publicaciones</h4>
+                        <!-- Aquí se puede agregar el contenido de las publicaciones -->
+                    </div>
 
-        </div>
-    </div>
-                                                      
-    <script src="files/js/script.js"></script>
+                    <!-- Tab Cambio de Plan -->
+                    <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                        <div class="d-flex justify-content-center">
+                            <!-- Tarjeta Gratis -->
+                            <div class="card w-50 m-2 shadow-lg border-0 rounded-3">
+                                <div class="card-body text-center">
+                                    <h2 class="card-title text-primary">Gratis</h2>
+                                    <h2 class="card-title text-success">S/0</h2>
+                                    <h4 class="card-title text-muted">soles/mes</h4>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Descubre como los avisos te ayudan a vender mas rapido </p>
+                                    </div>
+                                    <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100">
+                                        <i class="bi bi-star-fill"></i>
+                                        <span class="fs-8 d-none d-md-inline">Tu Plan Actual</span>
+                                        <span class="fs-10 d-inline d-md-none">Plan</span>
+                                    </a>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Título del anuncio</p>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Descripción</p>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Una imagen por Aviso</p>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Contacto</p>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Duración del Anuncio</p>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Tarjeta Plus -->
+                            <div class="card w-50 m-2 shadow-lg border-0 rounded-3">
+                                <div class="card-body text-center">
+                                    <h2 class="card-title text-primary">Plus</h2>
+                                    <h2 class="card-title text-success">S/50</h2>
+                                    <h4 class="card-title text-muted">soles/mes</h4>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Mejora tu productividad con un acceso Ampliado</p>
+                                    </div>
+                                    <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100">
+                                         <i class="bi bi-star-fill"></i>
+                                        <span class="fs-5 d-none d-md-inline">Mejora tu plan a Premium</span>
+                                        <span class="fs-10 d-inline d-md-none">Premium</span>
+                                    </a>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Colocar un maximo de 6 imagenes por Aviso</p>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Colocar un video por cada aviso</p>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Mayor tiempo de Publicacion</p>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Promocion en redes Sociales</p>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <p class="card-text">Busquedas Avanzadas</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Tarjeta Escoge tus Beneficios -->
+                        <div class="d-flex justify-content-center">
+                            <div class="card w-50 m-2 shadow-lg border-0 rounded-3">
+                                <div class="card-body text-center">
+                                    <h2 class="card-title">Escoge tus Beneficios</h2>
+                                    <h2 class="card-title text-success">S/0</h2>
+                                    <h4 class="card-title text-muted">soles/mes</h4>
+                                    <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100">
+                                        <i class="bi bi-star-fill"></i>
+                                        <span class="fs-7 d-none d-md-inline">Escogidos</span>
+                                        <span class="fs-10 d-inline d-md-none">Plan</span>
+                                    </a>
+                        
+                                    <!-- Elementos de la tarjeta con checkboxes -->
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="checkTitle">
+                                            <label class="form-check-label" for="checkTitle">Colocar un video por cada aviso</label>
+                                        </div>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="checkDescription">
+                                            <label class="form-check-label" for="checkDescription">Colocar un maximode 6 imagenes por Aviso  </label>
+                                        </div>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="checkImage">
+                                            <label class="form-check-label" for="checkImage">Mayor tiempo de Publicacion<</label>
+                                        </div>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="checkContact">
+                                            <label class="form-check-label" for="checkContact">Promocion en redes Sociales</label>
+                                        </div>
+                                    </div>
+                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="checkDuration">
+                                            <label class="form-check-label" for="checkDuration">Busquedas Avanzadas</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
