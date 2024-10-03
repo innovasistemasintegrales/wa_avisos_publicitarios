@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,209 +9,223 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
+     <link rel="stylesheet" href="files/css/">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container-fluid container-md ">
-        <div class="row mb-3">
-            <div class="col-sm-10">
+    <div class="container-fluid sidebar">
+        <div class="row mb-3 header-row">
+            <div class="col-sm-10 title-col">
                 <h1>Perfil de Publicista</h1>
             </div>
-            <div class="col-sm-2 text-end">
-                <img title="Profile Image" class="img-fluid" src="images/logo.png" alt="Logo">
+            <div class="col-sm-2 text-end logo-col">
+                <img title="Profile Image" class="img-fluid logo-image" src="images/logo.png" alt="Logo">
             </div>
         </div>
-        <div class="row">
+        <div class="row content-row">
             <!-- Panel Izquierdo -->
-            <div class="col-sm-3">
-                <div class="text-center">
-                    <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar rounded-circle img-thumbnail" alt="avatar">
+            <div class="col-sm-3 left-panel">
+                <div class="text-center profile-image-container">
+                    <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar rounded-circle img-thumbnail profile-avatar" alt="avatar">
                     <h6>Foto de Perfil</h6>
-                    <input type="file" class="form-control text-center" id="profileImageUpload">
+                    <input type="file" class="form-control text-center profile-image-upload" id="profileImageUpload">
                 </div>
                 <br>
-                <!-- Panel de Sitio Web -->
-                <div class="card mb-3">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Sitio Web <i class="bi bi-link-45deg"></i></span>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addWebsiteModal">
-                            <span class="fs-8 d-none d-md-inline">Añadir Página Web</span>
-                            <span class="fs-10 d-inline d-md-none">+</span>                       
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Modal para añadir página web -->
-                <div class="modal fade" id="addWebsiteModal" tabindex="-1" aria-labelledby="addWebsiteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addWebsiteModalLabel">Añadir Página Web</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="addWebsiteForm">
-                                    <div class="mb-3">
-                                        <label for="websiteTitle" class="form-label">Título de la Página</label>
-                                        <input type="text" class="form-control" id="websiteTitle" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="websiteUrl" class="form-label">URL de la Página</label>
-                                        <input type="url" class="form-control" id="websiteUrl" placeholder="http://example.com" required>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="saveWebsiteButton">Guardar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lista de Actividades -->
-                <ul class="list-group mb-3">
-                    <li class="list-group-item text-muted">Actividad <i class="bi bi-bar-chart-line"></i></li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><strong>Compartidos</strong></span> <span>125</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><strong>Likes</strong></span> <span>13</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><strong>Posts</strong></span> <span>37</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><strong>Followers</strong></span> <span>78</span>
-                    </li>
-                </ul>
 
                 <!-- Botones de Navegación (Tabs) -->
-                <ul class="nav flex-column mb-3">
-                    <li class="nav-item">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button">Datos</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button">Publicaciones</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button">Cambio de Plan</button>
-                    </li>
-                </ul>
+                <ul class="nav flex-column mb-3 shadow-sm rounded border p-3 bg-white nav-tabs-custom">
+    <li class="nav-item">
+        <button class="nav-link active text-start btn btn-outline-success mb-2 nav-button" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button">
+            <i class="bi bi-person-fill me-2"></i> Datos
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link text-start btn btn-outline-success mb-2 nav-button" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button">
+            <i class="bi bi-chat-left-text-fill me-2"></i> Publicaciones
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link text-start btn btn-outline-success mb-2 nav-button" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button">
+            <i class="bi bi-gear-fill me-2"></i> Cambio de Plan
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link text-start btn btn-outline-success nav-button" id="activities-tab" data-bs-toggle="tab" data-bs-target="#activities" type="button">
+            <i class="bi bi-bar-chart-line-fill me-2"></i> Actividades
+        </button>
+    </li>
+</ul>
 
-                <!-- Redes Sociales -->
-                <div class="card">
-                    <div class="card-header">Social Media</div>
-                    <div class="card-body text-center">
-                        <i class="bi bi-facebook me-2"></i> 
-                        <i class="bi bi-github me-2"></i> 
-                        <i class="bi bi-twitter me-2"></i> 
-                        <i class="bi bi-pinterest me-2"></i> 
-                        <i class="bi bi-google"></i>
-                    </div>
-                </div>
             </div>
 
             <!-- Panel Principal de Contenido -->
-            <div class="col-sm-9">
+            <div class="col-sm-9 main-content">
                 <div class="tab-content mt-3" id="profileTabContent">
+                   
                     <!-- Tab Datos -->
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <form class="form" id="registrationForm">
+                        <form class="form registration-form" id="registrationForm">
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="first_name" class="form-label"><h5>Nombre</h5></label>
-                                    <input type="text" class="form-control" id="first_name" placeholder="Nombre">
+                                    <input type="text" class="form-control input-field" id="first_name" placeholder="Nombre">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="last_name" class="form-label"><h5>Apellido</h5></label>
-                                    <input type="text" class="form-control" id="last_name" placeholder="Apellido">
+                                    <input type="text" class="form-control input-field" id="last_name" placeholder="Apellido">
                                 </div>
                             </div>
+                    
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="phone" class="form-label"><h5>Telefono</h5></label>
-                                    <input type="text" class="form-control" id="phone" placeholder="Telefono">
+                                    <label for="dni" class="form-label"><h5>DNI</h5></label>
+                                    <input type="text" class="form-control input-field" id="dni" placeholder="DNI">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="birth_date" class="form-label"><h5>Fecha de Nacimiento</h5></label>
+                                    <input type="date" class="form-control input-field" id="birth_date">
+                                </div>
+                            </div>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="occupation" class="form-label"><h5>Ocupación</h5></label>
+                                    <input type="text" class="form-control input-field" id="occupation" placeholder="Ocupación">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="education" class="form-label"><h5>Estudios</h5></label>
+                                    <input type="text" class="form-control input-field" id="education" placeholder="Nivel de Estudios">
+                                </div>
+                            </div>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label"><h5>Teléfono</h5></label>
+                                    <input type="text" class="form-control input-field" id="phone" placeholder="Teléfono">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="email" class="form-label"><h5>Correo Electrónico</h5></label>
-                                    <input type="email" class="form-control" id="email" placeholder="you@email.com">
+                                    <input type="email" class="form-control input-field" id="email" placeholder="you@email.com">
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success me-2" id="saveButton">Guardar</button>
-                            <button type="reset" class="btn btn-secondary">Reiniciar</button>
+                    
+                            <button type="button" class="btn btn-success me-2 save-button" id="saveButton">Guardar</button>
+                            <button type="reset" class="btn btn-secondary reset-button">Reiniciar</button>
                         </form>
                     </div>
+                    
 
                     <!-- Tab Publicaciones -->
                     <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
                         <h4>Sección de Publicaciones</h4>
-                        <!-- Aquí se puede agregar el contenido de las publicaciones -->
+                    
+                        <!-- Botón para abrir el modal -->
+                        <button type="button" class="btn btn-primary add-post-button" data-bs-toggle="modal" data-bs-target="#addPostModal">
+                            Añadir Publicación
+                        </button>
+                    
+                        <!-- Contenedor donde se mostrarán las publicaciones -->
+                        <div id="postContainer" class="row mt-3 post-container"></div>
+                    
+                        <!-- Modal para agregar una nueva publicación -->
+                        <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addPostModalLabel">Nueva Publicación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="postForm" class="post-form">
+                                            <div class="mb-3">
+                                                <label for="postTitle" class="form-label">Título</label>
+                                                <input type="text" class="form-control input-field" id="postTitle" placeholder="Escribe el título" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="postImage" class="form-label">Agregar Foto</label>
+                                                <input type="file" class="form-control input-field" id="postImage" accept="image/*" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="postDescription" class="form-label">Descripción</label>
+                                                <textarea class="form-control input-field" id="postDescription" rows="3" placeholder="Escribe una descripción" required></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="button" class="btn btn-primary save-post-button" id="savePostButton">Guardar Publicación</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
+                    
+                    
                     <!-- Tab Cambio de Plan -->
                     <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                        <div class="d-flex justify-content-center">
+                        
+                        <h4>Cambia a un plan Superior</h4>
+                        <div class="d-flex justify-content-center plan-container">
                             <!-- Tarjeta Gratis -->
-                            <div class="card w-50 m-2 shadow-lg border-0 rounded-3">
+                            <div class="card w-50 m-2 shadow-lg border-0 rounded-3 plan-card">
                                 <div class="card-body text-center">
                                     <h2 class="card-title text-primary">Gratis</h2>
                                     <h2 class="card-title text-success">S/0</h2>
                                     <h4 class="card-title text-muted">soles/mes</h4>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Descubre como los avisos te ayudan a vender mas rapido </p>
                                     </div>
-                                    <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100">
+                                    <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100 plan-button">
                                         <i class="bi bi-star-fill"></i>
                                         <span class="fs-8 d-none d-md-inline">Tu Plan Actual</span>
                                         <span class="fs-10 d-inline d-md-none">Plan</span>
                                     </a>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Título del anuncio</p>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Descripción</p>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Una imagen por Aviso</p>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Contacto</p>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Duración del Anuncio</p>
                                     </div>
                                 </div>
                             </div>
                     
                             <!-- Tarjeta Plus -->
-                            <div class="card w-50 m-2 shadow-lg border-0 rounded-3">
+                            <div class="card w-50 m-2 shadow-lg border-0 rounded-3 plan-card">
                                 <div class="card-body text-center">
                                     <h2 class="card-title text-primary">Plus</h2>
                                     <h2 class="card-title text-success">S/50</h2>
                                     <h4 class="card-title text-muted">soles/mes</h4>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Mejora tu productividad con un acceso Ampliado</p>
                                     </div>
-                                    <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100">
+                                    <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100 plan-button">
                                          <i class="bi bi-star-fill"></i>
                                         <span class="fs-5 d-none d-md-inline">Mejora tu plan a Premium</span>
                                         <span class="fs-10 d-inline d-md-none">Premium</span>
                                     </a>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Colocar un maximo de 6 imagenes por Aviso</p>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Colocar un video por cada aviso</p>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Mayor tiempo de Publicacion</p>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Promocion en redes Sociales</p>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 plan-feature">
                                         <p class="card-text">Busquedas Avanzadas</p>
                                     </div>
                                 </div>
@@ -219,55 +234,97 @@
                     
                         <!-- Tarjeta Escoge tus Beneficios -->
                         <div class="d-flex justify-content-center">
-                            <div class="card w-50 m-2 shadow-lg border-0 rounded-3">
+                            <div class="card w-50 m-2 shadow-lg border-0 rounded-3 custom-plan-card">
                                 <div class="card-body text-center">
                                     <h2 class="card-title">Escoge tus Beneficios</h2>
                                     <h2 class="card-title text-success">S/0</h2>
                                     <h4 class="card-title text-muted">soles/mes</h4>
-                                    <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100">
+                                    <a href="#" class="btn btn-success btn-lg rounded-pill shadow-lg w-100 custom-plan-button">
                                         <i class="bi bi-star-fill"></i>
                                         <span class="fs-7 d-none d-md-inline">Escogidos</span>
                                         <span class="fs-10 d-inline d-md-none">Plan</span>
                                     </a>
                         
                                     <!-- Elementos de la tarjeta con checkboxes -->
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 custom-plan-feature">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="checkTitle">
+                                            <input class="form-check-input custom-checkbox" type="checkbox" value="" id="checkTitle">
                                             <label class="form-check-label" for="checkTitle">Colocar un video por cada aviso</label>
                                         </div>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 custom-plan-feature">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="checkDescription">
+                                            <input class="form-check-input custom-checkbox" type="checkbox" value="" id="checkDescription">
                                             <label class="form-check-label" for="checkDescription">Colocar un maximode 6 imagenes por Aviso  </label>
                                         </div>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 custom-plan-feature">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="checkImage">
+                                            <input class="form-check-input custom-checkbox" type="checkbox" value="" id="checkImage">
                                             <label class="form-check-label" for="checkImage">Mayor tiempo de Publicacion<</label>
                                         </div>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 custom-plan-feature">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="checkContact">
+                                            <input class="form-check-input custom-checkbox" type="checkbox" value="" id="checkContact">
                                             <label class="form-check-label" for="checkContact">Promocion en redes Sociales</label>
                                         </div>
                                     </div>
-                                    <div class="card p-3 mb-3 bg-light rounded-3">
+                                    <div class="card p-3 mb-3 bg-light rounded-3 custom-plan-feature">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="checkDuration">
+                                            <input class="form-check-input custom-checkbox" type="checkbox" value="" id="checkDuration">
                                             <label class="form-check-label" for="checkDuration">Busquedas Avanzadas</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>                    </div>
+
+                    <!-- Tab Actividades -->
+                    <div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="activities-tab">
+                        <!-- Contenido de Actividades -->
+                        <div class="card mb-3 activities-card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Actividades <i class="bi bi-bar-chart-line"></i></span>
+                            </div>
+                            <ul class="list-group mb-3 activities-list">
+                                <li class="list-group-item d-flex justify-content-between align-items-center activity-item">
+                                    <span><strong>Compartidos</strong></span> <span>125</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center activity-item">
+                                    <span><strong>Likes</strong></span> <span>13</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center activity-item">
+                                    <span><strong>Posts</strong></span> <span>37</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center activity-item">
+                                    <span><strong>Followers</strong></span> <span>78</span>
+                                </li>
+                            </ul>
+                            <div class="card social-media-card">
+                                <div class="card-header">Social Media</div>
+                                <div class="card-body text-center social-media-icons">
+                                    <i class="bi bi-facebook me-2"></i> 
+                                    <i class="bi bi-github me-2"></i> 
+                                    <i class="bi bi-twitter me-2"></i> 
+                                    <i class="bi bi-pinterest me-2"></i> 
+                                    <i class="bi bi-google"></i>
+                                </div>
+                            </div>
                         </div>
-                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="files/js/script.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
+```
