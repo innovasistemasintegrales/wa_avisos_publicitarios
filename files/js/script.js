@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const gridViewBtn = document.getElementById('gridViewBtn');
     const listViewBtn = document.getElementById('listViewBtn');
     const productContainer = document.getElementById('productContainer');
-    const vehiclesContainer = document.querySelectorAll('.product-item');
     const innovaTrabajosContainer = document.getElementById('innovaTrabajosContainer');
+    const vehiclesContainer = document.querySelectorAll('.product-item');
 
     function showVehicles() {
         // Muestra las tarjetas de vehículos y oculta InnovaTrabajos
