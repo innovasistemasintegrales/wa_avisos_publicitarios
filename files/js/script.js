@@ -70,3 +70,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+document.getElementById('profileImageUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Obtener el archivo seleccionado
+
+    if (file) {
+        const reader = new FileReader(); // Crear un objeto FileReader
+
+        reader.onload = function(e) {
+            // Cambiar la fuente de la imagen de perfil a la nueva imagen
+            document.getElementById('profileImagePreview').src = e.target.result;
+        }
+
+        reader.readAsDataURL(file); // Leer el archivo como URL de datos
+    }
+});
