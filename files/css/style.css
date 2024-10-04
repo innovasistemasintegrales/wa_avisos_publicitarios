@@ -3,12 +3,20 @@
 	margin: 0;
 	box-sizing: border-box;
 }
+:root{
+	--color1: #38d39f;
+	--borde-boton: border-radius: 20px;
+}
 
+
+
+;
 body{
     font-family: 'Poppins', sans-serif;
 }
 
 .login-wave{
+	
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -102,7 +110,7 @@ body{
 	bottom: -2px;
 	width: 0%;
 	height: 2px;
-	background-color: #38d39f;
+	background-color: var(--color1);
 	transition: .4s;
 }
 
@@ -236,4 +244,44 @@ body{
 /* CSS para Cliente*/
 
 
+#noPostsMessage {
+    background-color: var(--color1); /* Color de fondo */
+    border: 1px solid #f5c6cb; /* Borde */
+    border-radius: 0.25rem; /* Bordes redondeados */
+    padding: 10px; /* Reducido el espaciado interno */
+    margin-top: 4px; /* Espacio superior */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita */
+    font-size: 0.9rem; /* Tamaño de fuente reducido */
+    width: 25%; /* Ancho del contenedor (ajusta según necesites) */
+    max-width: 300px; /* Ancho máximo para el contenedor */
+    text-align: center; /* Centra el texto dentro del contenedor */
+    margin: auto; /* Centra el mensaje dentro de postContainer */
+}
 
+.plan-card, .custom-plan-card {
+    max-width: 400px; /* Ajusta el ancho máximo */
+    width: 100%; /* Para asegurarte de que ocupe el 100% de su contenedor */
+    border-radius: 15px; /* Esquinas redondeadas más pronunciadas */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transición para efectos al pasar el mouse */
+}
+
+.plan-card:hover, .custom-plan-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
+}
+
+.plan-title {
+    font-size: 1.5rem; 
+}
+
+.plan-feature {
+    background-color: #f8f9fa; /* Color de fondo para resaltar características */
+    border: 1px solid #dee2e6; /* Borde sutil */
+    border-radius: 10px; /* Esquinas redondeadas */
+}
+
+.custom-plan-card {
+    background-color: #ffffff; /* Fondo blanco para personalización */
+    border: 1px solid #ced4da; /* Borde sutil */
+}

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Listener para el botón 'saveWebsite'
+    // Listener para el botón 'savePostButton'
     document.getElementById('savePostButton').addEventListener('click', function() {
         const title = document.getElementById('postTitle').value;
         const description = document.getElementById('postDescription').value;
@@ -56,6 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 card.innerHTML = cardBody;
                 postContainer.appendChild(card);
 
+                // Mostrar u ocultar el mensaje de "No tienes ninguna publicación"
+                const noPostsMessage = document.getElementById('noPostsMessage');
+                const postCards = postContainer.querySelectorAll('.product-item'); // Seleccionamos solo las tarjetas
+                
+                if (postCards.length > 0) {
+                    noPostsMessage.style.display = 'none'; // Ocultar el mensaje si hay al menos una tarjeta
+                }
+
                 // Limpiar el formulario
                 document.getElementById('postForm').reset();
 
@@ -69,6 +77,15 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Por favor, completa todos los campos.');
         }
     });
+
+    // Mostrar mensaje al cargar la página si no hay publicaciones
+    const postContainer = document.getElementById('postContainer');
+    const noPostsMessage = document.getElementById('noPostsMessage');
+    const postCards = postContainer.querySelectorAll('.product-item');
+    
+    if (postCards.length === 0) {
+        noPostsMessage.style.display = 'block'; // Mostrar mensaje si no hay publicaciones
+    }
 });
 document.getElementById('profileImageUpload').addEventListener('change', function(event) {
     const file = event.target.files[0]; // Obtener el archivo seleccionado
