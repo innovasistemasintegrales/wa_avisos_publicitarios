@@ -6,6 +6,8 @@
 :root{
 	--color1: #38d39f;
 	--borde-boton: border-radius: 20px;
+	--color2: #CECECE;
+
 }
 
 
@@ -284,4 +286,18 @@ body{
 .custom-plan-card {
     background-color: #ffffff; /* Fondo blanco para personalización */
     border: 1px solid #ced4da; /* Borde sutil */
+}
+
+.logo-col {
+    background-color: var(--color2);
+    
+}
+.left-panel{
+	background-color: var(--color2);
+}
+.sidebar{
+	background-color: white
+}
+.title-col{
+	background-color: var(--color2);
 }
