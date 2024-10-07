@@ -7,24 +7,24 @@
     --btn-radius: 15px;
 }
 
-header {
+.catalog header {
     position: sticky;
     top: 0;
     z-index: 999;
     width: 100%;
 }
 
-.header-custom {
+.catalog .header-custom {
     background-color: var(--background-color);
 }
 
-#main-content {
+.catalog #main-content {
     margin-left: 0;
-    margin-top: 3rem;
+    margin-top: -3rem;
     transition: margin-left 0.3s ease-in-out;
 }
 
-#sidebar {
+.catalog #sidebar {
     width: 250px;
     min-height: 100vh;
     position: fixed;
@@ -37,26 +37,26 @@ header {
     padding-top: 1rem;
 }
 
-#sidebar.show {
+.catalog #sidebar.show {
     left: 0;
 }
 
-#sidebar h4 {
+.catalog #sidebar h4 {
     color: var(--text-color);
     text-transform: uppercase;
     font-size: 1.5rem;
 }
 
-#sidebar ul {
+.catalog #sidebar ul {
     padding-left: 0;
 }
 
-#sidebar ul li a i {
+.catalog #sidebar ul li a i {
     margin-right: 8px;
     color: var(--text-color);
 }
 
-#sidebar ul li a {
+.catalog #sidebar ul li a {
     color: var(--text-color);
     text-decoration: none;
     font-size: 1rem;
@@ -69,17 +69,17 @@ header {
     white-space: nowrap;
 }
 
-#sidebar ul li a:hover {
+.catalog #sidebar ul li a:hover {
     background-color: var(--hover-color);
     color: white;
 }
 
-#sidebar ul li a.active {
+.catalog #sidebar ul li a.active {
     background-color: var(--primary-color);
     color: black;
 }
 
-.view-options .btn {
+.catalog .view-options .btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,71 +93,71 @@ header {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.view-options .btn.active {
+.catalog .view-options .btn.active {
     background-color: var(--primary-color);
     color: black;
 }
 
-.view-options .btn:hover {
+.catalog .view-options .btn:hover {
     background-color: var(--hover-color);
     color: white;
 }
 
-#filterButton {
+.catalog #filterButton {
     width: 100%;
     border-radius: var(--btn-radius);
-    border: 1px color: black;
+    border: 1px solid black;
     background-color: transparent;
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#filterButton:hover {
+.catalog #filterButton:hover {
     background-color: var(--hover-color);
     color: white;
 }
 
 @media (min-width: 768px) {
-    #filterButton {
+    .catalog #filterButton {
         width: auto;
     }
 }
 
-.product-item {
+.catalog .product-item {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.product-item.show {
+.catalog .product-item.show {
     opacity: 1;
     transform: translateY(0);
 }
 
-#productContainer.list-view .product-item {
+.catalog #productContainer.list-view .product-item {
     transition: opacity 0.4s ease, transform 0.4s ease, flex-direction 0.2s ease;
 }
 
-.list-view {
+.catalog .list-view {
     display: flex;
     flex-direction: column;
 }
 
-.list-view .product-item {
+.catalog .list-view .product-item {
     display: flex;
     align-items: center;
     width: 100%;
     margin-bottom: 15px;
 }
 
-.list-view .card {
+.catalog .list-view .card {
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
 }
 
-.list-view .card img {
+.catalog .list-view .card img {
     width: 200px;
     height: auto;
     max-width: 100%;
@@ -165,16 +165,16 @@ header {
 }
 
 @media (max-width: 575.98px) {
-    .list-view .card {
+    .catalog .list-view .card {
         flex-direction: row;
     }
 
-    .list-view .card img {
+    .catalog .list-view .card img {
         width: 50px;
     }
 }
 
-.grid-view {
+.catalog .grid-view {
     display: flex;
     flex-wrap: wrap;
     margin-left: -15px;
@@ -183,7 +183,7 @@ header {
 }
 
 @media (min-width: 992px) {
-    .grid-view .product-item {
+    .catalog .grid-view .product-item {
         flex: 0 0 calc(25% - 30px);
         max-width: calc(25% - 30px);
         margin: 15px;
@@ -191,7 +191,7 @@ header {
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
-    .grid-view .product-item {
+    .catalog .grid-view .product-item {
         flex: 0 0 calc(33.33% - 30px);
         max-width: calc(33.33% - 30px);
         margin: 15px;
@@ -199,7 +199,7 @@ header {
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-    .grid-view .product-item {
+    .catalog .grid-view .product-item {
         flex: 0 0 calc(50% - 30px);
         max-width: calc(50% - 30px);
         margin: 15px;
@@ -207,51 +207,51 @@ header {
 }
 
 @media (max-width: 575.98px) {
-    .grid-view .product-item {
+    .catalog .grid-view .product-item {
         flex: 0 0 100%;
         max-width: 100%;
         margin: 15px;
     }
 }
 
-.header-custom img {
+.catalog .header-custom img {
     max-width: 120px;
 }
 
 @media (max-width: 320px) {
-    .header-custom {
+    .catalog .header-custom {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .header-custom .btn-custom {
+    .catalog .header-custom .btn-custom {
         margin-top: 10px;
         align-self: center;
     }
 
-    .header-custom img {
+    .catalog .header-custom img {
         margin-bottom: 10px;
     }
 
-    #vehicleSearchForm {
+    .catalog #vehicleSearchForm {
         margin-top: 10px;
     }
 }
 
-.btn-custom {
+.catalog .btn-custom {
     background-color: white;
     color: var(--text-color);
     border: 1px solid var(--text-color);
     border-radius: var(--btn-radius);
 }
 
-.btn-custom:hover {
+.catalog .btn-custom:hover {
     background-color: var(--hover-color);
     filter: brightness(85%);
     color: white;
 }
 
-.overlay {
+.catalog .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -264,15 +264,15 @@ header {
     transition: opacity 0.3s ease-in-out;
 }
 
-.overlay.show {
+.catalog .overlay.show {
     display: block;
     opacity: 1;
 }
 
-.hide {
+.catalog .hide {
     display: none !important;
 }
 
-#sidebar.show {
+.catalog #sidebar.show {
     display: block !important;
 }
