@@ -247,9 +247,14 @@ body{
     
 }
 /* CSS para Cliente*/
+.product-item {
+    margin: 0; /* Elimina el margen entre las tarjetas */
+    padding: 0; /* Asegúrate de que no haya padding extra */
+}
+
 .description-container {
     display: -webkit-box;
-    -webkit-line-clamp: 5; /* Número de líneas permitidas */
+    -webkit-line-clamp: 3; /* Número de líneas permitidas */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
