@@ -6,7 +6,7 @@
 :root{
 	--color1: #38d39f;
 	--borde-boton: border-radius: 20px;
-	--color2: #CECECE;
+	--color2: #D9DED8;
 
 }
 
@@ -242,9 +242,18 @@ body{
     }
 }
 
-
+.left-panel{
+	background-color: var(--color)
+    
+}
 /* CSS para Cliente*/
-
+.description-container {
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Número de líneas permitidas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 #noPostsMessage {
     background-color: var(--color1); /* Color de fondo */
@@ -292,11 +301,292 @@ body{
     background-color: var(--color2);
     
 }
-.left-panel{
-}
+
 .sidebar{
 	background-color: white
 }
 .title-col{
-	background-color: var(--color2);
+	background-color: var(--background-color);
+}
+
+/* CSS para Index*/
+
+
+:root {
+    --primary-color: #38d39f;
+    --hover-color: #006b50;
+    --background-color: #D9DED8;
+    --text-color: #000000;
+    --font-family: 'Poppins', sans-serif;
+    --btn-radius: 15px;
+}
+
+.catalog header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+}
+
+.catalog .header-custom {
+    background-color: var(--background-color);
+}
+
+.catalog #main-content {
+    margin-left: 0;
+    margin-top: -3rem;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.catalog #sidebar {
+    width: 250px;
+    min-height: 100vh;
+    position: fixed;
+    top: 30px;
+    left: -250px;
+    z-index: 1000;
+    background-color: var(--background-color);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s ease-in-out;
+    padding-top: 1rem;
+}
+
+.catalog #sidebar.show {
+    left: 0;
+}
+
+.catalog #sidebar h4 {
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+.catalog #sidebar ul {
+    padding-left: 0;
+}
+
+.catalog #sidebar ul li a i {
+    margin-right: 8px;
+    color: var(--text-color);
+}
+
+.catalog #sidebar ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+    padding: 7px;
+    border-radius: var(--btn-radius);
+    border: 1px solid transparent;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+}
+
+.catalog #sidebar ul li a:hover {
+    background-color: var(--hover-color);
+    color: white;
+}
+
+.catalog #sidebar ul li a.active {
+    background-color: var(--primary-color);
+    color: black;
+}
+
+.catalog .view-options .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 10px 20px;
+    width: auto;
+    border-radius: var(--btn-radius);
+    border: 1px solid var(--text-color);
+    background-color: white;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.catalog .view-options .btn.active {
+    background-color: var(--primary-color);
+    color: black;
+}
+
+.catalog .view-options .btn:hover {
+    background-color: var(--hover-color);
+    color: white;
+}
+
+.catalog #filterButton {
+    width: 100%;
+    border-radius: var(--btn-radius);
+    border: 1px solid black;
+    background-color: transparent;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.catalog #filterButton:hover {
+    background-color: var(--hover-color);
+    color: white;
+}
+
+@media (min-width: 768px) {
+    .catalog #filterButton {
+        width: auto;
+    }
+}
+
+.catalog .product-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.catalog .product-item.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.catalog #productContainer.list-view .product-item {
+    transition: opacity 0.4s ease, transform 0.4s ease, flex-direction 0.2s ease;
+}
+
+.catalog .list-view {
+    display: flex;
+    flex-direction: column;
+}
+
+.catalog .list-view .product-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.catalog .list-view .card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.catalog .list-view .card img {
+    width: 200px;
+    height: auto;
+    max-width: 100%;
+    margin-right: 15px;
+}
+
+@media (max-width: 575.98px) {
+    .catalog .list-view .card {
+        flex-direction: row;
+    }
+
+    .catalog .list-view .card img {
+        width: 50px;
+    }
+}
+
+.catalog .grid-view {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+    justify-content: flex-start;
+}
+
+@media (min-width: 992px) {
+    .catalog .grid-view .product-item {
+        flex: 0 0 calc(25% - 30px);
+        max-width: calc(25% - 30px);
+        margin: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .catalog .grid-view .product-item {
+        flex: 0 0 calc(33.33% - 30px);
+        max-width: calc(33.33% - 30px);
+        margin: 15px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .catalog .grid-view .product-item {
+        flex: 0 0 calc(50% - 30px);
+        max-width: calc(50% - 30px);
+        margin: 15px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .catalog .grid-view .product-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: 15px;
+    }
+}
+
+.catalog .header-custom img {
+    max-width: 120px;
+}
+
+@media (max-width: 320px) {
+    .catalog .header-custom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .catalog .header-custom .btn-custom {
+        margin-top: 10px;
+        align-self: center;
+    }
+
+    .catalog .header-custom img {
+        margin-bottom: 10px;
+    }
+
+    .catalog #vehicleSearchForm {
+        margin-top: 10px;
+    }
+}
+
+.catalog .btn-custom {
+    background-color: white;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    border-radius: var(--btn-radius);
+}
+
+.catalog .btn-custom:hover {
+    background-color: var(--hover-color);
+    filter: brightness(85%);
+    color: white;
+}
+
+.catalog .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: none;
+    z-index: 900;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.catalog .overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+.catalog .hide {
+    display: none !important;
+}
+
+.catalog #sidebar.show {
+    display: block !important;
 }
