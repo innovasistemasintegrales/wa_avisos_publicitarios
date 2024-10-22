@@ -3,16 +3,16 @@
 	margin: 0;
 	box-sizing: border-box;
 }
-:root{
-	--color1: #38d39f;
-	--borde-boton: border-radius: 20px;
-	--color2: #D9DED8;
-
+:root {
+    --color1:#00B74A;
+    --color2:#D50032;
+    --color3:#32CD32;
+    --hover-color: #006b50;
+    --background-color: #B0BEC5;
+    --text-color: #000000;
+    --font-family: 'Poppins', sans-serif;
+    --btn-radius: 5px;
 }
-
-
-
-;
 body{
     font-family: 'Poppins', sans-serif;
 }
@@ -166,29 +166,35 @@ body{
 }
 
 .login-register-link:hover{
-	color: #38d39f;
+	color: var(--color1);
 }
 
-.login-submit-btn{
-	display: block;
-	width: 100%;
-	height: 50px;
-	border-radius: 15px;
-	outline: none;
-	border: none;
-	background-image: linear-gradient(#38D39F, #38D39F, #38D39F);
-	background-size: 200%;
-	font-size: 1.2rem;
-	color: #fff;
-	font-family: 'Poppins', sans-serif;
-	text-transform: uppercase;
-	margin: 1rem 0;
-	cursor: pointer;
-	transition: .5s;
+.login-submit-btn {
+    display: block;
+    width: 100%;
+    height: 50px;
+    border-radius: var(--btn-radius); 
+    outline: none;
+    border: none;
+    background-color: var(--color1); /* Relleno con color primario */
+    font-size: 1.2rem;
+    color: #fff;
+    font-family: var(--font-family); 
+    text-transform: uppercase;
+    margin: 1rem 0;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
-.login-submit-btn:hover{
-	background-position: right;
+
+.login-submit-btn:hover {
+    background-color: var(--hover-color); /* Color de fondo en hover */
+    transform: translateY(-2px); /* Efecto de levantar ligeramente el botón */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Aumentar la sombra en hover */
 }
+
+
+
 
 .login-modal-dialog {
     max-width: 405px; /* Ajusta según sea necesario */
@@ -247,6 +253,140 @@ body{
     
 }
 /* CSS para Cliente*/
+.cancel-button {
+    background-color: transparent;
+    border: 2px solid var(--color2);
+    color: var(--color2);
+}
+
+.cancel-button:hover {
+    background-color: var(--color2); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--background-color)}
+
+.save-button {
+    background-color: transparent;
+    border: 2px solid var(--color1);
+    color: var(--color1);}
+
+.save-button:hover {
+    background-color: var(--color1); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--color1)}
+
+.edit-button{
+    background-color: transparent;
+    border: 2px solid var(--color1);
+    color: var(--color1); 
+}
+.edit-button:hover {
+    background-color: var(--color1); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--color1)
+}
+
+.close-button {
+    background-color: transparent;
+    border: 2px solid var(--color2);
+    color: var(--color2); 
+}
+
+.close-button:hover {
+    background-color: var(--color2); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--background-color)
+}
+.close-button {
+    background-color: transparent;
+    border: 2px solid var(--color2);
+    color: var(--color2); 
+}
+
+.close-button:hover {
+    background-color: var(--color2); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--background-color)
+}
+.save-post-button{
+    background-color: transparent;
+    border: 2px solid var(--color1);
+    color: var(--color1);
+}
+.save-post-button:hover {
+    background-color: var(--color1); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--color1)
+}
+.plan-button {
+    border: 1px solid var(--color1); /* Borde con color definido */
+    border-radius: var(--btn-radius); /* Bordes redondeados */
+}
+.btn-edit {
+    background-color: transparent; 
+    border: 2px solid var(--color1); /* Borde con color principal */
+    color: var(--color1); 
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: var(--btn-radius); /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-family: var(--font-family); /* Fuente definida */
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.btn-edit:hover {
+    background-color: var(--color1); /* Relleno al hacer hover */
+    color: white; /* Texto blanco en hover */
+    transform: translateY(-2px); /* Levantamiento en hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más profunda en hover */
+}
+
+
+.nav-button {
+    background-color: transparent; 
+    color: black; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 10px; /* Espacio entre los botones */
+}
+
+.nav-button.active,
+.nav-button:hover {
+    background-color: var(--color1); 
+    color: white; 
+}
+
+
+.add-post-button {
+    background-color: transparent; 
+    border: 2px solid var(--color1); 
+    color: black; 
+    font-size: 1.2rem; 
+    padding: 5px 20px; 
+    border-radius: var(--btn-radius); 
+    cursor: pointer;
+    transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.add-post-button:hover {
+    background-color: var(--color1); /* Color en hover */
+    color: white; /* Texto blanco al hacer hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más profunda al hacer hover */
+    transform: translateY(-2px); /* Ligeramente levanta el botón al hacer hover */
+}
+
 .product-item {
     margin: 0; /* Elimina el margen entre las tarjetas */
     padding: 0; /* Asegúrate de que no haya padding extra */
@@ -261,19 +401,35 @@ body{
 }
 
 #noPostsMessage {
-    background-color: var(--color1); /* Color de fondo */
-    border: 1px solid #f5c6cb; /* Borde */
-    border-radius: 0.25rem; /* Bordes redondeados */
-    padding: 10px; /* Reducido el espaciado interno */
-    margin-top: 4px; /* Espacio superior */
-    color: white; /* Color del texto */
+    background-color: var(--color3); /* Color de fondo */
+    border-radius: var(--btn-radius); /* Bordes redondeados */
+    padding: 15px 20px; /* Aumentado el espaciado interno para darle más aire */
+    margin-top: 10px; /* Más espacio superior */
+    color: var(--text-color); /* Color del texto */
     font-weight: bold; /* Negrita */
-    font-size: 0.9rem; /* Tamaño de fuente reducido */
-    width: 25%; /* Ancho del contenedor (ajusta según necesites) */
-    max-width: 300px; /* Ancho máximo para el contenedor */
-    text-align: center; /* Centra el texto dentro del contenedor */
-    margin: auto; /* Centra el mensaje dentro de postContainer */
+    font-size: 1rem; /* Tamaño de fuente ligeramente mayor */
+    width: 100%; /* Ancho completo por defecto */
+    max-width: 400px; /* Ancho máximo ajustado para pantallas más grandes */
+    text-align: center; /* Centra el texto */
+    margin: 10px auto; /* Centra el mensaje vertical y horizontalmente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suave animación en hover */
 }
+
+#noPostsMessage:hover {
+    transform: translateY(-5px); /* Efecto de levantamiento */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más intensa en hover */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    #noPostsMessage {
+        max-width: 90%; /* Ancho ajustado para pantallas pequeñas */
+        font-size: 0.9rem; /* Reducir tamaño de fuente en pantallas pequeñas */
+        padding: 12px 15px; /* Ajuste de padding */
+    }
+}
+
 
 .plan-card, .custom-plan-card {
     max-width: 400px; /* Ajusta el ancho máximo */
@@ -303,7 +459,7 @@ body{
 }
 
 .logo-col {
-    background-color: var(--color2);
+    background-color: var(--background-color);
     
 }
 
@@ -317,14 +473,7 @@ body{
 /* CSS para Index*/
 
 
-:root {
-    --primary-color: #38d39f;
-    --hover-color: #006b50;
-    --background-color: #D9DED8;
-    --text-color: #000000;
-    --font-family: 'Poppins', sans-serif;
-    --btn-radius: 15px;
-}
+
 
 .catalog header {
     position: sticky;

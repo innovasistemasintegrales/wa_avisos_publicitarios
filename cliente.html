@@ -42,26 +42,26 @@
                 <!-- Botones de Navegación (Tabs) -->
                 <ul class="nav flex-column mb-3 shadow-sm rounded border p-3 bg-white nav-tabs-custom text-center">
                     <li class="nav-item d-flex justify-content-center">
-                        <button class="nav-link active btn btn-outline-success mb-2 nav-button w-100" id="messages-tab"
-                            data-bs-toggle="tab" data-bs-target="#messages" type="button" style="color: black;">
+                        <button class="nav-link active btn nav-button w-100" id="messages-tab" data-bs-toggle="tab"
+                            data-bs-target="#messages" type="button">
                             <i class="bi bi-chat-left-text-fill me-2"></i> Publicaciones
                         </button>
                     </li>
                     <li class="nav-item d-flex justify-content-center">
-                        <button class="nav-link btn btn-outline-success mb-2 nav-button w-100" id="home-tab"
-                            data-bs-toggle="tab" data-bs-target="#home" type="button" style="color: black;">
+                        <button class="nav-link btn nav-button w-100" id="home-tab" data-bs-toggle="tab"
+                            data-bs-target="#home" type="button">
                             <i class="bi bi-person-fill me-2"></i> Datos
                         </button>
                     </li>
                     <li class="nav-item d-flex justify-content-center">
-                        <button class="nav-link btn btn-outline-success mb-2 nav-button w-100" id="settings-tab"
-                            data-bs-toggle="tab" data-bs-target="#settings" type="button" style="color: black;">
+                        <button class="nav-link btn nav-button w-100" id="settings-tab" data-bs-toggle="tab"
+                            data-bs-target="#settings" type="button">
                             <i class="bi bi-gear-fill me-2"></i> Cambio de Plan
                         </button>
                     </li>
                     <li class="nav-item d-flex justify-content-center">
-                        <button class="nav-link btn btn-outline-success nav-button w-100" id="activities-tab"
-                            data-bs-toggle="tab" data-bs-target="#activities" type="button" style="color: black;">
+                        <button class="nav-link btn nav-button w-100" id="activities-tab" data-bs-toggle="tab"
+                            data-bs-target="#activities" type="button">
                             <i class="bi bi-bar-chart-line-fill me-2"></i> Actividades
                         </button>
                     </li>
@@ -147,7 +147,7 @@
                                 </div>
                             </div>
 
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-edit" data-bs-toggle="modal"
                                 data-bs-target="#editModal">
                                 Editar
                             </button>
@@ -201,10 +201,11 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
+                                    <button type="button" class="btn btn-secondary cancel-button"
                                         data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn btn-success" id="saveChangesButton">Guardar
-                                        Cambios</button>
+                                    <button type="button" class="btn btn-success save-button"
+                                        id="saveChangesButton">Guardar Cambios</button>
+
                                 </div>
                             </div>
                         </div>
@@ -214,13 +215,13 @@
                     <!-- Tab Publicaciones -->
                     <div class="tab-pane fade show active" id="messages" role="tabpanel" aria-labelledby="messages-tab">
                         <h4>Mis Publicaciones</h4>
-
+                        <br>
                         <!-- Botón para abrir el modal -->
                         <button type="button" class="btn btn-success add-post-button" data-bs-toggle="modal"
                             data-bs-target="#addPostModal">
                             Añadir Publicación
                         </button>
-
+                        <br><br>
                         <!-- Contenedor donde se mostrarán las publicaciones -->
                         <div id="postContainer" class="row mt-32 post-container">
                             <div id="noPostsMessage" class="col-12 text-center" style="display: none;">
@@ -305,27 +306,16 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="premiumPostImages" class="form-label">Agregar Imágenes (máx.
-                                                6)</label>
+                                                5)</label>
                                             <input type="file" class="form-control input-field" id="premiumPostImages"
                                                 accept="image/*" multiple required>
-                                            <small class="form-text text-muted">Puedes seleccionar hasta 6
+                                            <small class="form-text text-muted">Puedes seleccionar hasta 5
                                                 imágenes.</small>
                                         </div>
                                         <div class="mb-3">
                                             <label for="premiumPostDescription" class="form-label">Descripción</label>
                                             <textarea class="form-control input-field" id="premiumPostDescription"
                                                 rows="3" placeholder="Escribe una descripción" required></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Beneficios Premium</label>
-                                            <ul class="list-unstyled mt-3">
-                                                <li style="margin-bottom: 10px;">• Colocar un máximo de 6 imágenes por
-                                                    Aviso</li>
-                                                <li style="margin-bottom: 10px;">• Colocar un video por cada aviso</li>
-                                                <li style="margin-bottom: 10px;">• Mayor tiempo de Publicación</li>
-                                                <li style="margin-bottom: 10px;">• Promoción en redes Sociales</li>
-                                                <li>• Búsquedas Avanzadas</li>
-                                            </ul>
                                         </div>
                                     </form>
                                 </div>

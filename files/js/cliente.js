@@ -58,6 +58,7 @@ function truncateDescription(text, maxLines) {
 
 // Listener para el botón 'savePostButton'
 document.getElementById('savePostButton').addEventListener('click', function () {
+    // Código para guardar la publicación en el modal gratuito
     const title = document.getElementById('postTitle').value;
     const description = document.getElementById('postDescription').value;
     const imageFile = document.getElementById('postImage').files[0];
@@ -68,15 +69,11 @@ document.getElementById('savePostButton').addEventListener('click', function () 
 
         reader.onload = function (e) {
             const postContainer = document.getElementById('postContainer');
-            const card = createCard(title, description, e.target.result, category);
+            const card = createCard(title, description, e.target.result, category, null, false); // Aquí se crea la tarjeta en modo gratuito
             postContainer.appendChild(card);
             updateNoPostsMessage();
             document.getElementById('postForm').reset();
 
-            // Actualizar la foto de perfil
-            updateProfilePicture(e.target.result);
-
-            // Cerrar el modal correctamente
             const modal = bootstrap.Modal.getInstance(document.getElementById('addPostModal'));
             modal.hide();
         };
@@ -247,41 +244,256 @@ document.addEventListener('DOMContentLoaded', function() {
     handleProfileImageUpload(); // Añadimos esta línea
 });
 
-   // Variable para almacenar el plan actual
-   let planActual = "Gratis"; // Puedes cambiar esto según el plan predeterminado
+// Variable para almacenar el plan actual
+let currentPlan = "Gratis";
 
-   // Función para cambiar el plan
-   function cambiarPlan(nuevoPlan) {
-       // Actualiza el plan actual
-       planActual = nuevoPlan;
+// Función para crear una tarjeta para una publicación
+function createCard(title, description, imageSrc, category, id, isPremium = false) {
+    const card = document.createElement('div');
+    card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
+    card.id = id || 'card-' + Date.now();
+    card.setAttribute('data-full-description', description);
 
-       // Actualiza los botones de las tarjetas
-       const botones = document.querySelectorAll('.plan-button');
-       botones.forEach(boton => {
-           if (boton.querySelector('.fs-8')) { // Para el botón del plan Gratis
-               boton.querySelector('.fs-8').textContent = (nuevoPlan === "Gratis") ? "Tu Plan Actual" : "Gratis";
-               boton.classList.toggle('btn-success', nuevoPlan === "Gratis");
-               boton.classList.toggle('btn-secondary', nuevoPlan === "Gratis");
-           }
-           if (boton.querySelector('.fs-5')) { // Para el botón del plan Plus
-               boton.querySelector('.fs-5').textContent = (nuevoPlan === "Plus") ? "Tu Plan Actual" : "Mejora tu plan a Premium";
-               boton.classList.toggle('btn-success', nuevoPlan === "Plus");
-               boton.classList.toggle('btn-secondary', nuevoPlan === "Plus");
-           }
-       });
-   }
+    const premiumBadge = isPremium ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Premium</span>' : '';
 
-   // Agregar eventos a los botones
-   document.querySelectorAll('.plan-button').forEach(boton => {
-       boton.addEventListener('click', function(e) {
-           e.preventDefault(); // Evitar el comportamiento predeterminado del enlace
+    card.innerHTML = `
+    <div class="card h-100" style="width: 100%;">
+        ${premiumBadge}
+        <img src="${imageSrc}" class="card-img-top" alt="${title}" style="height: 120px; object-fit: cover;">
+        <div class="card-body p-2">
+            <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
+            <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
+            <div class="description-wrapper">
+                <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
+            </div>
+            <br>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-danger delete-button">Eliminar</button>
+                <button class="btn btn-sm btn-outline-primary edit-button" data-bs-toggle="modal" data-bs-target="#editModal2">Editar</button>
+            </div>
+        </div>
+    </div>
+    `;
 
-           // Cambiar plan según el botón
-           if (this.querySelector('.fs-8')) {
-               cambiarPlan("Gratis");
-           } else if (this.querySelector('.fs-5')) {
-               cambiarPlan("Plus");
-           }
-       });
-   });
-   
+    card.querySelector('.delete-button').addEventListener('click', function () {
+        if (confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
+            card.remove();
+            updateNoPostsMessage();
+        }
+    });
+
+    card.querySelector('.edit-button').addEventListener('click', function () {
+        fillEditModal(card.id);
+    });
+
+    return card;
+}
+
+// Función para truncar la descripción
+function truncateDescription(text, maxLines) {
+    const words = text.split(' ');
+    let result = '';
+    let lineCount = 0;
+
+    for (let word of words) {
+        result += word + ' ';
+        if (result.split('\n').length >= maxLines) {
+            result += '...';
+            break;
+        }
+    }
+    return result.trim();
+}
+
+// Función para cambiar el plan
+function changePlan(newPlan) {
+    currentPlan = newPlan;
+    updatePlanButtons();
+    updateModalUsage();
+}
+
+// Función para actualizar los botones de plan
+function updatePlanButtons() {
+    const buttons = document.querySelectorAll('.plan-button');
+    buttons.forEach(button => {
+        const planName = button.closest('.card').querySelector('.plan-title').textContent;
+        const isCurrentPlan = planName === currentPlan;
+        
+        if (button.querySelector('.fs-8')) {
+            button.querySelector('.fs-8').textContent = isCurrentPlan ? "Tu Plan Actual" : "Gratis";
+        } else if (button.querySelector('.fs-5')) {
+            button.querySelector('.fs-5').textContent = isCurrentPlan ? "Tu Plan Actual" : "Mejora tu plan a Premium";
+        }
+        
+        button.classList.toggle('btn-success', isCurrentPlan);
+        button.classList.toggle('btn-secondary', !isCurrentPlan);
+    });
+}
+
+// Función para actualizar el uso del modal basado en el plan actual
+function updateModalUsage() {
+    const addPostButton = document.querySelector('.add-post-button');
+    if (addPostButton) {
+        addPostButton.setAttribute('data-bs-target', 
+            currentPlan === "Plus" ? '#addPremiumPostModal' : '#addPostModal');
+    }
+}
+
+// Listener para el botón 'savePremiumPostButton'
+document.getElementById('savePremiumPostButton').addEventListener('click', function () {
+    // Obtener los valores del formulario
+    const title = document.getElementById('premiumPostTitle').value;
+    const description = document.getElementById('premiumPostDescription').value;
+    const category = document.getElementById('premiumPostCategory').value;
+    const imageFiles = document.getElementById('premiumPostImages').files; // Obtiene todos los archivos seleccionados
+
+    // Verifica que todos los campos sean válidos
+    if (title && description && category) {
+        if (imageFiles.length > 5) {
+            alert('Por favor, selecciona un máximo de 5 imágenes.');
+            return; // Salir si hay más de 5 imágenes
+        }
+
+        // Procesar cada imagen seleccionada
+        for (let i = 0; i < imageFiles.length; i++) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const postContainer = document.getElementById('postContainer');
+                // Crear la tarjeta con la información de la publicación
+                const card = createCard(title, description, e.target.result, category, null, true); // Aquí se crea la tarjeta en modo premium
+                postContainer.appendChild(card);
+                updateNoPostsMessage(); // Actualiza el mensaje si no hay publicaciones
+                document.getElementById('premiumPostForm').reset(); // Restablece el formulario
+
+                // Cerrar el modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addPremiumPostModal'));
+                modal.hide();
+            };
+
+            reader.readAsDataURL(imageFiles[i]); // Leer la imagen como URL
+        }
+    } else {
+        alert('Por favor, completa todos los campos. Asegúrate de seleccionar hasta 5 imágenes.');
+    }
+});
+
+
+
+
+// Función para llenar el modal de edición
+function fillEditModal(cardId) {
+    const card = document.getElementById(cardId);
+    const editModal = document.getElementById('editModal2');
+
+    document.getElementById('editTitle').value = card.querySelector('.card-title').textContent;
+    document.getElementById('editDescription').value = card.getAttribute('data-full-description');
+    document.getElementById('editCategory').value = card.querySelector('.card-text').textContent.replace('Categoría:', '').trim();
+    document.getElementById('currentImage').src = card.querySelector('.card-img-top').src;
+
+    editModal.dataset.currentCard = cardId;
+}
+
+// Listener para el botón 'saveEditButton'
+document.getElementById('saveEditButton').addEventListener('click', function () {
+    const editModal = document.getElementById('editModal2');
+    const cardId = editModal.dataset.currentCard;
+    const card = document.getElementById(cardId);
+
+    const newTitle = document.getElementById('editTitle').value.trim();
+    const newDescription = document.getElementById('editDescription').value.trim();
+    const newCategory = document.getElementById('editCategory').value.trim();
+    const newImageFile = document.getElementById('editImage').files[0];
+
+    if (newTitle && newDescription && newCategory) {
+        card.querySelector('.card-title').textContent = newTitle;
+        card.querySelector('.card-text').innerHTML = `<b>Categoría:</b> ${newCategory}`;
+        card.querySelector('.description-container').textContent = truncateDescription(newDescription, 3);
+        card.setAttribute('data-full-description', newDescription);
+
+        if (newImageFile) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                card.querySelector('.card-img-top').src = e.target.result;
+            };
+            reader.readAsDataURL(newImageFile);
+        }
+
+        showConfirmationMessage(card);
+
+        const modalInstance = bootstrap.Modal.getInstance(editModal);
+        if (modalInstance) {
+            modalInstance.hide();
+        }
+    } else {
+        alert('Por favor, completa todos los campos.');
+    }
+});
+
+// Función para mostrar el mensaje de confirmación
+function showConfirmationMessage(card) {
+    const message = document.createElement('div');
+    message.textContent = 'Su edición ya está realizada';
+    message.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: #28a745;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        z-index: 1000;
+    `;
+    card.style.position = 'relative';
+    card.appendChild(message);
+
+    setTimeout(() => {
+        message.remove();
+    }, 3000);
+}
+
+// Función para actualizar el mensaje de "No hay publicaciones"
+function updateNoPostsMessage() {
+    const postContainer = document.getElementById('postContainer');
+    const noPostsMessage = document.getElementById('noPostsMessage');
+    if (postContainer.querySelectorAll('.product-item').length === 0) {
+        noPostsMessage.style.display = 'block';
+    } else {
+        noPostsMessage.style.display = 'none';
+    }
+}
+
+// Función para manejar la carga de la imagen de perfil
+function handleProfileImageUpload() {
+    const input = document.getElementById('profileImageUpload');
+    const preview = document.getElementById('profileImagePreview');
+
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+// Agregar event listeners a los botones de plan
+document.querySelectorAll('.plan-button').forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const newPlan = this.closest('.card').querySelector('.plan-title').textContent;
+        changePlan(newPlan);
+    });
+});
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', function() {
+    updateNoPostsMessage();
+    handleProfileImageUpload();
+    updatePlanButtons();
+    updateModalUsage();
+});
