@@ -1,17 +1,20 @@
 :root {
-    --primary-color: #38d39f;
-    --hover-color: #006b50;
+    --hover-color: #00B74A;
     --background-color: #D9DED8;
     --text-color: #000000;
     --font-family: 'Poppins', sans-serif;
-    --btn-radius: 15px;
+    --btn-radius: 5px;
 }
 
-.catalog header {
+/* Header styling */
+.catalog .header {
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 1000;
     width: 100%;
+    background-color: var(--background-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
 }
 
 .catalog .header-custom {
@@ -20,10 +23,11 @@
 
 .catalog #main-content {
     margin-left: 0;
-    margin-top: -3rem;
+    margin-top: 2rem;
     transition: margin-left 0.3s ease-in-out;
 }
 
+/* Sidebar styling */
 .catalog #sidebar {
     width: 250px;
     min-height: 100vh;
@@ -56,88 +60,147 @@
     color: var(--text-color);
 }
 
+/* Botones de categorías en el sidebar */
 .catalog #sidebar ul li a {
     color: var(--text-color);
     text-decoration: none;
     font-size: 1rem;
     display: block;
-    padding: 7px;
-    border-radius: var(--btn-radius);
+    padding: 7px 20px;
+    border-radius: 0;
     border: 1px solid transparent;
     background-color: transparent;
     transition: background-color 0.3s ease, color 0.3s ease;
     white-space: nowrap;
 }
 
+/* Mantener la misma lógica para las categorías activas */
+.catalog #sidebar ul li a.active {
+    background-color: var(--hover-color);
+    color: white; /* Texto blanco al estar activo */
+    border: none;
+}
+
+.catalog #sidebar ul li a.active i {
+    color: white; /* Ícono blanco al estar activo */
+}
+
+/* Excluir enlaces de descargas (con la clase no-highlight) del estilo activo */
+.catalog #sidebar ul li a.no-highlight {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.catalog #sidebar ul li a.no-highlight i {
+    color: var(--text-color);
+}
+
+/* Hover del botón de categoría */
 .catalog #sidebar ul li a:hover {
     background-color: var(--hover-color);
     color: white;
+    border: none;
 }
 
-.catalog #sidebar ul li a.active {
-    background-color: var(--primary-color);
-    color: black;
-}
-
-.catalog .view-options .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    padding: 10px 20px;
-    width: auto;
-    border-radius: var(--btn-radius);
-    border: 1px solid var(--text-color);
-    background-color: white;
-    color: var(--text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.catalog .view-options .btn.active {
-    background-color: var(--primary-color);
-    color: black;
-}
-
-.catalog .view-options .btn:hover {
-    background-color: var(--hover-color);
+.catalog #sidebar ul li a:hover i {
     color: white;
 }
 
-.catalog #filterButton {
-    width: 100%;
-    border-radius: var(--btn-radius);
-    border: 1px solid black;
+/* No aplicar hover a los enlaces de descargas */
+.catalog #sidebar ul li a.no-highlight:hover {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.catalog #sidebar ul li a.no-highlight:hover i {
+    color: var(--text-color);
+}
+
+/* Botones de vista (cuadrícula y lista) sin border-radius */
+.catalog .view-options .btn {
+    border-radius: 0;
+    padding: 10px 20px;
+    border: 1px solid transparent;
     background-color: transparent;
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.catalog #filterButton:hover {
+/* Botones de vista activos */
+.catalog .view-options .btn.active {
     background-color: var(--hover-color);
     color: white;
 }
 
+/* Botones principales como "Buscar", "Filtrar" y "Publicar" */
+.catalog #filterButton,
+.catalog .btn-custom,
+#searchButton {
+    border-radius: var(--btn-radius);
+    padding: 10px 20px;
+    border: 1px solid var(--text-color);
+    background-color: transparent;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover específico para los botones principales */
+.catalog #filterButton:hover,
+.catalog .btn-custom:hover,
+#searchButton:hover {
+    background-color: var(--hover-color);
+    color: white;
+    border: none;
+}
+
+/* Grid y List view */
+.catalog .grid-view .product-item,
+.catalog .list-view .product-item {
+    display: none;
+}
+
+.catalog .product-item.show {
+    display: block;
+}
+
+/* Responsive styling */
 @media (min-width: 768px) {
     .catalog #filterButton {
         width: auto;
     }
 }
 
+/* Product Item Styling */
 .catalog .product-item {
+    display: none;
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .catalog .product-item.show {
+    display: block;
     opacity: 1;
     transform: translateY(0);
 }
 
-.catalog #productContainer.list-view .product-item {
-    transition: opacity 0.4s ease, transform 0.4s ease, flex-direction 0.2s ease;
+/* Grid view styling */
+.catalog .grid-view .product-item {
+    display: flex;
+    flex-direction: column;
 }
 
+.catalog .grid-view .card {
+    width: 100%;
+    height: auto;
+}
+
+.catalog .grid-view img {
+    width: 100%;
+    height: auto;
+}
+
+/* List view styling */
 .catalog .list-view {
     display: flex;
     flex-direction: column;
@@ -154,34 +217,17 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
+    width: 460%;
+    height: auto;
 }
 
-.catalog .list-view .card img {
-    width: 200px;
+.catalog .list-view img {
+    width: 150px;
     height: auto;
-    max-width: 100%;
     margin-right: 15px;
 }
 
-@media (max-width: 575.98px) {
-    .catalog .list-view .card {
-        flex-direction: row;
-    }
-
-    .catalog .list-view .card img {
-        width: 50px;
-    }
-}
-
-.catalog .grid-view {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -15px;
-    margin-right: -15px;
-    justify-content: flex-start;
-}
-
+/* Grid view adjustments based on screen size */
 @media (min-width: 992px) {
     .catalog .grid-view .product-item {
         flex: 0 0 calc(25% - 30px);
@@ -214,43 +260,7 @@
     }
 }
 
-.catalog .header-custom img {
-    max-width: 120px;
-}
-
-@media (max-width: 320px) {
-    .catalog .header-custom {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .catalog .header-custom .btn-custom {
-        margin-top: 10px;
-        align-self: center;
-    }
-
-    .catalog .header-custom img {
-        margin-bottom: 10px;
-    }
-
-    .catalog #vehicleSearchForm {
-        margin-top: 10px;
-    }
-}
-
-.catalog .btn-custom {
-    background-color: white;
-    color: var(--text-color);
-    border: 1px solid var(--text-color);
-    border-radius: var(--btn-radius);
-}
-
-.catalog .btn-custom:hover {
-    background-color: var(--hover-color);
-    filter: brightness(85%);
-    color: white;
-}
-
+/* Overlay styling */
 .catalog .overlay {
     position: fixed;
     top: 0;
@@ -269,10 +279,39 @@
     opacity: 1;
 }
 
+/* Hide class for utility */
 .catalog .hide {
     display: none !important;
 }
 
 .catalog #sidebar.show {
     display: block !important;
+}
+
+/* Additional CSS for extra effects */
+.catalog #filterButton {
+    width: 100%;
+    border-radius: var(--btn-radius);
+    border: 1px solid black;
+    background-color: transparent;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.catalog #filterButton:hover {
+    background-color: var(--hover-color);
+    color: white;
+}
+
+.catalog .btn-custom:hover {
+    background-color: var(--hover-color);
+    filter: brightness(85%);
+    color: white;
+}
+
+/* Hacer las checkboxes más grandes y alinearlas correctamente */
+.product-checkbox {
+    transform: scale(1.5); /* Aumentar el tamaño de la casilla */
+    margin-right: 10px; /* Espacio entre la casilla y el texto */
+    vertical-align: middle; /* Alinear verticalmente la casilla con el texto */
 }
