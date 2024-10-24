@@ -51,12 +51,12 @@
                     </div>
                 </li>
 
-                <!-- Descargas (sin resaltar) -->
+                <!-- Descargas -->
                 <li class="mb-3">
                     <h5 class="fw-bold">Descargar</h5>
                     <ul class="list-unstyled ms-3">
-                        <li><a href="#" class="text no-highlight" id="downloadPdf">Avisos por PDF</a></li>
-                        <li><a href="#" class="text no-highlight" id="downloadExcel">Avisos por Excel</a></li>
+                        <li><a href="#" class="text" id="downloadPdf">Avisos por PDF</a></li>
+                        <li><a href="#" class="text" id="downloadExcel">Avisos por Excel</a></li>
                     </ul>
                 </li>
             </ul>
@@ -82,11 +82,11 @@
 
             <!-- Products (Grid / List view) -->
             <div id="VehicleContainer" class="row grid-view">
+                <!-- Vehículos Category -->
                 <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item vehículos">
-                    <div class="card h-100">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Camioneta Nissan" data-product-description="Auto semi nuevo, poco kilometraje" data-product-image="https://via.placeholder.com/150">
                         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Camioneta Nissan">
                         <div class="card-body">
-                            <input type="checkbox" class="product-checkbox" style="display: none;"> <!-- Checkbox para selección -->
                             <h5 class="card-title">Camioneta Nissan</h5>
                             <p class="card-text">Auto semi nuevo, poco kilometraje</p>
                             <div class="d-flex justify-content-between">
@@ -97,13 +97,58 @@
                     </div>
                 </div>
 
+                <!-- InnovaTrabajos Category -->
                 <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item innovatrabajos">
-                    <div class="card h-100">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Trabajo Innovador" data-product-description="Trabajo especializado en tecnología" data-product-image="https://via.placeholder.com/150">
                         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Trabajo Innovador">
                         <div class="card-body">
-                            <input type="checkbox" class="product-checkbox" style="display: none;"> <!-- Checkbox para selección -->
                             <h5 class="card-title">Trabajo Innovador</h5>
                             <p class="card-text">Trabajo especializado en tecnología</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
+                                <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inmueble Category -->
+                <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item inmueble">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Casa en Venta" data-product-description="Hermosa casa familiar en buena ubicación" data-product-image="https://via.placeholder.com/150">
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Casa en Venta">
+                        <div class="card-body">
+                            <h5 class="card-title">Casa en Venta</h5>
+                            <p class="card-text">Hermosa casa familiar en buena ubicación</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
+                                <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Oficios Category -->
+                <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item oficios">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Electricista Profesional" data-product-description="Servicios eléctricos a domicilio" data-product-image="https://via.placeholder.com/150">
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Electricista Profesional">
+                        <div class="card-body">
+                            <h5 class="card-title">Electricista Profesional</h5>
+                            <p class="card-text">Servicios eléctricos a domicilio</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
+                                <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ETC Category -->
+                <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item etc">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Producto Variado" data-product-description="Artículo especial en promoción" data-product-image="https://via.placeholder.com/150">
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Producto Variado">
+                        <div class="card-body">
+                            <h5 class="card-title">Producto Variado</h5>
+                            <p class="card-text">Artículo especial en promoción</p>
                             <div class="d-flex justify-content-between">
                                 <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
                                 <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
@@ -116,6 +161,28 @@
     </div>
 </div>
 
+<!-- Modal para mostrar el anuncio -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Título del anuncio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" alt="" id="productModalImage" class="img-fluid mb-3">
+                <p id="productModalDescription">"card-text"</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="modalWhatsApp" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
+                <a href="#" id="modalCall" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="files/js/script.js"></script>
 </body>
 </html>

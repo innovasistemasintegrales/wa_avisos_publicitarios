@@ -312,6 +312,4 @@
 /* Hacer las checkboxes más grandes y alinearlas correctamente */
 .product-checkbox {
     transform: scale(1.5); /* Aumentar el tamaño de la casilla */
-    margin-right: 10px; /* Espacio entre la casilla y el texto */
-    vertical-align: middle; /* Alinear verticalmente la casilla con el texto */
 }

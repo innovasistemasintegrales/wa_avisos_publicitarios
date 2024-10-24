@@ -12,6 +12,34 @@ document.addEventListener('DOMContentLoaded', function () {
     const downloadButton = document.getElementById('filterButton');
     const categories = document.querySelectorAll('#sidebar ul li ul li a:not(.no-highlight)'); // Excluir enlaces con .no-highlight
 
+    const productModal = new bootstrap.Modal(document.getElementById('productModal')); // Inicializar el modal
+    const modalTitle = document.getElementById('productModalLabel');
+    const modalImage = document.getElementById('productModalImage');
+    const modalDescription = document.getElementById('productModalDescription');
+
+    // Función para actualizar el modal con los datos de la tarjeta seleccionada
+    function updateModal(productName, productDescription, productImage) {
+        modalTitle.textContent = productName;
+        modalDescription.textContent = productDescription;
+        modalImage.src = productImage;
+        modalImage.alt = productName;
+    }
+
+    // Añadir evento a cada tarjeta para abrir el modal con la información correspondiente
+    products.forEach(product => {
+        product.addEventListener('click', function () {
+            const productName = product.querySelector('.card-title').textContent;
+            const productDescription = product.querySelector('.card-text').textContent;
+            const productImage = product.querySelector('img').src;
+
+            // Actualizar el modal con la información de la tarjeta seleccionada
+            updateModal(productName, productDescription, productImage);
+
+            // Mostrar el modal
+            productModal.show();
+        });
+    });
+
     // Función para mostrar productos de una categoría específica
     function showCategory(category) {
         products.forEach(function (product) {
