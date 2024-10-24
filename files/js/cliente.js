@@ -247,19 +247,23 @@ document.addEventListener('DOMContentLoaded', function() {
 // Variable para almacenar el plan actual
 let currentPlan = "Gratis";
 
-// Función para crear una tarjeta para una publicación
-function createCard(title, description, imageSrc, category, id, isPremium = false) {
+// Función modificada para crear una tarjeta de publicación
+function createCard(title, description, imageSrcs, category, id, isPremium = false) {
     const card = document.createElement('div');
     card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
     card.id = id || 'card-' + Date.now();
     card.setAttribute('data-full-description', description);
+    card.setAttribute('data-images', JSON.stringify(imageSrcs)); // Almacenar todas las URLs de imágenes
 
     const premiumBadge = isPremium ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Premium</span>' : '';
+    const imageCount = Array.isArray(imageSrcs) ? imageSrcs.length : 1;
+    const imageBadge = imageCount > 1 ? `<span class="badge bg-info text-dark position-absolute top-0 start-0 m-2">${imageCount} imágenes</span>` : '';
 
     card.innerHTML = `
     <div class="card h-100" style="width: 100%;">
         ${premiumBadge}
-        <img src="${imageSrc}" class="card-img-top" alt="${title}" style="height: 120px; object-fit: cover;">
+        ${imageBadge}
+        <img src="${Array.isArray(imageSrcs) ? imageSrcs[0] : imageSrcs}" class="card-img-top" alt="${title}" style="height: 120px; object-fit: cover;">
         <div class="card-body p-2">
             <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
             <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
@@ -288,6 +292,7 @@ function createCard(title, description, imageSrc, category, id, isPremium = fals
 
     return card;
 }
+
 
 // Función para truncar la descripción
 function truncateDescription(text, maxLines) {
@@ -339,49 +344,106 @@ function updateModalUsage() {
     }
 }
 
-// Listener para el botón 'savePremiumPostButton'
-document.getElementById('savePremiumPostButton').addEventListener('click', function () {
-    // Obtener los valores del formulario
-    const title = document.getElementById('premiumPostTitle').value;
-    const description = document.getElementById('premiumPostDescription').value;
-    const category = document.getElementById('premiumPostCategory').value;
-    const imageFiles = document.getElementById('premiumPostImages').files; // Obtiene todos los archivos seleccionados
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('premiumPostImages');
+    const imagePreview = document.getElementById('imagePreview');
+    const savePremiumPostButton = document.getElementById('savePremiumPostButton');
+    let selectedImages = [];
 
-    // Verifica que todos los campos sean válidos
-    if (title && description && category) {
-        if (imageFiles.length > 5) {
-            alert('Por favor, selecciona un máximo de 5 imágenes.');
-            return; // Salir si hay más de 5 imágenes
+    imageInput.addEventListener('change', function(event) {
+        const files = Array.from(event.target.files);
+        
+        if (selectedImages.length + files.length > 5) {
+            alert('Puedes seleccionar un máximo de 5 imágenes.');
+            return;
         }
 
-        // Procesar cada imagen seleccionada
-        for (let i = 0; i < imageFiles.length; i++) {
-            const reader = new FileReader();
+        files.forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    addImagePreview(e.target.result);
+                }
+                reader.readAsDataURL(file);
+                selectedImages.push(file);
+            }
+        });
 
-            reader.onload = function (e) {
-                const postContainer = document.getElementById('postContainer');
-                // Crear la tarjeta con la información de la publicación
-                const card = createCard(title, description, e.target.result, category, null, true); // Aquí se crea la tarjeta en modo premium
-                postContainer.appendChild(card);
-                updateNoPostsMessage(); // Actualiza el mensaje si no hay publicaciones
-                document.getElementById('premiumPostForm').reset(); // Restablece el formulario
+        updateImageInput();
+    });
 
-                // Cerrar el modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('addPremiumPostModal'));
-                modal.hide();
-            };
-
-            reader.readAsDataURL(imageFiles[i]); // Leer la imagen como URL
-        }
-    } else {
-        alert('Por favor, completa todos los campos. Asegúrate de seleccionar hasta 5 imágenes.');
+    function addImagePreview(src) {
+        const div = document.createElement('div');
+        div.className = 'image-preview-item';
+        div.innerHTML = `
+            <img src="${src}" alt="Vista previa">
+            <button type="button" class="remove-image" aria-label="Eliminar imagen">&times;</button>
+        `;
+        div.querySelector('.remove-image').addEventListener('click', function() {
+            const index = Array.from(imagePreview.children).indexOf(div);
+            selectedImages.splice(index, 1);
+            div.remove();
+            updateImageInput();
+        });
+        imagePreview.appendChild(div);
     }
-});
+
+    function updateImageInput() {
+        const dataTransfer = new DataTransfer();
+        selectedImages.forEach(file => {
+            dataTransfer.items.add(file);
+        });
+        imageInput.files = dataTransfer.files;
+    }
+
+    document.getElementById('savePremiumPostButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        if (document.getElementById('premiumPostForm').checkValidity()) {
+            const title = document.getElementById('premiumPostTitle').value;
+            const description = document.getElementById('premiumPostDescription').value;
+            const category = document.getElementById('premiumPostCategory').value;
+            const imageFiles = document.getElementById('premiumPostImages').files;
+    
+            if (title && description && category && imageFiles.length > 0) {
+                if (imageFiles.length > 5) {
+                    alert('Por favor, selecciona un máximo de 5 imágenes.');
+                    return;
+                }
+    
+                const imageSrcs = [];
+                let loadedImages = 0;
+    
+                for (let i = 0; i < imageFiles.length; i++) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        imageSrcs.push(e.target.result);
+                        loadedImages++;
+    
+                        if (loadedImages === imageFiles.length) {
+                            const postContainer = document.getElementById('postContainer');
+                            const card = createCard(title, description, imageSrcs, category, null, true);
+                            postContainer.appendChild(card);
+                            updateNoPostsMessage();
+                            document.getElementById('premiumPostForm').reset();
+    
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('addPremiumPostModal'));
+                            modal.hide();
+                        }
+                    };
+                    reader.readAsDataURL(imageFiles[i]);
+                }
+            } else {
+                alert('Por favor, completa todos los campos y selecciona al menos una imagen (máximo 5).');
+            }
+        } else {
+            document.getElementById('premiumPostForm').reportValidity();
+        }
+    });
+    
+    
 
 
-
-
-// Función para llenar el modal de edición
+// Función modificada para llenar el modal de edición
 function fillEditModal(cardId) {
     const card = document.getElementById(cardId);
     const editModal = document.getElementById('editModal2');
@@ -389,7 +451,25 @@ function fillEditModal(cardId) {
     document.getElementById('editTitle').value = card.querySelector('.card-title').textContent;
     document.getElementById('editDescription').value = card.getAttribute('data-full-description');
     document.getElementById('editCategory').value = card.querySelector('.card-text').textContent.replace('Categoría:', '').trim();
-    document.getElementById('currentImage').src = card.querySelector('.card-img-top').src;
+    
+    // Limpiar el contenedor de imágenes existente
+    const imageContainer = document.getElementById('editImageContainer');
+    imageContainer.innerHTML = '';
+
+    // Obtener todas las imágenes almacenadas
+    const images = JSON.parse(card.getAttribute('data-images'));
+
+    // Mostrar todas las imágenes en el modal
+    images.forEach((src, index) => {
+        const imgElement = document.createElement('img');
+        imgElement.src = src;
+        imgElement.alt = `Imagen ${index + 1}`;
+        imgElement.className = 'img-thumbnail m-1';
+        imgElement.style.width = '100px';
+        imgElement.style.height = '100px';
+        imgElement.style.objectFit = 'cover';
+        imageContainer.appendChild(imgElement);
+    });
 
     editModal.dataset.currentCard = cardId;
 }
@@ -497,3 +577,4 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePlanButtons();
     updateModalUsage();
 });
+})

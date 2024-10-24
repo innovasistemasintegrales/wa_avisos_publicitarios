@@ -193,9 +193,6 @@ body{
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Aumentar la sombra en hover */
 }
 
-
-
-
 .login-modal-dialog {
     max-width: 405px; /* Ajusta según sea necesario */
     width: 100%; /* Permite que el modal ocupe el 100% de su contenedor */
@@ -253,6 +250,40 @@ body{
     
 }
 /* CSS para Cliente*/
+.image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+.image-preview-item {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+.image-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.card {
+    margin-top: 20px;
+}
+#postContainer {
+    margin-top: 20px;
+}
 .cancel-button {
     background-color: transparent;
     border: 2px solid var(--color2);

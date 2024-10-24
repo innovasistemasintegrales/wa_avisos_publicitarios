@@ -198,6 +198,8 @@
                                             <label for="edit_email" class="form-label">Correo Electrónico</label>
                                             <input type="email" class="form-control" id="edit_email">
                                         </div>
+                                        <input type="file" class="form-control text-center profile-image-upload" id="profileImageUpload"
+                        accept="image/*">
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -305,12 +307,10 @@
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="premiumPostImages" class="form-label">Agregar Imágenes (máx.
-                                                5)</label>
-                                            <input type="file" class="form-control input-field" id="premiumPostImages"
-                                                accept="image/*" multiple required>
-                                            <small class="form-text text-muted">Puedes seleccionar hasta 5
-                                                imágenes.</small>
+                                            <label for="premiumPostImages" class="form-label">Agregar Imágenes (máx. 5)</label>
+                                            <input type="file" class="form-control input-field" id="premiumPostImages" accept="image/*" multiple required>
+                                            <small class="form-text text-muted">Puedes seleccionar hasta 5 imágenes.</small>
+                                            <div id="imagePreview" class="image-preview"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="premiumPostDescription" class="form-label">Descripción</label>
