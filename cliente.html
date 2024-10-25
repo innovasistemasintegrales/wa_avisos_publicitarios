@@ -232,104 +232,107 @@
                         </div>
 
                         <!-- Modal para agregar una nueva publicación -->
-                        <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="addPostModalLabel">Nueva Publicación</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="postForm" class="post-form">
-                                            <div class="mb-3">
-                                                <label for="postTitle" class="form-label">Título</label>
-                                                <input type="text" class="form-control input-field" id="postTitle"
-                                                    placeholder="Escribe el título" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="postCategory" class="form-label">Categoría</label>
-                                                <select class="form-select input-field" id="postCategory" required>
-                                                    <option value="" disabled selected>Selecciona una categoría</option>
-                                                    <option value="vehiculos">Vehículos</option>
-                                                    <option value="inmuebles">Inmuebles</option>
-                                                    <option value="trabajo">Trabajo</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="postImage" class="form-label">Agregar Foto</label>
-                                                <input type="file" class="form-control input-field" id="postImage"
-                                                    accept="image/*" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="postDescription" class="form-label">Descripción</label>
-                                                <textarea class="form-control input-field" id="postDescription" rows="3"
-                                                    placeholder="Escribe una descripción" required></textarea>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary close-button"
-                                            data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-primary save-post-button"
-                                            data-bs-dismiss="modal" id="savePostButton">Guardar Publicación</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPostModalLabel">Nueva Publicación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="postForm" class="post-form">
+                    <div class="mb-3">
+                        <label for="postTitle" class="form-label">Título</label>
+                        <input type="text" class="form-control input-field" id="postTitle" placeholder="Escribe el título" required>
                     </div>
-
-                    <!-- Modal Premium para agregar una nueva publicación -->
-                    <div class="modal fade" id="addPremiumPostModal" tabindex="-1"
-                        aria-labelledby="addPremiumPostModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addPremiumPostModalLabel">Nueva Publicación Premium</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="premiumPostForm" class="premium-post-form">
-                                        <div class="mb-3">
-                                            <label for="premiumPostTitle" class="form-label">Título</label>
-                                            <input type="text" class="form-control input-field" id="premiumPostTitle"
-                                                placeholder="Escribe el título" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="premiumPostCategory" class="form-label">Categoría</label>
-                                            <select class="form-select input-field" id="premiumPostCategory" required>
-                                                <option value="" disabled selected>Selecciona una categoría</option>
-                                                <option value="vehiculos">Vehículos</option>
-                                                <option value="inmuebles">Inmuebles</option>
-                                                <option value="trabajo">Trabajo</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="premiumPostImages" class="form-label">Agregar Imágenes (máx. 5)</label>
-                                            <input type="file" class="form-control input-field" id="premiumPostImages" accept="image/*" multiple required>
-                                            <small class="form-text text-muted">Puedes seleccionar hasta 5 imágenes.</small>
-                                            <div id="imagePreview" class="image-preview"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="premiumPostDescription" class="form-label">Descripción</label>
-                                            <textarea class="form-control input-field" id="premiumPostDescription"
-                                                rows="3" placeholder="Escribe una descripción" required></textarea>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary close-button"
-                                        data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary save-premium-post-button"
-                                        data-bs-dismiss="modal" id="savePremiumPostButton">Guardar Publicación
-                                        Premium</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="postCategory" class="form-label">Categoría</label>
+                        <select class="form-select input-field" id="postCategory" required>
+                            <option value="" disabled selected>Selecciona una categoría</option>
+                            <option value="vehiculos">Vehículos</option>
+                            <option value="inmuebles">Inmuebles</option>
+                            <option value="trabajo">Trabajo</option>
+                        </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="postImage" class="form-label">Agregar Foto</label>
+                        <input type="file" class="form-control input-field" id="postImage" accept=".png, .jpg, .jpeg" required> 
+                        <small class="form-text text-muted">Solo se permiten archivos PNG o JPG.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postPrice" class="form-label">Precio</label>
+                        <input type="number" class="form-control input-field" id="postPrice" placeholder="Ingresa el precio" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postDescription" class="form-label">Descripción</label>
+                        <textarea class="form-control input-field" id="postDescription" rows="3" placeholder="Escribe una descripción" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary save-post-button" data-bs-dismiss="modal" id="savePostButton">Guardar Publicación</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Modal Premium para agregar una nueva publicación -->
+<div class="modal fade" id="addPremiumPostModal" tabindex="-1"
+    aria-labelledby="addPremiumPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPremiumPostModalLabel">Nueva Publicación Premium</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="premiumPostForm" class="premium-post-form">
+                    <div class="mb-3">
+                        <label for="premiumPostTitle" class="form-label">Título</label>
+                        <input type="text" class="form-control input-field" id="premiumPostTitle"
+                            placeholder="Escribe el título" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="premiumPostCategory" class="form-label">Categoría</label>
+                        <select class="form-select input-field" id="premiumPostCategory" required>
+                            <option value="" disabled selected>Selecciona una categoría</option>
+                            <option value="vehiculos">Vehículos</option>
+                            <option value="inmuebles">Inmuebles</option>
+                            <option value="trabajo">Trabajo</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="premiumPostImages" class="form-label">Agregar Imágenes (máx. 5)</label>
+                        <input type="file" class="form-control input-field" id="premiumPostImages" accept=".png, .jpg, .jpeg" multiple required> 
+                        <small class="form-text text-muted">Puedes seleccionar hasta 5 imágenes (PNG o JPG).</small>
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="premiumPostPrice" class="form-label">Precio</label>
+                        <input type="number" class="form-control input-field" id="premiumPostPrice"
+                            placeholder="Ingresa el precio" min="0">
+                    </div>
+                    <div class="mb-3">
+                        <label for="premiumPostDescription" class="form-label">Descripción</label>
+                        <textarea class="form-control input-field" id="premiumPostDescription"
+                            rows="3" placeholder="Escribe una descripción" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-button"
+                    data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary save-premium-post-button"
+                    data-bs-dismiss="modal" id="savePremiumPostButton">Guardar Publicación
+                    Premium</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
 
                     <!-- Tab Cambio de Plan -->
                     <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
@@ -402,29 +405,33 @@
                                     <!-- Elementos de la tarjeta con checkboxes -->
                                     <div class="custom-plan-features mt-3">
                                         <div class="form-check">
-                                            <input class="form-check-input custom-checkbox" type="checkbox" value=""
+                                            <input  class="form-check-input custom-checkbox" type="checkbox" value=""
                                                 id="checkTitle">
                                             <label class="form-check-label" for="checkTitle">Colocar un video por cada
                                                 aviso</label>
                                         </div>
+                                        <br>
                                         <div class="form-check">
                                             <input class="form-check-input custom-checkbox" type="checkbox" value=""
                                                 id="checkDescription">
                                             <label class="form-check-label" for="checkDescription">Colocar un máximo de
                                                 6 imágenes por Aviso</label>
                                         </div>
+                                        <br>
                                         <div class="form-check">
                                             <input class="form-check-input custom-checkbox" type="checkbox" value=""
                                                 id="checkImage">
                                             <label class="form-check-label" for="checkImage">Mayor tiempo de
                                                 Publicación</label>
                                         </div>
+                                        <br>
                                         <div class="form-check">
                                             <input class="form-check-input custom-checkbox" type="checkbox" value=""
                                                 id="checkContact">
                                             <label class="form-check-label" for="checkContact">Promoción en redes
                                                 Sociales</label>
                                         </div>
+                                        <br>
                                         <div class="form-check">
                                             <input class="form-check-input custom-checkbox" type="checkbox" value=""
                                                 id="checkDuration">
