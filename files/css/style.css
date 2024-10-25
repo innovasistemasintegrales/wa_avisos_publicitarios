@@ -17,6 +17,60 @@
     padding: 10px 0;
 }
 
+.catalog .modal-dialog {
+    display: flex;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.catalog .modal-content {
+    margin: auto;
+}
+
+/* Modal styles */
+.catalog .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.catalog .modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.catalog .modal-body {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.catalog .modal-body img {
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.catalog #productModalDescription {
+    flex: 1;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.catalog .modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
+.catalog .catalog .header-custom {
+    background-color: var(--background-color);
+}
+
 .catalog .header-custom {
     background-color: var(--background-color);
 }

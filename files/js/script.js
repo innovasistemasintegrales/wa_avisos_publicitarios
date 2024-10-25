@@ -16,13 +16,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalTitle = document.getElementById('productModalLabel');
     const modalImage = document.getElementById('productModalImage');
     const modalDescription = document.getElementById('productModalDescription');
+    const modalPrice = document.getElementById('productModalPrice'); // Elemento del precio del modal
 
     // Función para actualizar el modal con los datos de la tarjeta seleccionada
-    function updateModal(productName, productDescription, productImage) {
+    function updateModal(productName, productDescription, productImage, productPrice) {
         modalTitle.textContent = productName;
         modalDescription.textContent = productDescription;
         modalImage.src = productImage;
         modalImage.alt = productName;
+        modalPrice.textContent = productPrice; // Actualizar el precio en el modal
     }
 
     // Añadir evento a cada tarjeta para abrir el modal con la información correspondiente
@@ -31,9 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const productName = product.querySelector('.card-title').textContent;
             const productDescription = product.querySelector('.card-text').textContent;
             const productImage = product.querySelector('img').src;
+            const productPrice = product.querySelector('.card-price').textContent; // Obtener el precio dinámico
 
-            // Actualizar el modal con la información de la tarjeta seleccionada
-            updateModal(productName, productDescription, productImage);
+            // Actualizar el modal con la información de la tarjeta seleccionada, incluyendo el precio
+            updateModal(productName, productDescription, productImage, productPrice);
 
             // Mostrar el modal
             productModal.show();

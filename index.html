@@ -84,9 +84,10 @@
             <div id="VehicleContainer" class="row grid-view">
                 <!-- Vehículos Category -->
                 <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item vehículos">
-                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Camioneta Nissan" data-product-description="Auto semi nuevo, poco kilometraje" data-product-image="https://via.placeholder.com/150">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Camioneta Nissan" data-product-description="Auto semi nuevo, poco kilometraje" data-product-image="https://via.placeholder.com/150" data-product-price="S/.60,000">
                         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Camioneta Nissan">
                         <div class="card-body">
+                            <p class="card-price fw-bold text-success">S/.60,000</p>
                             <h5 class="card-title">Camioneta Nissan</h5>
                             <p class="card-text">Auto semi nuevo, poco kilometraje</p>
                             <div class="d-flex justify-content-between">
@@ -99,9 +100,10 @@
 
                 <!-- InnovaTrabajos Category -->
                 <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item innovatrabajos">
-                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Trabajo Innovador" data-product-description="Trabajo especializado en tecnología" data-product-image="https://via.placeholder.com/150">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Trabajo Innovador" data-product-description="Trabajo especializado en tecnología" data-product-image="https://via.placeholder.com/150" data-product-price="S/.30/hora">
                         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Trabajo Innovador">
                         <div class="card-body">
+                            <p class="card-price fw-bold text-success">S/.30</p>
                             <h5 class="card-title">Trabajo Innovador</h5>
                             <p class="card-text">Trabajo especializado en tecnología</p>
                             <div class="d-flex justify-content-between">
@@ -114,9 +116,10 @@
 
                 <!-- Inmueble Category -->
                 <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item inmueble">
-                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Casa en Venta" data-product-description="Hermosa casa familiar en buena ubicación" data-product-image="https://via.placeholder.com/150">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Casa en Venta" data-product-description="Hermosa casa familiar en buena ubicación" data-product-image="https://via.placeholder.com/150" data-product-price="S/.350,000">
                         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Casa en Venta">
                         <div class="card-body">
+                            <p class="card-price fw-bold text-success">S/.350,000</p>
                             <h5 class="card-title">Casa en Venta</h5>
                             <p class="card-text">Hermosa casa familiar en buena ubicación</p>
                             <div class="d-flex justify-content-between">
@@ -129,9 +132,10 @@
 
                 <!-- Oficios Category -->
                 <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item oficios">
-                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Electricista Profesional" data-product-description="Servicios eléctricos a domicilio" data-product-image="https://via.placeholder.com/150">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Electricista Profesional" data-product-description="Servicios eléctricos a domicilio" data-product-image="https://via.placeholder.com/150" data-product-price="S/.50/hora">
                         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Electricista Profesional">
                         <div class="card-body">
+                            <p class="card-price fw-bold text-success">S/.50</p>
                             <h5 class="card-title">Electricista Profesional</h5>
                             <p class="card-text">Servicios eléctricos a domicilio</p>
                             <div class="d-flex justify-content-between">
@@ -144,9 +148,10 @@
 
                 <!-- ETC Category -->
                 <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item etc">
-                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Producto Variado" data-product-description="Artículo especial en promoción" data-product-image="https://via.placeholder.com/150">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#productModal" data-product-name="Producto Variado" data-product-description="Artículo especial en promoción" data-product-image="https://via.placeholder.com/150" data-product-price="S/.15">
                         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Producto Variado">
                         <div class="card-body">
+                            <p class="card-price fw-bold text-success">S/.15</p>
                             <h5 class="card-title">Producto Variado</h5>
                             <p class="card-text">Artículo especial en promoción</p>
                             <div class="d-flex justify-content-between">
@@ -161,22 +166,26 @@
     </div>
 </div>
 
-<!-- Modal para mostrar el anuncio -->
-<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productModalLabel">Título del anuncio</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <img src="" alt="" id="productModalImage" class="img-fluid mb-3">
-                <p id="productModalDescription">"card-text"</p>
-            </div>
-            <div class="modal-footer">
-                <a href="#" id="modalWhatsApp" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                <a href="#" id="modalCall" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+<div class="catalog">
+    <!-- Modal para mostrar el anuncio -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="modal-title" id="productModalLabel">Título del anuncio</h5>
+                        <p id="productModalPrice" class="fw-bold text-success mb-0"></p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="" id="productModalImage" class="img-fluid mb-3">
+                    <p id="productModalDescription">Descripción</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" id="modalWhatsApp" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
+                    <a href="#" id="modalCall" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
+                </div>
             </div>
         </div>
     </div>
