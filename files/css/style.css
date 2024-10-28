@@ -193,7 +193,7 @@
     border-radius: var(--btn-radius);
     padding: 10px 20px;
     border: 1px solid var(--text-color);
-    background-color: transparent;
+    background-color: var(--hover-color);
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -229,9 +229,20 @@
     display: none;
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Asegura que el tamaño total incluya padding y borde */
+    margin: 15px; /* Espacio alrededor de la tarjeta */
+    padding: 15px; /* Espacio interno de la tarjeta */
+    border-radius: 8px; /* Añadir esquinas redondeadas si lo deseas */
+    background-color: white; /* Fondo blanco para la tarjeta */
 }
 
+/* Añadir sombreado al pasar el mouse */
+.catalog .product-item:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Asegúrate de que el producto esté visible al pasar el mouse */
 .catalog .product-item.show {
     display: block;
     opacity: 1;
@@ -242,11 +253,14 @@
 .catalog .grid-view .product-item {
     display: flex;
     flex-direction: column;
+    width: calc(100% - 30px); /* Ajustar el ancho para el margen */
 }
 
+/* Ajustes específicos de la tarjeta para evitar el recorte */
 .catalog .grid-view .card {
     width: 100%;
     height: auto;
+    overflow: hidden; /* Evitar que el contenido se desborde */
 }
 
 .catalog .grid-view img {
@@ -347,14 +361,9 @@
     width: 100%;
     border-radius: var(--btn-radius);
     border: 1px solid black;
-    background-color: transparent;
+    background-color: var(--hover-color);
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.catalog #filterButton:hover {
-    background-color: var(--hover-color);
-    color: white;
 }
 
 .catalog .btn-custom:hover {
@@ -363,7 +372,6 @@
     color: white;
 }
 
-/* Hacer las checkboxes más grandes y alinearlas correctamente */
 .product-checkbox {
-    transform: scale(1.5); /* Aumentar el tamaño de la casilla */
+    display: none;
 }

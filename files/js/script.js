@@ -178,3 +178,54 @@ document.addEventListener('DOMContentLoaded', function () {
     // Animar productos al cargar la página
     animateProducts();
 });
+
+
+// Función para mostrar checkboxes solo cuando se elige descargar
+function showCheckboxes() {
+    productCheckboxes.forEach(checkbox => {
+        checkbox.style.display = 'block';
+    });
+}
+
+// Función para ocultar checkboxes después de descargar anuncios
+function hideCheckboxes() {
+    productCheckboxes.forEach(checkbox => {
+        checkbox.style.display = 'none';
+        checkbox.checked = false; // Desmarcar todas las casillas
+    });
+}
+
+// Evento para mostrar checkboxes al pulsar descargar PDF y cerrar sidebar
+downloadPdfBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    showCheckboxes(); // Mostrar checkboxes
+    hideSidebar();    // Cerrar el sidebar al pulsar descargar PDF
+});
+
+// Evitar que el clic en la checkbox abra el modal
+productCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', function (e) {
+        e.stopPropagation(); // Evitar que el clic en la checkbox propague el evento a la tarjeta
+    });
+});
+
+// Evento para mostrar checkboxes al pulsar descargar Excel y cerrar sidebar
+downloadExcelBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    showCheckboxes(); // Mostrar checkboxes
+    hideSidebar();    // Cerrar el sidebar al pulsar descargar Excel
+});
+
+// Evento para ocultar checkboxes al finalizar la descarga
+downloadButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    hideCheckboxes();
+    alert('Anuncios descargados');
+});
+
+// Evitar que el clic en la checkbox abra el modal
+productCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', function (e) {
+        e.stopPropagation(); // Evitar que el clic en la checkbox propague el evento a la tarjeta
+    });
+});
