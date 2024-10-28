@@ -1,4 +1,5 @@
-function createCard(title, description, imageSrc, category, id) {
+// Función para crear una tarjeta de publicación
+function createCard(title, description, imageSrc, category, price, id) {
     const card = document.createElement('div');
     card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
     card.id = id || 'card-' + Date.now();
@@ -11,6 +12,7 @@ function createCard(title, description, imageSrc, category, id) {
         <div class="card-body p-2">
             <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
             <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
+            <p class="card-text" style="font-size: 0.9rem;"><b>Precio:</b> $${price}</p>
             <div class="description-wrapper">
                 <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
             </div>
@@ -39,7 +41,6 @@ function createCard(title, description, imageSrc, category, id) {
     return card;
 }
 
-
 // Función para truncar la descripción a un número máximo de líneas
 function truncateDescription(text, maxLines) {
     const words = text.split(' ');
@@ -58,18 +59,18 @@ function truncateDescription(text, maxLines) {
 
 // Listener para el botón 'savePostButton'
 document.getElementById('savePostButton').addEventListener('click', function () {
-    // Código para guardar la publicación en el modal gratuito
     const title = document.getElementById('postTitle').value;
     const description = document.getElementById('postDescription').value;
     const imageFile = document.getElementById('postImage').files[0];
     const category = document.getElementById('postCategory').value;
+    const price = document.getElementById('postPrice').value;
 
-    if (title && description && imageFile && category) {
+    if (title && description && imageFile && category && price) {
         const reader = new FileReader();
 
         reader.onload = function (e) {
             const postContainer = document.getElementById('postContainer');
-            const card = createCard(title, description, e.target.result, category, null, false); // Aquí se crea la tarjeta en modo gratuito
+            const card = createCard(title, description, e.target.result, category, price, null);
             postContainer.appendChild(card);
             updateNoPostsMessage();
             document.getElementById('postForm').reset();
@@ -92,7 +93,7 @@ function updateProfilePicture(imageSrc) {
     }
 }
 
-// Agregar modal de edición al DOM con campo de categoría
+// Agregar modal de edición al DOM con campo de categoría y precio
 document.body.insertAdjacentHTML('beforeend', `
     <div class="modal fade" id="editModal2" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -116,6 +117,10 @@ document.body.insertAdjacentHTML('beforeend', `
                             <input type="text" class="form-control" id="editCategory" required>
                         </div>
                         <div class="mb-3">
+                            <label for="editPrice" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="editPrice" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="editImage" class="form-label">Imagen actual</label>
                             <img id="currentImage" src="" alt="Imagen actual" class="img-fluid mb-2">
                             <input type="file" class="form-control" id="editImage" accept="image/*">
@@ -124,12 +129,26 @@ document.body.insertAdjacentHTML('beforeend', `
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="saveEditButton">Guardar cambios</button>
+                    <button type="button" class="btn btn-primary" id="saveEditButton">Guardar cambios</button>
                 </div>
             </div>
         </div>
     </div>
 `);
+
+// Función para llenar el modal de edición
+function fillEditModal(cardId) {
+    const card = document.getElementById(cardId);
+    const editModal = document.getElementById('editModal2');
+
+    document.getElementById('editTitle').value = card.querySelector('.card-title').textContent;
+    document.getElementById('editDescription').value = card.getAttribute('data-full-description');
+    document.getElementById('editCategory').value = card.querySelector('.card-text:nth-child(2)').textContent.replace('Categoría:', '').trim();
+    document.getElementById('editPrice').value = card.querySelector('.card-text:nth-child(3)').textContent.replace('Precio: $', '').trim();
+    document.getElementById('currentImage').src = card.querySelector('.card-img-top').src;
+
+    editModal.dataset.currentCard = cardId;
+}
 
 // Guardar cambios desde el modal de edición
 document.getElementById('saveEditButton').addEventListener('click', function () {
@@ -140,12 +159,15 @@ document.getElementById('saveEditButton').addEventListener('click', function () 
     const newTitle = document.getElementById('editTitle').value.trim();
     const newDescription = document.getElementById('editDescription').value.trim();
     const newCategory = document.getElementById('editCategory').value.trim();
+    const newPrice = document.getElementById('editPrice').value.trim();
     const newImageFile = document.getElementById('editImage').files[0];
 
-    if (newTitle && newDescription && newCategory) {
+    if (newTitle && newDescription && newCategory && newPrice) {
         card.querySelector('.card-title').textContent = newTitle;
-        card.querySelector('.card-text').innerHTML = `<b>Categoría:</b> ${newCategory}`;
+        card.querySelector('.card-text:nth-child(2)').innerHTML = `<b>Categoría:</b> ${newCategory}`;
+        card.querySelector('.card-text:nth-child(3)').innerHTML = `<b>Precio:</b> $${newPrice}`;
         card.querySelector('.description-container').textContent = truncateDescription(newDescription, 3);
+        card.setAttribute('data-full-description', newDescription);
 
         if (newImageFile) {
             const reader = new FileReader();
