@@ -250,6 +250,9 @@ body{
     
 }
 /* CSS para Cliente*/
+/* Contenedor de la imagen de perfil */
+
+
 .image-preview {
     display: flex;
     flex-wrap: wrap;

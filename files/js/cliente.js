@@ -215,19 +215,6 @@ function showConfirmationMessage(card) {
     }, 3000);
 }
 
-function fillEditModal(cardId) {
-    const card = document.getElementById(cardId);
-    const editModal = document.getElementById('editModal2');
-
-    document.getElementById('editTitle').value = card.querySelector('.card-title').textContent;
-    document.getElementById('editDescription').value = card.getAttribute('data-full-description'); // Obtener la descripción completa
-    document.getElementById('editCategory').value = card.querySelector('.card-text').textContent.replace('Categoría:', '').trim();
-    document.getElementById('currentImage').src = card.querySelector('.card-img-top').src;
-
-    editModal.dataset.currentCard = cardId;
-}
-
-
 // Función para actualizar el mensaje de "No hay publicaciones"
 function updateNoPostsMessage() {
     const postContainer = document.getElementById('postContainer');
@@ -263,7 +250,7 @@ function handleProfileImageUpload() {
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
     updateNoPostsMessage();
-    handleProfileImageUpload(); // Añadimos esta línea
+    handleProfileImageUpload();
 });
 
 // Variable para almacenar el plan actual
@@ -286,14 +273,16 @@ function updateModalUsage() {
             currentPlan === "Plus" ? '#addPremiumPostModal' : '#addPostModal');
     }
 }
+
 // Función para cambiar el plan
 function changePlan(newPlan) {
     currentPlan = newPlan;
     updatePlanButtons();
     updateModalUsage();
 }
+
 // Función modificada para crear una tarjeta de publicación
-function createCard(title, description, imageSrcs, category, id, isPremium = false) {
+function createCard(title, description, imageSrcs, category, price, id, isPremium = false) {
     const card = document.createElement('div');
     card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
     card.id = id || 'card-' + Date.now();
@@ -319,6 +308,7 @@ function createCard(title, description, imageSrcs, category, id, isPremium = fal
         <div class="card-body p-2">
             <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
             <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
+            <p class="card-text" style="font-size: 0.9rem;"><b>Precio:</b> S/${price}</p>
             <div class="description-wrapper">
                 <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
             </div>
@@ -342,6 +332,7 @@ function createCard(title, description, imageSrcs, category, id, isPremium = fal
         if (isPremium) {
             fillPremiumEditModal(card.id);
             const editModal = new bootstrap.Modal(document.getElementById('editPremiumModal'));
+            
             editModal.show();
         } else {
             fillEditModal(card.id);
@@ -353,7 +344,7 @@ function createCard(title, description, imageSrcs, category, id, isPremium = fal
     return card;
 }
 
-// Función para crear un carrusel de imágenes (sin cambios)
+// Función para crear un carrusel de imágenes
 function createImageCarousel(imageSrcs, cardId) {
     if (!Array.isArray(imageSrcs) || imageSrcs.length === 0) {
         return '<img src="/placeholder.svg" class="card-img-top" alt="Placeholder" style="height: 120px; object-fit: cover;">';
@@ -394,63 +385,6 @@ function createImageCarousel(imageSrcs, cardId) {
     `;
 }
 
-// Función para llenar el modal de edición (para tarjetas no premium)
-function fillEditModal(cardId) {
-    const card = document.getElementById(cardId);
-    const editModal = document.getElementById('editModal2');
-
-    document.getElementById('editTitle').value = card.querySelector('.card-title').textContent;
-    document.getElementById('editDescription').value = card.getAttribute('data-full-description');
-    document.getElementById('editCategory').value = card.querySelector('.card-text').textContent.replace('Categoría:', '').trim();
-    
-    const currentImageSrc = card.querySelector('.card-img-top').src;
-    const imagePreview = document.getElementById('editImagePreview');
-    if (imagePreview) {
-        imagePreview.src = currentImageSrc;
-        imagePreview.style.display = 'block';
-    }
-
-    editModal.dataset.currentCard = cardId;
-}
-
-// Listener para el botón 'saveEditButton' (para tarjetas no premium)
-document.getElementById('saveEditButton').addEventListener('click', function () {
-    const editModal = document.getElementById('editModal2');
-    const cardId = editModal.dataset.currentCard;
-    const card = document.getElementById(cardId);
-
-    const newTitle = document.getElementById('editTitle').value.trim();
-    const newDescription = document.getElementById('editDescription').value.trim();
-    const newCategory = document.getElementById('editCategory').value.trim();
-    const newImageFile = document.getElementById('editImage').files[0];
-
-    if (newTitle && newDescription && newCategory) {
-        card.querySelector('.card-title').textContent = newTitle;
-        card.querySelector('.card-text').innerHTML = `<b>Categoría:</b> ${newCategory}`;
-        card.querySelector('.description-container').textContent = truncateDescription(newDescription, 3);
-        card.setAttribute('data-full-description', newDescription);
-
-        if (newImageFile) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                card.querySelector('.card-img-top').src = e.target.result;
-            };
-            reader.readAsDataURL(newImageFile);
-        }
-
-        showConfirmationMessage(card);
-
-        const modalInstance = bootstrap.Modal.getInstance(editModal);
-        if (modalInstance) {
-            modalInstance.hide();
-        }
-    } else {
-        alert('Por favor, completa todos los campos.');
-    }
-});
-
-
-
 // Función para actualizar los botones de plan
 function updatePlanButtons() {
     const buttons = document.querySelectorAll('.plan-button');
@@ -467,15 +401,6 @@ function updatePlanButtons() {
         button.classList.toggle('btn-success', isCurrentPlan);
         button.classList.toggle('btn-secondary', !isCurrentPlan);
     });
-}
-
-// Función para actualizar el uso del modal basado en el plan actual
-function updateModalUsage() {
-    const addPostButton = document.querySelector('.add-post-button');
-    if (addPostButton) {
-        addPostButton.setAttribute('data-bs-target', 
-            currentPlan === "Plus" ? '#addPremiumPostModal' : '#addPostModal');
-    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -536,9 +461,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const title = document.getElementById('premiumPostTitle').value;
             const description = document.getElementById('premiumPostDescription').value;
             const category = document.getElementById('premiumPostCategory').value;
+            const price = document.getElementById('premiumPostPrice').value;
             const imageFiles = document.getElementById('premiumPostImages').files;
     
-            if (title && description && category && imageFiles.length > 0) {
+            if (title && description && category && price && imageFiles.length > 0) {
                 if (imageFiles.length > 5) {
                     alert('Por favor, selecciona un máximo de 5 imágenes.');
                     return;
@@ -555,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
                         if (loadedImages === imageFiles.length) {
                             const postContainer = document.getElementById('postContainer');
-                            const card = createCard(title, description, imageSrcs, category, null, true);
+                            const card = createCard(title, description, imageSrcs, category, price, null, true);
                             postContainer.appendChild(card);
                             updateNoPostsMessage();
                             document.getElementById('premiumPostForm').reset();
@@ -583,8 +509,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateModalUsage();
 });
 
-
-
 // Agregar el nuevo modal de edición premium al DOM
 document.body.insertAdjacentHTML('beforeend', `
     <div class="modal fade" id="editPremiumModal" tabindex="-1" aria-labelledby="editPremiumModalLabel" aria-hidden="true">
@@ -609,6 +533,10 @@ document.body.insertAdjacentHTML('beforeend', `
                             <input type="text" class="form-control" id="editPremiumCategory" required>
                         </div>
                         <div class="mb-3">
+                            <label for="editPremiumPrice" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="editPremiumPrice" required>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Imágenes (máximo 5)</label>
                             <div id="editPremiumImageContainer" class="d-flex flex-wrap gap-2 mb-2"></div>
                             <input type="file" class="form-control" id="editPremiumImageUpload" accept="image/*" multiple>
@@ -631,9 +559,8 @@ function fillPremiumEditModal(cardId) {
 
     document.getElementById('editPremiumTitle').value = card.querySelector('.card-title').textContent;
     document.getElementById('editPremiumDescription').value = card.getAttribute('data-full-description');
-    document.getElementById('editPremiumCategory').value = card.querySelector('.card-text').textContent.replace('Categoría:', '').trim();
-    
-    
+    document.getElementById('editPremiumCategory').value = card.querySelector('.card-text:nth-child(2)').textContent.replace('Categoría:', '').trim();
+    document.getElementById('editPremiumPrice').value = card.querySelector('.card-text:nth-child(3)').textContent.replace('Precio: S/', '').trim();
     
     const imageContainer = document.getElementById('editPremiumImageContainer');
     imageContainer.innerHTML = '';
@@ -700,11 +627,13 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
     const newTitle = document.getElementById('editPremiumTitle').value.trim();
     const newDescription = document.getElementById('editPremiumDescription').value.trim();
     const newCategory = document.getElementById('editPremiumCategory').value.trim();
+    const newPrice = document.getElementById('editPremiumPrice').value.trim();
     const newImages = Array.from(document.getElementById('editPremiumImageContainer').children).map(wrapper => wrapper.querySelector('img').src);
 
-    if (newTitle && newDescription && newCategory && newImages.length > 0) {
+    if (newTitle && newDescription && newCategory && newPrice && newImages.length > 0) {
         card.querySelector('.card-title').textContent = newTitle;
-        card.querySelector('.card-text').innerHTML = `<b>Categoría:</b> ${newCategory}`;
+        card.querySelector('.card-text:nth-child(2)').innerHTML = `<b>Categoría:</b> ${newCategory}`;
+        card.querySelector('.card-text:nth-child(3)').innerHTML = `<b>Precio:</b> $${newPrice}`;
         card.querySelector('.description-container').textContent = truncateDescription(newDescription, 3);
         card.setAttribute('data-full-description', newDescription);
         card.setAttribute('data-images', JSON.stringify(newImages));
@@ -740,7 +669,9 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
         } else if (newImages.length > 1) {
             const newBadge = document.createElement('span');
             newBadge.className = 'badge bg-info text-dark position-absolute top-0 start-0 m-2';
-            newBadge.textContent = `${newImages.length} imágenes`;
+            newBadge.textContent = `${new
+
+Images.length} imágenes`;
             card.querySelector('.card').prepend(newBadge);
         }
 
@@ -753,4 +684,105 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
     } else {
         alert('Por favor, completa todos los campos y asegúrate de tener al menos una imagen.');
     }
+});
+//Editar Datos de Perfil
+document.addEventListener('DOMContentLoaded', () => {
+    // Obtener los elementos de los campos de edición y los campos principales
+    const editFormFields = {
+        first_name: document.getElementById('edit_first_name'),
+        last_name: document.getElementById('edit_last_name'),
+        dni: document.getElementById('edit_dni'),
+        birth_date: document.getElementById('edit_birth_date'),
+        occupation: document.getElementById('edit_occupation'),
+        education: document.getElementById('edit_education'),
+        phone: document.getElementById('edit_phone'),
+        email: document.getElementById('edit_email')
+    };
+
+    const mainFormFields = {
+        first_name: document.getElementById('first_name'),
+        last_name: document.getElementById('last_name'),
+        dni: document.getElementById('dni'),
+        birth_date: document.getElementById('birth_date'),
+        occupation: document.getElementById('occupation'),
+        education: document.getElementById('education'),
+        phone: document.getElementById('phone'),
+        email: document.getElementById('email')
+    };
+
+    // Cargar los datos actuales del formulario principal en el formulario de edición al abrir el modal
+    document.getElementById('editModal').addEventListener('show.bs.modal', () => {
+        for (const field in editFormFields) {
+            editFormFields[field].value = mainFormFields[field].value;
+        }
+    });
+
+    // Guardar cambios y actualizar los campos en el formulario principal
+    document.getElementById('saveChangesButton').addEventListener('click', () => {
+        for (const field in editFormFields) {
+            mainFormFields[field].value = editFormFields[field].value;
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const profileImageUpload = document.getElementById('profileImageUpload');
+    const profileImagePreview = document.getElementById('profileImagePreview');
+
+    profileImageUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                profileImagePreview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const modalImageUpload = document.getElementById('modalProfileImageUpload');
+    const profileImagePreview = document.getElementById('profileImagePreview');
+
+    // Manejar el cambio de imagen en el modal
+    modalImageUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                profileImagePreview.src = e.target.result; // Actualiza la imagen de perfil
+            };
+
+            reader.readAsDataURL(file); // Lee el archivo como URL de datos
+        }
+    });
+
+    // Opcional: si quieres guardar los cambios al cerrar el modal
+    document.getElementById('saveChangesButton').addEventListener('click', () => {
+        // Aquí puedes agregar más lógica si necesitas guardar otros cambios.
+        // El evento de cambio de imagen ya actualiza el preview.
+    });
+});
+
+//Escoge tus Beneficios
+// Seleccionar todos los checkboxes
+const checkboxes = document.querySelectorAll('.custom-checkbox');
+const totalPriceElement = document.getElementById('total-price');
+
+// Función para actualizar el precio
+function updatePrice() {
+  let total = 0;
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      total += parseFloat(checkbox.value);
+    }
+  });
+  totalPriceElement.textContent = `S/${total}`;
+}
+
+// Añadir evento a cada checkbox para actualizar el precio cuando se selecciona o deselecciona
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener('change', updatePrice);
 });
