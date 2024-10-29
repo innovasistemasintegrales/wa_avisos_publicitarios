@@ -67,10 +67,6 @@
     padding-top: 1rem;
 }
 
-.catalog .catalog .header-custom {
-    background-color: var(--background-color);
-}
-
 .catalog .header-custom {
     background-color: var(--background-color);
 }
@@ -128,45 +124,23 @@
     white-space: nowrap;
 }
 
-/* Mantener la misma lógica para las categorías activas */
-.catalog #sidebar ul li a.active {
-    background-color: var(--hover-color);
-    color: white; /* Texto blanco al estar activo */
-    border: none;
-}
-
-.catalog #sidebar ul li a.active i {
-    color: white; /* Ícono blanco al estar activo */
-}
-
-/* Excluir enlaces de descargas (con la clase no-highlight) del estilo activo */
-.catalog #sidebar ul li a.no-highlight {
-    background-color: transparent;
-    color: var(--text-color);
-}
-
-.catalog #sidebar ul li a.no-highlight i {
-    color: var(--text-color);
-}
-
-/* Hover del botón de categoría */
+/* Categorías activas */
+.catalog #sidebar ul li a.active,
 .catalog #sidebar ul li a:hover {
     background-color: var(--hover-color);
     color: white;
     border: none;
 }
 
+.catalog #sidebar ul li a.active i,
 .catalog #sidebar ul li a:hover i {
     color: white;
 }
 
-/* No aplicar hover a los enlaces de descargas */
+/* Excluir enlaces de descargas del estilo activo */
+.catalog #sidebar ul li a.no-highlight,
 .catalog #sidebar ul li a.no-highlight:hover {
     background-color: transparent;
-    color: var(--text-color);
-}
-
-.catalog #sidebar ul li a.no-highlight:hover i {
     color: var(--text-color);
 }
 
@@ -186,7 +160,7 @@
     color: white;
 }
 
-/* Botones principales como "Buscar", "Filtrar" y "Publicar" */
+/* Botones principales */
 .catalog #filterButton,
 .catalog .btn-custom,
 #searchButton {
@@ -229,38 +203,36 @@
     display: none;
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
-    box-sizing: border-box; /* Asegura que el tamaño total incluya padding y borde */
-    margin: 15px; /* Espacio alrededor de la tarjeta */
-    padding: 15px; /* Espacio interno de la tarjeta */
-    border-radius: 8px; /* Añadir esquinas redondeadas si lo deseas */
-    background-color: white; /* Fondo blanco para la tarjeta */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    box-sizing: border-box;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: white;
 }
 
-/* Añadir sombreado al pasar el mouse */
-.catalog .product-item:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Asegúrate de que el producto esté visible al pasar el mouse */
 .catalog .product-item.show {
     display: block;
     opacity: 1;
     transform: translateY(0);
 }
 
+.catalog .product-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 /* Grid view styling */
 .catalog .grid-view .product-item {
     display: flex;
     flex-direction: column;
-    width: calc(100% - 30px); /* Ajustar el ancho para el margen */
+    width: calc(100% - 30px);
 }
 
-/* Ajustes específicos de la tarjeta para evitar el recorte */
 .catalog .grid-view .card {
     width: 100%;
     height: auto;
-    overflow: hidden; /* Evitar que el contenido se desborde */
+    overflow: hidden;
 }
 
 .catalog .grid-view img {
@@ -347,7 +319,7 @@
     opacity: 1;
 }
 
-/* Hide class for utility */
+/* Utility classes */
 .catalog .hide {
     display: none !important;
 }
@@ -356,7 +328,6 @@
     display: block !important;
 }
 
-/* Additional CSS for extra effects */
 .catalog #filterButton {
     width: 100%;
     border-radius: var(--btn-radius);
@@ -372,6 +343,48 @@
     color: white;
 }
 
+/* Hide product checkboxes by default */
 .product-checkbox {
     display: none;
+}
+
+/* Styling for product checkboxes when they are shown */
+.product-checkbox {
+    appearance: none; /* Remove default checkbox style */
+    width: 20px;
+    height: 20px;
+    background-color: var(--background-color);
+    border: 2px solid var(--text-color);
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.product-checkbox:checked {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+}
+
+.product-checkbox:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-checkbox:checked:after {
+    opacity: 1;
+}
+
+.product-checkbox:hover {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
 }
