@@ -250,8 +250,28 @@ body{
     
 }
 /* CSS para Cliente*/
-/* Contenedor de la imagen de perfil */
-
+.contenedor-imagen {
+    width: 200px; /* Establece el ancho del elemento a 200 píxeles. */
+    height: 200px; /* Establece el alto del elemento a 200 píxeles. */
+    border-radius: 50%; /* Crea bordes redondeados en el elemento, un 50% crea un círculo perfecto. */
+    overflow: hidden; /* Oculta cualquier contenido que se extienda más allá de los bordes del elemento. */
+    margin: 20px; /* Agrega un margen de 20 píxeles alrededor del elemento. */
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5); /* Agrega una sombra al elemento con un desplazamiento de 0 píxeles en horizontal y vertical, un radio de 6 píxeles y un color negro semi-transparente. */
+    cursor: pointer; /* Cambia el cursor del ratón a un puntero cuando el usuario pasa el ratón sobre el elemento. */
+    transition: 400ms; /* Define una transición para las propiedades que cambien, en este caso, la duración de la transición es de 400 milisegundos. */
+  }
+  
+  .contenedor-imagen > img {
+    width: 100%; /* Ajusta el ancho de la imagen al 100% del ancho del contenedor. */
+    height: 100%; /* Ajusta el alto de la imagen al 100% del alto del contenedor. */
+    object-fit: cover; /* Ajusta la imagen para cubrir todo el área del contenedor, manteniendo su proporción. */
+  }
+  
+  /* Esto es opcional */
+  .contenedor-imagen:hover {
+    transform: scale(1.1); /* Amplía el elemento a un 110% de su tamaño original cuando el usuario pasa el ratón sobre él. */
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5); /* Cambia la sombra del elemento cuando el usuario pasa el ratón sobre él, aumentando el radio a 12 píxeles. */
+  }
 
 .image-preview {
     display: flex;

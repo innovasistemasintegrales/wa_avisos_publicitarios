@@ -12,7 +12,7 @@ function createCard(title, description, imageSrc, category, price, id) {
         <div class="card-body p-2">
             <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
             <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
-            <p class="card-text" style="font-size: 0.9rem;"><b>Precio:</b> $${price}</p>
+            <p class="card-text" style="font-size: 0.9rem;"><b>Precio:</b> S/${price}</p>
             <div class="description-wrapper">
                 <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
             </div>
@@ -144,7 +144,7 @@ function fillEditModal(cardId) {
     document.getElementById('editTitle').value = card.querySelector('.card-title').textContent;
     document.getElementById('editDescription').value = card.getAttribute('data-full-description');
     document.getElementById('editCategory').value = card.querySelector('.card-text:nth-child(2)').textContent.replace('Categoría:', '').trim();
-    document.getElementById('editPrice').value = card.querySelector('.card-text:nth-child(3)').textContent.replace('Precio: $', '').trim();
+    document.getElementById('editPrice').value = card.querySelector('.card-text:nth-child(3)').textContent.replace('Precio: S/', '').trim();
     document.getElementById('currentImage').src = card.querySelector('.card-img-top').src;
 
     editModal.dataset.currentCard = cardId;
@@ -165,7 +165,7 @@ document.getElementById('saveEditButton').addEventListener('click', function () 
     if (newTitle && newDescription && newCategory && newPrice) {
         card.querySelector('.card-title').textContent = newTitle;
         card.querySelector('.card-text:nth-child(2)').innerHTML = `<b>Categoría:</b> ${newCategory}`;
-        card.querySelector('.card-text:nth-child(3)').innerHTML = `<b>Precio:</b> $${newPrice}`;
+        card.querySelector('.card-text:nth-child(3)').innerHTML = `<b>Precio:</b> S/${newPrice}`;
         card.querySelector('.description-container').textContent = truncateDescription(newDescription, 3);
         card.setAttribute('data-full-description', newDescription);
 
@@ -255,6 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Variable para almacenar el plan actual
 let currentPlan = "Gratis";
+let beneficiosSeleccionados = [];
 
 // Agregar event listeners a los botones de plan
 document.querySelectorAll('.plan-button').forEach(button => {
@@ -633,7 +634,7 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
     if (newTitle && newDescription && newCategory && newPrice && newImages.length > 0) {
         card.querySelector('.card-title').textContent = newTitle;
         card.querySelector('.card-text:nth-child(2)').innerHTML = `<b>Categoría:</b> ${newCategory}`;
-        card.querySelector('.card-text:nth-child(3)').innerHTML = `<b>Precio:</b> $${newPrice}`;
+        card.querySelector('.card-text:nth-child(3)').innerHTML = `<b>Precio:</b> S/${newPrice}`;
         card.querySelector('.description-container').textContent = truncateDescription(newDescription, 3);
         card.setAttribute('data-full-description', newDescription);
         card.setAttribute('data-images', JSON.stringify(newImages));
@@ -685,7 +686,8 @@ Images.length} imágenes`;
         alert('Por favor, completa todos los campos y asegúrate de tener al menos una imagen.');
     }
 });
-//Editar Datos de Perfil
+
+// Editar Datos de Perfil
 document.addEventListener('DOMContentLoaded', () => {
     // Obtener los elementos de los campos de edición y los campos principales
     const editFormFields = {
@@ -722,30 +724,28 @@ document.addEventListener('DOMContentLoaded', () => {
         for (const field in editFormFields) {
             mainFormFields[field].value = editFormFields[field].value;
         }
-    });
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const profileImageUpload = document.getElementById('profileImageUpload');
-    const profileImagePreview = document.getElementById('profileImagePreview');
 
-    profileImageUpload.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
+        // Manejar la imagen de perfil
+        const profileImageUpload = document.getElementById('profileImageUpload');
+        const profileImagePreview = document.getElementById('profileImagePreview'); // Asegúrate de que este ID sea correcto
+        const imageFiles = profileImageUpload.files;
+
+        if (imageFiles.length > 0) {
             const reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
+                // Actualiza la imagen de perfil en el modal
                 profileImagePreview.src = e.target.result;
+                // Actualiza la imagen de perfil del usuario (asumiendo que tienes una función updateProfilePicture)
+                updateProfilePicture(e.target.result);
             };
 
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(imageFiles[0]);
         }
     });
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const modalImageUpload = document.getElementById('modalProfileImageUpload');
-    const profileImagePreview = document.getElementById('profileImagePreview');
 
     // Manejar el cambio de imagen en el modal
+    const modalImageUpload = document.getElementById('profileImageUpload'); // Asegúrate de que este ID sea correcto
     modalImageUpload.addEventListener('change', function() {
         const file = this.files[0];
         if (file) {
@@ -758,31 +758,304 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.readAsDataURL(file); // Lee el archivo como URL de datos
         }
     });
-
-    // Opcional: si quieres guardar los cambios al cerrar el modal
-    document.getElementById('saveChangesButton').addEventListener('click', () => {
-        // Aquí puedes agregar más lógica si necesitas guardar otros cambios.
-        // El evento de cambio de imagen ya actualiza el preview.
-    });
 });
 
 //Escoge tus Beneficios
-// Seleccionar todos los checkboxes
-const checkboxes = document.querySelectorAll('.custom-checkbox');
-const totalPriceElement = document.getElementById('total-price');
+// Definición de los beneficios disponibles
+const beneficios = [
+    { id: 'checkTitle', label: 'Colocar un video por cada aviso', precio: 10 },
+    { id: 'checkDescription', label: 'Colocar un máximo de 5 imágenes por Aviso', precio: 5 },
+    { id: 'checkImage', label: 'Mayor tiempo de Publicación', precio: 8 },
+    { id: 'checkWhatsapp', label: 'Acceso Directo a Whatsapp', precio: 8 },
+    { id: 'checkDuration', label: 'Búsquedas Avanzadas', precio: 6 }
+  ];
+  // Función para crear el modal de beneficios
+function crearModalBeneficios() {
+    const modal = document.createElement('div');
+    modal.className = 'modal fade';
+    modal.id = 'beneficiosModal';
+    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('aria-labelledby', 'beneficiosModalLabel');
+    modal.setAttribute('aria-hidden', 'true');
 
-// Función para actualizar el precio
-function updatePrice() {
-  let total = 0;
-  checkboxes.forEach((checkbox) => {
-    if (checkbox.checked) {
-      total += parseFloat(checkbox.value);
-    }
-  });
-  totalPriceElement.textContent = `S/${total}`;
+    modal.innerHTML = `
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="beneficiosModalLabel">Beneficios Escogidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Estos son los beneficios que has seleccionado para tu plan personalizado:</p>
+                    <div id="beneficiosSeleccionados"></div>
+                    <div class="mt-3">
+                        <strong>Precio Total: </strong><span id="precioTotalModal" class="text-success fs-4">S/0</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarBeneficios" data-bs-dismiss="modal" >Confirmar Selección</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
 }
 
-// Añadir evento a cada checkbox para actualizar el precio cuando se selecciona o deselecciona
-checkboxes.forEach((checkbox) => {
-  checkbox.addEventListener('change', updatePrice);
+  function createCard(title, description, imageSrcs, category, price, id, beneficiosAplicados = []) {
+    const card = document.createElement('div');
+    card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
+    card.id = id || 'card-' + Date.now();
+    card.setAttribute('data-full-description', description);
+    card.setAttribute('data-images', JSON.stringify(imageSrcs));
+
+    const isPremium = beneficiosAplicados.length > 0;
+    const premiumBadge = isPremium ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Premium</span>' : '';
+    const imageCount = Array.isArray(imageSrcs) ? imageSrcs.length : 1;
+    const imageBadge = imageCount > 1 ? `<span class="badge bg-info text-dark position-absolute top-0 start-0 m-2">${imageCount} imágenes</span>` : '';
+    const videoBadge = beneficiosAplicados.includes('checkTitle') ? '<span class="badge bg-primary text-white position-absolute top-0 start-0 m-2">Video</span>' : '';
+
+    let imageContent;
+    if (isPremium && imageCount > 1) {
+        imageContent = createImageCarousel(imageSrcs, card.id);
+    } else {
+        imageContent = `<img src="${Array.isArray(imageSrcs) ? imageSrcs[0] : imageSrcs}" class="card-img-top" alt="${title}" style="height: 120px; object-fit: cover;">`;
+    }
+
+    const whatsappButton = beneficiosAplicados.includes('checkWhatsapp') ? 
+        `<a href="https://wa.me/1234567890" class="btn btn-success btn-sm mt-2" target="_blank">Contactar por WhatsApp</a>` : '';
+
+    card.innerHTML = `
+    <div class="card h-100" style="width: 100%;">
+        ${premiumBadge}
+        ${imageBadge}
+        ${videoBadge}
+        ${imageContent}
+        <div class="card-body p-2">
+            <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
+            <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
+            <p class="card-text" style="font-size: 0.9rem;"><b>Precio:</b> S/${price}</p>
+            <div class="description-wrapper">
+                <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
+            </div>
+            ${whatsappButton}
+            <br>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-danger delete-button">Eliminar</button>
+                <button class="btn btn-sm btn-outline-primary edit-button">Editar</button>
+            </div>
+        </div>
+    </div>
+    `;
+
+    card.querySelector('.delete-button').addEventListener('click', function () {
+        if (confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
+            card.remove();
+            updateNoPostsMessage();
+        }
+    });
+
+    card.querySelector('.edit-button').addEventListener('click', function () {
+        if (isPremium) {
+            fillPremiumEditModal(card.id, beneficiosAplicados);
+            const editModal = new bootstrap.Modal(document.getElementById('editPremiumModal'));
+            editModal.show();
+        } else {
+            fillEditModal(card.id);
+            const editModal = new bootstrap.Modal(document.getElementById('editModal2'));
+            editModal.show();
+        }
+    });
+
+    return card;
+}
+// Función para actualizar el botón "Añadir Publicación"
+function actualizarBotonAnadirPublicacion() {
+    const addPostButton = document.querySelector('.add-post-button');
+    if (addPostButton) {
+        if (beneficiosSeleccionados.length > 0) {
+            addPostButton.textContent = 'Añadir Publicación con Beneficios';
+            addPostButton.setAttribute('data-bs-target', '#addCustomPostModal');
+        } else {
+            addPostButton.textContent = 'Añadir Publicación';
+            addPostButton.setAttribute('data-bs-target', '#addPostModal');
+        }
+    }
+}
+// Crear un nuevo modal para publicaciones con beneficios personalizados
+function crearModalPublicacionPersonalizada() {
+    const modal = document.createElement('div');
+    modal.className = 'modal fade';
+    modal.id = 'addCustomPostModal';
+    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('aria-labelledby', 'addCustomPostModalLabel');
+    modal.setAttribute('aria-hidden', 'true');
+
+    modal.innerHTML = `
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCustomPostModalLabel">Nueva Publicación con Beneficios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="customPostForm">
+                        <div class="mb-3">
+                            <label for="customPostTitle" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="customPostTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customPostDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="customPostDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customPostCategory" class="form-label">Categoría</label>
+                            <select class="form-select" id="customPostCategory" required>
+                                <option value="" disabled selected>Selecciona una categoría</option>
+                                <option value="vehiculos">Vehículos</option>
+                                <option value="inmuebles">Inmuebles</option>
+                                <option value="trabajo">Trabajo</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customPostPrice" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="customPostPrice" required>
+                        </div>
+                        <div id="customBenefitsContainer"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="saveCustomPostButton">Guardar Publicación</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}
+
+// Función para actualizar el contenido del modal de publicación personalizada
+function actualizarModalPublicacionPersonalizada() {
+    const benefitsContainer = document.getElementById('customBenefitsContainer');
+    benefitsContainer.innerHTML = '';
+
+    beneficiosSeleccionados.forEach(beneficioId => {
+        const beneficio = beneficios.find(b => b.id === beneficioId);
+        if (beneficio) {
+            if (beneficio.id === 'checkDescription') {
+                benefitsContainer.innerHTML += `
+                    <div class="mb-3">
+                        <label for="customPostImages" class="form-label">Imágenes (máximo 5)</label>
+                        <input type="file" class="form-control" id="customPostImages" accept="image/*" multiple>
+                    </div>
+                `;
+            } else if (beneficio.id === 'checkTitle') {
+                benefitsContainer.innerHTML += `
+                    <div class="mb-3">
+                        <label for="customPostVideo" class="form-label">Video</label>
+                        <input type="file" class="form-control" id="customPostVideo" accept="video/*">
+                    </div>
+                `;
+            }
+        }
+    });
+}
+
+  // Función para actualizar el modal con los beneficios seleccionados
+function actualizarModalBeneficios() {
+    const beneficiosSeleccionados = document.querySelectorAll('.custom-checkbox:checked');
+    const contenedorBeneficios = document.getElementById('beneficiosSeleccionados');
+    const precioTotalModal = document.getElementById('precioTotalModal');
+    
+    contenedorBeneficios.innerHTML = '';
+    let precioTotal = 0;
+
+    beneficiosSeleccionados.forEach(checkbox => {
+        const beneficio = beneficios.find(b => b.id === checkbox.id);
+        if (beneficio) {
+            const beneficioElement = document.createElement('div');
+            beneficioElement.className = 'form-check';
+            beneficioElement.innerHTML = `
+                <input class="form-check-input" type="checkbox" value="${beneficio.precio}" id="modal${beneficio.id}" checked>
+                <label class="form-check-label" for="modal${beneficio.id}">${beneficio.label}</label>
+            `;
+            contenedorBeneficios.appendChild(beneficioElement);
+            precioTotal += beneficio.precio;
+
+            beneficioElement.querySelector('input').addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    precioTotal += beneficio.precio;
+                } else {
+                    precioTotal -= beneficio.precio;
+                }
+                precioTotalModal.textContent = `S/${precioTotal}`;
+                
+                document.getElementById(beneficio.id).checked = e.target.checked;
+                actualizarPrecioTotal();
+            });
+        }
+    });
+
+    precioTotalModal.textContent = `S/${precioTotal}`;
+}
+
+// Función para actualizar el precio total en la tarjeta principal
+function actualizarPrecioTotal() {
+    const checkboxes = document.querySelectorAll('.custom-checkbox');
+    let total = 0;
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            total += parseFloat(checkbox.value);
+        }
+    });
+    document.getElementById('total-price').textContent = `S/${total}`;
+}
+
+  
+  // Función para actualizar el precio total en la tarjeta principal
+  function actualizarPrecioTotal() {
+    const checkboxes = document.querySelectorAll('.custom-checkbox');
+    let total = 0;
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        total += parseFloat(checkbox.value);
+      }
+    });
+    document.getElementById('total-price').textContent = `S/${total}`;
+  }
+  
+  // Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    crearModalBeneficios();
+    crearModalPublicacionPersonalizada();
+    actualizarBotonAnadirPublicacion();
+
+    const botonEscogidos = document.querySelector('.custom-plan-button');
+    botonEscogidos.setAttribute('data-bs-toggle', 'modal');
+    botonEscogidos.setAttribute('data-bs-target', '#beneficiosModal');
+    botonEscogidos.addEventListener('click', actualizarModalBeneficios);
+
+    document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            actualizarPrecioTotal();
+            actualizarModalBeneficios();
+        });
+    });
+
+    document.getElementById('confirmarBeneficios').addEventListener('click', () => {
+        beneficiosSeleccionados = Array.from(document.querySelectorAll('.custom-checkbox:checked')).map(cb => cb.id);
+        actualizarBotonAnadirPublicacion();
+        const modal = bootstrap.Modal.getInstance(document.getElementById('beneficiosModal'));
+        modal.hide();
+    });
+
+    document.querySelector('.add-post-button').addEventListener('click', () => {
+        if (beneficiosSeleccionados.length > 0) {
+            actualizarModalPublicacionPersonalizada();
+        }
+    });
+
+    actualizarPrecioTotal();
 });
