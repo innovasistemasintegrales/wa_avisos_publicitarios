@@ -1,14 +1,46 @@
+// Variables globales
+let beneficiosSeleccionados = [];
+let currentPlan = "Gratis";
+
+// Definición de los beneficios disponibles
+const beneficios = [
+    { id: 'checkTitle', label: 'Colocar un video por cada aviso', precio: 10 },
+    { id: 'checkDescription', label: 'Colocar un máximo de 5 imágenes por Aviso', precio: 5 },
+    { id: 'checkImage', label: 'Mayor tiempo de Publicación', precio: 8 },
+    { id: 'checkWhatsapp', label: 'Acceso Directo a Whatsapp', precio: 8 },
+    { id: 'checkDuration', label: 'Búsquedas Avanzadas', precio: 6 }
+];
+
 // Función para crear una tarjeta de publicación
-function createCard(title, description, imageSrc, category, price, id) {
+function createCard(title, description, imageSrcs, category, price, id, beneficiosAplicados = []) {
     const card = document.createElement('div');
     card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
     card.id = id || 'card-' + Date.now();
-    // Almacenar la descripción completa
     card.setAttribute('data-full-description', description);
+    card.setAttribute('data-images', JSON.stringify(imageSrcs));
+
+    const isPremium = beneficiosAplicados.length > 0 || currentPlan === "Plus";
+    const premiumBadge = isPremium ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Premium</span>' : '';
+    const imageCount = Array.isArray(imageSrcs) ? imageSrcs.length : 1;
+    const imageBadge = imageCount > 1 ? `<span class="badge bg-info text-dark position-absolute top-0 start-0 m-2">${imageCount} imágenes</span>` : '';
+    const videoBadge = beneficiosAplicados.includes('checkTitle') ? '<span class="badge bg-primary text-white position-absolute top-0 start-0 m-2">Video</span>' : '';
+
+    let imageContent;
+    if (isPremium && imageCount > 1) {
+        imageContent = createImageCarousel(imageSrcs, card.id);
+    } else {
+        imageContent = `<img src="${Array.isArray(imageSrcs) ? imageSrcs[0] : imageSrcs}" class="card-img-top" alt="${title}" style="height: 120px; object-fit: cover;">`;
+    }
+
+    const whatsappButton = beneficiosAplicados.includes('checkWhatsapp') ? 
+        `<a href="https://wa.me/1234567890" class="btn btn-success btn-sm mt-2" target="_blank">Contactar por WhatsApp</a>` : '';
 
     card.innerHTML = `
     <div class="card h-100" style="width: 100%;">
-        <img src="${imageSrc}" class="card-img-top" alt="${title}" style="height: 120px; object-fit: cover;">
+        ${premiumBadge}
+        ${imageBadge}
+        ${videoBadge}
+        ${imageContent}
         <div class="card-body p-2">
             <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
             <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
@@ -16,16 +48,16 @@ function createCard(title, description, imageSrc, category, price, id) {
             <div class="description-wrapper">
                 <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
             </div>
+            ${whatsappButton}
             <br>
             <div class="d-flex justify-content-between">
                 <button class="btn btn-sm btn-outline-danger delete-button">Eliminar</button>
-                <button class="btn btn-sm btn-outline-primary edit-button" data-bs-toggle="modal" data-bs-target="#editModal2">Editar</button>
+                <button class="btn btn-sm btn-outline-primary edit-button">Editar</button>
             </div>
         </div>
     </div>
     `;
 
-    // Evento para eliminar la tarjeta
     card.querySelector('.delete-button').addEventListener('click', function () {
         if (confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
             card.remove();
@@ -33,15 +65,22 @@ function createCard(title, description, imageSrc, category, price, id) {
         }
     });
 
-    // Evento para editar la tarjeta
     card.querySelector('.edit-button').addEventListener('click', function () {
-        fillEditModal(card.id);
+        if (isPremium) {
+            fillPremiumEditModal(card.id, beneficiosAplicados);
+            const editModal = new bootstrap.Modal(document.getElementById('editPremiumModal'));
+            editModal.show();
+        } else {
+            fillEditModal(card.id);
+            const editModal = new bootstrap.Modal(document.getElementById('editModal2'));
+            editModal.show();
+        }
     });
 
     return card;
 }
 
-// Función para truncar la descripción a un número máximo de líneas
+// Función para truncar la descripción
 function truncateDescription(text, maxLines) {
     const words = text.split(' ');
     let result = '';
@@ -57,33 +96,430 @@ function truncateDescription(text, maxLines) {
     return result.trim();
 }
 
-// Listener para el botón 'savePostButton'
-document.getElementById('savePostButton').addEventListener('click', function () {
-    const title = document.getElementById('postTitle').value;
-    const description = document.getElementById('postDescription').value;
-    const imageFile = document.getElementById('postImage').files[0];
-    const category = document.getElementById('postCategory').value;
-    const price = document.getElementById('postPrice').value;
-
-    if (title && description && imageFile && category && price) {
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            const postContainer = document.getElementById('postContainer');
-            const card = createCard(title, description, e.target.result, category, price, null);
-            postContainer.appendChild(card);
-            updateNoPostsMessage();
-            document.getElementById('postForm').reset();
-
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addPostModal'));
-            modal.hide();
-        };
-
-        reader.readAsDataURL(imageFile);
-    } else {
-        alert('Por favor, completa todos los campos.');
+// Función para crear un carrusel de imágenes
+function createImageCarousel(imageSrcs, cardId) {
+    if (!Array.isArray(imageSrcs) || imageSrcs.length === 0) {
+        return '<img src="/placeholder.svg" class="card-img-top" alt="Placeholder" style="height: 120px; object-fit: cover;">';
     }
+
+    const carouselId = `carousel-${cardId}`;
+    let carouselItems = '';
+    let carouselIndicators = '';
+
+    imageSrcs.forEach((src, index) => {
+        carouselItems += `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <img src="${src}" class="d-block w-100" alt="Image ${index + 1}" style="height: 120px; object-fit: cover;">
+            </div>
+        `;
+        carouselIndicators += `
+            <button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index + 1}"></button>
+        `;
+    });
+
+    return `
+        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                ${carouselIndicators}
+            </div>
+            <div class="carousel-inner">
+                ${carouselItems}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    `;
+}
+
+// Función para actualizar el botón "Añadir Publicación"
+function actualizarBotonAnadirPublicacion() {
+    const addPostButton = document.querySelector('.add-post-button');
+    if (addPostButton) {
+        if (beneficiosSeleccionados.length > 0 || currentPlan === "Plus") {
+            addPostButton.textContent = 'Añadir Publicación Premium';
+            addPostButton.setAttribute('data-bs-target', '#addCustomPostModal');
+        } else {
+            addPostButton.textContent = 'Añadir Publicación';
+            addPostButton.setAttribute('data-bs-target', '#addPostModal');
+        }
+    }
+}
+
+// Función para cambiar el plan
+function changePlan(newPlan) {
+    currentPlan = newPlan;
+    updatePlanButtons();
+    actualizarBotonAnadirPublicacion();
+    if (newPlan !== "Personalizado") {
+        beneficiosSeleccionados = [];
+        document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        actualizarPrecioTotal();
+    }
+}
+
+// Función para actualizar los botones de plan
+function updatePlanButtons() {
+    const buttons = document.querySelectorAll('.plan-button');
+    buttons.forEach(button => {
+        const planName = button.closest('.card').querySelector('.plan-title').textContent;
+        const isCurrentPlan = planName === currentPlan;
+        
+        if (button.querySelector('.fs-8')) {
+            button.querySelector('.fs-8').textContent = isCurrentPlan ? "Tu Plan Actual" : "Gratis";
+        } else if (button.querySelector('.fs-5')) {
+            button.querySelector('.fs-5').textContent = isCurrentPlan ? "Tu Plan Actual" : "Mejora tu plan a Premium";
+        }
+        
+        button.classList.toggle('btn-success', isCurrentPlan);
+        button.classList.toggle('btn-secondary', !isCurrentPlan);
+        button.disabled = isCurrentPlan;
+    });
+
+    // Actualizar el botón "Escoge tus beneficios"
+    const customPlanButton = document.querySelector('.custom-plan-button');
+    if (customPlanButton) {
+        customPlanButton.classList.toggle('btn-success', currentPlan === "Personalizado");
+        customPlanButton.classList.toggle('btn-secondary', currentPlan !== "Personalizado");
+    }
+}
+
+// Función para crear el modal de beneficios
+function crearModalBeneficios() {
+    const modal = document.createElement('div');
+    modal.className = 'modal fade';
+    modal.id = 'beneficiosModal';
+    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('aria-labelledby', 'beneficiosModalLabel');
+    modal.setAttribute('aria-hidden', 'true');
+
+    modal.innerHTML = `
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="beneficiosModalLabel">Beneficios Escogidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Estos son los beneficios que has seleccionado para tu plan personalizado:</p>
+                    <div id="beneficiosSeleccionados"></div>
+                    <div class="mt-3">
+                        <strong>Precio Total: </strong><span id="precioTotalModal" class="text-success fs-4">S/0</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarBeneficios" data-bs-dismiss="modal" >Confirmar Selección</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}
+
+// Función para actualizar el modal con los beneficios seleccionados
+function actualizarModalBeneficios() {
+    const beneficiosSeleccionados = document.querySelectorAll('.custom-checkbox:checked');
+    const contenedorBeneficios = document.getElementById('beneficiosSeleccionados');
+    const precioTotalModal = document.getElementById('precioTotalModal');
+    
+    contenedorBeneficios.innerHTML = '';
+    let precioTotal = 0;
+
+    beneficiosSeleccionados.forEach(checkbox => {
+        const beneficio = beneficios.find(b => b.id === checkbox.id);
+        if (beneficio) {
+            const beneficioElement = document.createElement('div');
+            beneficioElement.className = 'form-check';
+            beneficioElement.innerHTML = `
+                <input class="form-check-input" type="checkbox" value="${beneficio.precio}" id="modal${beneficio.id}" checked>
+                <label class="form-check-label" for="modal${beneficio.id}">${beneficio.label}</label>
+            `;
+            contenedorBeneficios.appendChild(beneficioElement);
+            precioTotal += beneficio.precio;
+
+            beneficioElement.querySelector('input').addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    precioTotal += beneficio.precio;
+                } else {
+                    precioTotal -= beneficio.precio;
+                }
+                precioTotalModal.textContent = `S/${precioTotal}`;
+                
+                document.getElementById(beneficio.id).checked = e.target.checked;
+                actualizarPrecioTotal();
+            });
+        }
+    });
+
+    precioTotalModal.textContent = `S/${precioTotal}`;
+}
+
+// Función para actualizar el precio total en la tarjeta principal
+function actualizarPrecioTotal() {
+    const checkboxes = document.querySelectorAll('.custom-checkbox');
+    let total = 0;
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            total += parseFloat(checkbox.value);
+        }
+    });
+    document.getElementById('total-price').textContent = `S/${total}`;
+}
+
+// Crear un nuevo modal para publicaciones con beneficios personalizados
+function crearModalPublicacionPersonalizada() {
+    const modal = document.createElement('div');
+    modal.className = 'modal fade';
+    modal.id = 'addCustomPostModal';
+    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('aria-labelledby', 'addCustomPostModalLabel');
+    modal.setAttribute('aria-hidden', 'true');
+
+    modal.innerHTML = `
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCustomPostModalLabel">Nueva Publicación Premium</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="customPostForm">
+                        <div class="mb-3">
+                            <label for="customPostTitle" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="customPostTitle" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="customPostDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="customPostDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customPostCategory" class="form-label">Categoría</label>
+                            <select class="form-select" id="customPostCategory" required>
+                                <option value="" disabled selected>Selecciona una categoría</option>
+                                <option value="vehiculos">Vehículos</option>
+                                <option value="inmuebles">Inmuebles</option>
+                                <option value="trabajo">Trabajo</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customPostPrice" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="customPostPrice" required>
+                        </div>
+                        <div id="customBenefitsContainer"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="saveCustomPostButton">Guardar Publicación</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}
+
+// Función para actualizar el contenido del modal de publicación personalizada
+function actualizarModalPublicacionPersonalizada() {
+    const benefitsContainer = document.getElementById('customBenefitsContainer');
+    benefitsContainer.innerHTML = '';
+
+    const beneficiosActivos = currentPlan === "Plus" ? beneficios.map(b => b.id) : beneficiosSeleccionados;
+
+    beneficiosActivos.forEach(beneficioId => {
+        const beneficio = beneficios.find(b => b.id === beneficioId);
+        if (beneficio) {
+            if (beneficio.id === 'checkDescription') {
+                benefitsContainer.innerHTML += `
+                    <div class="mb-3">
+                        <label for="customPostImages" class="form-label">Imágenes (máximo 5)</label>
+                        <input type="file" class="form-control" id="customPostImages" accept="image/*" multiple>
+                        <div id="imagePreviewContainer" class="d-flex flex-wrap mt-2"></div>
+                    </div>
+                `;
+            } else if (beneficio.id === 'checkTitle') {
+                benefitsContainer.innerHTML += `
+                    <div class="mb-3">
+                        <label for="customPostVideo" class="form-label">Video</label>
+                        <input type="file" class="form-control" id="customPostVideo" accept="video/*">
+                    </div>
+                `;
+            }
+        }
+    });
+
+    // Agregar evento para previsualización de imágenes
+    const imageInput = document.getElementById('customPostImages');
+    if (imageInput) {
+        imageInput.addEventListener('change', function(event) {
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            previewContainer.innerHTML = '';
+            const files = event.target.files;
+            for (let i = 0; i < Math.min(files.length, 5); i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-thumbnail m-1';
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover';
+                    previewContainer.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+}
+
+// Evento para guardar una publicación personalizada
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('saveCustomPostButton').addEventListener('click', function() {
+        const title = document.getElementById('customPostTitle').value;
+        const description = document.getElementById('customPostDescription').value;
+        const category = document.getElementById('customPostCategory').value;
+        const price = document.getElementById('customPostPrice').value;
+        const imageFiles = document.getElementById('customPostImages')?.files || [];
+        const videoFile = document.getElementById('customPostVideo')?.files[0];
+
+        if (title && description && category && price) {
+            const imageSrcs = [];
+            let loadedFiles = 0;
+            const totalFiles = imageFiles.length + (videoFile ? 1 : 0);
+
+            const processFile = (file, isVideo = false) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (isVideo) {
+                        // Aquí puedes manejar el video si es necesario
+                    } else {
+                        imageSrcs.push(e.target.result);
+                    }
+                    loadedFiles++;
+                    if (loadedFiles === totalFiles) {
+                        const postContainer = document.getElementById('postContainer');
+                        const beneficiosActivos = currentPlan === "Plus" ? beneficios.map(b => b.id) : beneficiosSeleccionados;
+                        const card = createCard(title, description, imageSrcs, category, price, null, beneficiosActivos);
+                        postContainer.appendChild(card);
+                        updateNoPostsMessage();
+                        document.getElementById('customPostForm').reset();
+
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('addCustomPostModal'));
+                        modal.hide();
+                    }
+                };
+                reader.readAsDataURL(file);
+            };
+
+            if (imageFiles.length > 0) {
+                Array.from(imageFiles).forEach(file => processFile(file));
+            }
+            if (videoFile) {
+                processFile(videoFile, true);
+            }
+            if (totalFiles === 0) {
+                // Si no hay archivos, crear la tarjeta inmediatamente
+                const postContainer = document.getElementById('postContainer');
+                const beneficiosActivos = currentPlan === "Plus" ? beneficios.map(b => b.id) : beneficiosSeleccionados;
+                const card = createCard(title, description, [], category, price, null, beneficiosActivos);
+                postContainer.appendChild(card);
+                updateNoPostsMessage();
+                document.getElementById('customPostForm').reset();
+
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addCustomPostModal'));
+                modal.hide();
+            }
+        } else {
+            alert('Por favor, completa todos los campos requeridos.');
+        }
+    });
 });
+
+// Función para actualizar el mensaje de "No hay publicaciones"
+function updateNoPostsMessage() {
+    const postContainer = document.getElementById('postContainer');
+    const noPostsMessage = document.getElementById('noPostsMessage');
+    if (postContainer.querySelectorAll('.product-item').length === 0) {
+        noPostsMessage.style.display = 'block';
+    } else {
+        noPostsMessage.style.display = 'none';
+    }
+}
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    crearModalBeneficios();
+    crearModalPublicacionPersonalizada();
+    actualizarBotonAnadirPublicacion();
+
+    const botonEscogidos = document.querySelector('.custom-plan-button');
+    botonEscogidos.setAttribute('data-bs-toggle', 'modal');
+    botonEscogidos.setAttribute('data-bs-target', '#beneficiosModal');
+    botonEscogidos.addEventListener('click', actualizarModalBeneficios);
+
+    document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            actualizarPrecioTotal();
+            actualizarModalBeneficios();
+        });
+    });
+
+    document.getElementById('confirmarBeneficios').addEventListener('click', () => {
+        beneficiosSeleccionados = Array.from(document.querySelectorAll('.custom-checkbox:checked')).map(cb => cb.id);
+        actualizarBotonAnadirPublicacion();
+        changePlan('Personalizado');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('beneficiosModal'));
+        modal.hide();
+    });
+
+    document.querySelector('.add-post-button').addEventListener('click', () => {
+        if (beneficiosSeleccionados.length > 0 || currentPlan === "Plus") {
+            actualizarModalPublicacionPersonalizada();
+        }
+    });
+
+    document.querySelectorAll('.plan-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newPlan = this.closest('.card').querySelector('.plan-title').textContent;
+            changePlan(newPlan);
+        });
+    });
+
+    actualizarPrecioTotal();
+    updatePlanButtons();
+    updateNoPostsMessage();
+    handleProfileImageUpload();
+});
+
+// Función para manejar la carga de la imagen de perfil
+function handleProfileImageUpload() {
+    const input = document.getElementById('profileImageUpload');
+    const preview = document.getElementById('profileImagePreview');
+
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                updateProfilePicture(e.target.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+}
 
 // Función para actualizar la foto de perfil
 function updateProfilePicture(imageSrc) {
@@ -93,7 +529,7 @@ function updateProfilePicture(imageSrc) {
     }
 }
 
-// Agregar modal de edición al DOM con campo de categoría y precio
+// Agregar modal de edición al DOM
 document.body.insertAdjacentHTML('beforeend', `
     <div class="modal fade" id="editModal2" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -173,16 +609,13 @@ document.getElementById('saveEditButton').addEventListener('click', function () 
             const reader = new FileReader();
             reader.onload = function (e) {
                 card.querySelector('.card-img-top').src = e.target.result;
-                // Actualizar la foto de perfil
                 updateProfilePicture(e.target.result);
             };
             reader.readAsDataURL(newImageFile);
         }
 
-        // Mostrar mensaje de confirmación
         showConfirmationMessage(card);
 
-        // Cerrar el modal
         const modalInstance = bootstrap.Modal.getInstance(editModal);
         if (modalInstance) {
             modalInstance.hide();
@@ -214,301 +647,6 @@ function showConfirmationMessage(card) {
         message.remove();
     }, 3000);
 }
-
-// Función para actualizar el mensaje de "No hay publicaciones"
-function updateNoPostsMessage() {
-    const postContainer = document.getElementById('postContainer');
-    const noPostsMessage = document.getElementById('noPostsMessage');
-    if (postContainer.querySelectorAll('.product-item').length === 0) {
-        noPostsMessage.style.display = 'block';
-    } else {
-        noPostsMessage.style.display = 'none';
-    }
-}
-
-// Función para manejar la carga de la imagen de perfil
-function handleProfileImageUpload() {
-    const input = document.getElementById('profileImageUpload');
-    const preview = document.getElementById('profileImagePreview');
-
-    input.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                // También actualizamos la variable global si existe
-                if (typeof updateProfilePicture === 'function') {
-                    updateProfilePicture(e.target.result);
-                }
-            }
-            reader.readAsDataURL(file);
-        }
-    });
-}
-
-// Inicialización
-document.addEventListener('DOMContentLoaded', function() {
-    updateNoPostsMessage();
-    handleProfileImageUpload();
-});
-
-// Variable para almacenar el plan actual
-let currentPlan = "Gratis";
-let beneficiosSeleccionados = [];
-
-// Agregar event listeners a los botones de plan
-document.querySelectorAll('.plan-button').forEach(button => {
-    button.addEventListener('click', function(e) {
-        e.preventDefault();
-        const newPlan = this.closest('.card').querySelector('.plan-title').textContent;
-        changePlan(newPlan);
-    });
-});
-
-// Función para actualizar el uso del modal basado en el plan actual
-function updateModalUsage() {
-    const addPostButton = document.querySelector('.add-post-button');
-    if (addPostButton) {
-        addPostButton.setAttribute('data-bs-target', 
-            currentPlan === "Plus" ? '#addPremiumPostModal' : '#addPostModal');
-    }
-}
-
-// Función para cambiar el plan
-function changePlan(newPlan) {
-    currentPlan = newPlan;
-    updatePlanButtons();
-    updateModalUsage();
-}
-
-// Función modificada para crear una tarjeta de publicación
-function createCard(title, description, imageSrcs, category, price, id, isPremium = false) {
-    const card = document.createElement('div');
-    card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
-    card.id = id || 'card-' + Date.now();
-    card.setAttribute('data-full-description', description);
-    card.setAttribute('data-images', JSON.stringify(imageSrcs));
-
-    const premiumBadge = isPremium ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Premium</span>' : '';
-    const imageCount = Array.isArray(imageSrcs) ? imageSrcs.length : 1;
-    const imageBadge = imageCount > 1 ? `<span class="badge bg-info text-dark position-absolute top-0 start-0 m-2">${imageCount} imágenes</span>` : '';
-
-    let imageContent;
-    if (isPremium) {
-        imageContent = createImageCarousel(imageSrcs, card.id);
-    } else {
-        imageContent = `<img src="${Array.isArray(imageSrcs) ? imageSrcs[0] : imageSrcs}" class="card-img-top" alt="${title}" style="height: 120px; object-fit: cover;">`;
-    }
-
-    card.innerHTML = `
-    <div class="card h-100" style="width: 100%;">
-        ${premiumBadge}
-        ${isPremium ? imageBadge : ''}
-        ${imageContent}
-        <div class="card-body p-2">
-            <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
-            <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
-            <p class="card-text" style="font-size: 0.9rem;"><b>Precio:</b> S/${price}</p>
-            <div class="description-wrapper">
-                <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
-            </div>
-            <br>
-            <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-danger delete-button">Eliminar</button>
-                <button class="btn btn-sm btn-outline-primary edit-button">Editar</button>
-            </div>
-        </div>
-    </div>
-    `;
-
-    card.querySelector('.delete-button').addEventListener('click', function () {
-        if (confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
-            card.remove();
-            updateNoPostsMessage();
-        }
-    });
-
-    card.querySelector('.edit-button').addEventListener('click', function () {
-        if (isPremium) {
-            fillPremiumEditModal(card.id);
-            const editModal = new bootstrap.Modal(document.getElementById('editPremiumModal'));
-            
-            editModal.show();
-        } else {
-            fillEditModal(card.id);
-            const editModal = new bootstrap.Modal(document.getElementById('editModal2'));
-            editModal.show();
-        }
-    });
-
-    return card;
-}
-
-// Función para crear un carrusel de imágenes
-function createImageCarousel(imageSrcs, cardId) {
-    if (!Array.isArray(imageSrcs) || imageSrcs.length === 0) {
-        return '<img src="/placeholder.svg" class="card-img-top" alt="Placeholder" style="height: 120px; object-fit: cover;">';
-    }
-
-    const carouselId = `carousel-${cardId}`;
-    let carouselItems = '';
-    let carouselIndicators = '';
-
-    imageSrcs.forEach((src, index) => {
-        carouselItems += `
-            <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                <img src="${src}" class="d-block w-100" alt="Image ${index + 1}" style="height: 120px; object-fit: cover;">
-            </div>
-        `;
-        carouselIndicators += `
-            <button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index + 1}"></button>
-        `;
-    });
-
-    return `
-        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                ${carouselIndicators}
-            </div>
-            <div class="carousel-inner">
-                ${carouselItems}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    `;
-}
-
-// Función para actualizar los botones de plan
-function updatePlanButtons() {
-    const buttons = document.querySelectorAll('.plan-button');
-    buttons.forEach(button => {
-        const planName = button.closest('.card').querySelector('.plan-title').textContent;
-        const isCurrentPlan = planName === currentPlan;
-        
-        if (button.querySelector('.fs-8')) {
-            button.querySelector('.fs-8').textContent = isCurrentPlan ? "Tu Plan Actual" : "Gratis";
-        } else if (button.querySelector('.fs-5')) {
-            button.querySelector('.fs-5').textContent = isCurrentPlan ? "Tu Plan Actual" : "Mejora tu plan a Premium";
-        }
-        
-        button.classList.toggle('btn-success', isCurrentPlan);
-        button.classList.toggle('btn-secondary', !isCurrentPlan);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    const imageInput = document.getElementById('premiumPostImages');
-    const imagePreview = document.getElementById('imagePreview');
-    const savePremiumPostButton = document.getElementById('savePremiumPostButton');
-    let selectedImages = [];
-
-    imageInput.addEventListener('change', function(event) {
-        const files = Array.from(event.target.files);
-        
-        if (selectedImages.length + files.length > 5) {
-            alert('Puedes seleccionar un máximo de 5 imágenes.');
-            return;
-        }
-
-        files.forEach(file => {
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    addImagePreview(e.target.result);
-                }
-                reader.readAsDataURL(file);
-                selectedImages.push(file);
-            }
-        });
-
-        updateImageInput();
-    });
-
-    function addImagePreview(src) {
-        const div = document.createElement('div');
-        div.className = 'image-preview-item';
-        div.innerHTML = `
-            <img src="${src}" alt="Vista previa">
-            <button type="button" class="remove-image" aria-label="Eliminar imagen">&times;</button>
-        `;
-        div.querySelector('.remove-image').addEventListener('click', function() {
-            const index = Array.from(imagePreview.children).indexOf(div);
-            selectedImages.splice(index, 1);
-            div.remove();
-            updateImageInput();
-        });
-        imagePreview.appendChild(div);
-    }
-
-    function updateImageInput() {
-        const dataTransfer = new DataTransfer();
-        selectedImages.forEach(file => {
-            dataTransfer.items.add(file);
-        });
-        imageInput.files = dataTransfer.files;
-    }
-
-    document.getElementById('savePremiumPostButton').addEventListener('click', function(event) {
-        event.preventDefault();
-        if (document.getElementById('premiumPostForm').checkValidity()) {
-            const title = document.getElementById('premiumPostTitle').value;
-            const description = document.getElementById('premiumPostDescription').value;
-            const category = document.getElementById('premiumPostCategory').value;
-            const price = document.getElementById('premiumPostPrice').value;
-            const imageFiles = document.getElementById('premiumPostImages').files;
-    
-            if (title && description && category && price && imageFiles.length > 0) {
-                if (imageFiles.length > 5) {
-                    alert('Por favor, selecciona un máximo de 5 imágenes.');
-                    return;
-                }
-    
-                const imageSrcs = [];
-                let loadedImages = 0;
-    
-                for (let i = 0; i < imageFiles.length; i++) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        imageSrcs.push(e.target.result);
-                        loadedImages++;
-    
-                        if (loadedImages === imageFiles.length) {
-                            const postContainer = document.getElementById('postContainer');
-                            const card = createCard(title, description, imageSrcs, category, price, null, true);
-                            postContainer.appendChild(card);
-                            updateNoPostsMessage();
-                            document.getElementById('premiumPostForm').reset();
-                            imagePreview.innerHTML = '';
-                            selectedImages = [];
-    
-                            const modal = bootstrap.Modal.getInstance(document.getElementById('addPremiumPostModal'));
-                            modal.hide();
-                        }
-                    };
-                    reader.readAsDataURL(imageFiles[i]);
-                }
-            } else {
-                alert('Por favor, completa todos los campos y selecciona al menos una imagen (máximo 5).');
-            }
-        } else {
-            document.getElementById('premiumPostForm').reportValidity();
-        }
-    });
-
-    // Inicialización
-    updateNoPostsMessage();
-    handleProfileImageUpload();
-    updatePlanButtons();
-    updateModalUsage();
-});
 
 // Agregar el nuevo modal de edición premium al DOM
 document.body.insertAdjacentHTML('beforeend', `
@@ -554,7 +692,7 @@ document.body.insertAdjacentHTML('beforeend', `
 `);
 
 // Función para llenar el modal de edición premium
-function fillPremiumEditModal(cardId) {
+function fillPremiumEditModal(cardId, beneficiosAplicados) {
     const card = document.getElementById(cardId);
     const editModal = document.getElementById('editPremiumModal');
 
@@ -562,7 +700,7 @@ function fillPremiumEditModal(cardId) {
     document.getElementById('editPremiumDescription').value = card.getAttribute('data-full-description');
     document.getElementById('editPremiumCategory').value = card.querySelector('.card-text:nth-child(2)').textContent.replace('Categoría:', '').trim();
     document.getElementById('editPremiumPrice').value = card.querySelector('.card-text:nth-child(3)').textContent.replace('Precio: S/', '').trim();
-    
+
     const imageContainer = document.getElementById('editPremiumImageContainer');
     imageContainer.innerHTML = '';
 
@@ -573,6 +711,7 @@ function fillPremiumEditModal(cardId) {
     });
 
     editModal.dataset.currentCard = cardId;
+    editModal.dataset.beneficiosAplicados = JSON.stringify(beneficiosAplicados);
 }
 
 // Función para agregar una imagen al modal de edición premium
@@ -580,7 +719,7 @@ function addImageToEditPremiumModal(src, index) {
     const imageContainer = document.getElementById('editPremiumImageContainer');
     const imgWrapper = document.createElement('div');
     imgWrapper.className = 'position-relative';
-    
+
     const imgElement = document.createElement('img');
     imgElement.src = src;
     imgElement.alt = `Imagen ${index + 1}`;
@@ -588,7 +727,7 @@ function addImageToEditPremiumModal(src, index) {
     imgElement.style.width = '100px';
     imgElement.style.height = '100px';
     imgElement.style.objectFit = 'cover';
-    
+
     const removeButton = document.createElement('button');
     removeButton.innerHTML = '&times;';
     removeButton.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
@@ -624,6 +763,7 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
     const editModal = document.getElementById('editPremiumModal');
     const cardId = editModal.dataset.currentCard;
     const card = document.getElementById(cardId);
+    const beneficiosAplicados = JSON.parse(editModal.dataset.beneficiosAplicados || '[]');
 
     const newTitle = document.getElementById('editPremiumTitle').value.trim();
     const newDescription = document.getElementById('editPremiumDescription').value.trim();
@@ -670,10 +810,39 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
         } else if (newImages.length > 1) {
             const newBadge = document.createElement('span');
             newBadge.className = 'badge bg-info text-dark position-absolute top-0 start-0 m-2';
-            newBadge.textContent = `${new
-
-Images.length} imágenes`;
+            newBadge.textContent = `${newImages.length} imágenes`;
             card.querySelector('.card').prepend(newBadge);
+        }
+
+        // Actualizar otros badges y botones según los beneficios aplicados
+        const premiumBadge = card.querySelector('.badge.bg-warning');
+        if (!premiumBadge) {
+            const newPremiumBadge = document.createElement('span');
+            newPremiumBadge.className = 'badge bg-warning text-dark position-absolute top-0 end-0 m-2';
+            newPremiumBadge.textContent = 'Premium';
+            card.querySelector('.card').prepend(newPremiumBadge);
+        }
+
+        const videoBadge = card.querySelector('.badge.bg-primary');
+        if (beneficiosAplicados.includes('checkTitle') && !videoBadge) {
+            const newVideoBadge = document.createElement('span');
+            newVideoBadge.className = 'badge bg-primary text-white position-absolute top-0 start-0 m-2';
+            newVideoBadge.textContent = 'Video';
+            card.querySelector('.card').prepend(newVideoBadge);
+        } else if (!beneficiosAplicados.includes('checkTitle') && videoBadge) {
+            videoBadge.remove();
+        }
+
+        const whatsappButton = card.querySelector('.btn-success');
+        if (beneficiosAplicados.includes('checkWhatsapp') && !whatsappButton) {
+            const newWhatsappButton = document.createElement('a');
+            newWhatsappButton.href = 'https://wa.me/1234567890';
+            newWhatsappButton.className = 'btn btn-success btn-sm mt-2';
+            newWhatsappButton.target = '_blank';
+            newWhatsappButton.textContent = 'Contactar por WhatsApp';
+            card.querySelector('.card-body').insertBefore(newWhatsappButton, card.querySelector('.card-body').lastElementChild);
+        } else if (!beneficiosAplicados.includes('checkWhatsapp') && whatsappButton) {
+            whatsappButton.remove();
         }
 
         showConfirmationMessage(card);
@@ -689,7 +858,6 @@ Images.length} imágenes`;
 
 // Editar Datos de Perfil
 document.addEventListener('DOMContentLoaded', () => {
-    // Obtener los elementos de los campos de edición y los campos principales
     const editFormFields = {
         first_name: document.getElementById('edit_first_name'),
         last_name: document.getElementById('edit_last_name'),
@@ -712,350 +880,68 @@ document.addEventListener('DOMContentLoaded', () => {
         email: document.getElementById('email')
     };
 
-    // Cargar los datos actuales del formulario principal en el formulario de edición al abrir el modal
     document.getElementById('editModal').addEventListener('show.bs.modal', () => {
         for (const field in editFormFields) {
             editFormFields[field].value = mainFormFields[field].value;
         }
     });
 
-    // Guardar cambios y actualizar los campos en el formulario principal
     document.getElementById('saveChangesButton').addEventListener('click', () => {
         for (const field in editFormFields) {
             mainFormFields[field].value = editFormFields[field].value;
         }
 
-        // Manejar la imagen de perfil
         const profileImageUpload = document.getElementById('profileImageUpload');
-        const profileImagePreview = document.getElementById('profileImagePreview'); // Asegúrate de que este ID sea correcto
+        const profileImagePreview = document.getElementById('profileImagePreview');
         const imageFiles = profileImageUpload.files;
 
         if (imageFiles.length > 0) {
             const reader = new FileReader();
-
             reader.onload = function (e) {
-                // Actualiza la imagen de perfil en el modal
                 profileImagePreview.src = e.target.result;
-                // Actualiza la imagen de perfil del usuario (asumiendo que tienes una función updateProfilePicture)
                 updateProfilePicture(e.target.result);
             };
-
             reader.readAsDataURL(imageFiles[0]);
         }
     });
 
-    // Manejar el cambio de imagen en el modal
-    const modalImageUpload = document.getElementById('profileImageUpload'); // Asegúrate de que este ID sea correcto
+    const modalImageUpload = document.getElementById('profileImageUpload');
     modalImageUpload.addEventListener('change', function() {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
-
             reader.onload = function(e) {
-                profileImagePreview.src = e.target.result; // Actualiza la imagen de perfil
+                document.getElementById('profileImagePreview').src = e.target.result;
             };
-
-            reader.readAsDataURL(file); // Lee el archivo como URL de datos
+            reader.readAsDataURL(file);
         }
     });
 });
 
-//Escoge tus Beneficios
-// Definición de los beneficios disponibles
-const beneficios = [
-    { id: 'checkTitle', label: 'Colocar un video por cada aviso', precio: 10 },
-    { id: 'checkDescription', label: 'Colocar un máximo de 5 imágenes por Aviso', precio: 5 },
-    { id: 'checkImage', label: 'Mayor tiempo de Publicación', precio: 8 },
-    { id: 'checkWhatsapp', label: 'Acceso Directo a Whatsapp', precio: 8 },
-    { id: 'checkDuration', label: 'Búsquedas Avanzadas', precio: 6 }
-  ];
-  // Función para crear el modal de beneficios
-function crearModalBeneficios() {
-    const modal = document.createElement('div');
-    modal.className = 'modal fade';
-    modal.id = 'beneficiosModal';
-    modal.setAttribute('tabindex', '-1');
-    modal.setAttribute('aria-labelledby', 'beneficiosModalLabel');
-    modal.setAttribute('aria-hidden', 'true');
+// Listener para el botón 'savePostButton'
+document.getElementById('savePostButton').addEventListener('click', function () {
+    const title = document.getElementById('postTitle').value;
+    const description = document.getElementById('postDescription').value;
+    const imageFile = document.getElementById('postImage').files[0];
+    const category = document.getElementById('postCategory').value;
+    const price = document.getElementById('postPrice').value;
 
-    modal.innerHTML = `
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="beneficiosModalLabel">Beneficios Escogidos</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Estos son los beneficios que has seleccionado para tu plan personalizado:</p>
-                    <div id="beneficiosSeleccionados"></div>
-                    <div class="mt-3">
-                        <strong>Precio Total: </strong><span id="precioTotalModal" class="text-success fs-4">S/0</span>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="confirmarBeneficios" data-bs-dismiss="modal" >Confirmar Selección</button>
-                </div>
-            </div>
-        </div>
-    `;
+    if (title && description && imageFile && category && price) {
+        const reader = new FileReader();
 
-    document.body.appendChild(modal);
-}
-
-  function createCard(title, description, imageSrcs, category, price, id, beneficiosAplicados = []) {
-    const card = document.createElement('div');
-    card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
-    card.id = id || 'card-' + Date.now();
-    card.setAttribute('data-full-description', description);
-    card.setAttribute('data-images', JSON.stringify(imageSrcs));
-
-    const isPremium = beneficiosAplicados.length > 0;
-    const premiumBadge = isPremium ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Premium</span>' : '';
-    const imageCount = Array.isArray(imageSrcs) ? imageSrcs.length : 1;
-    const imageBadge = imageCount > 1 ? `<span class="badge bg-info text-dark position-absolute top-0 start-0 m-2">${imageCount} imágenes</span>` : '';
-    const videoBadge = beneficiosAplicados.includes('checkTitle') ? '<span class="badge bg-primary text-white position-absolute top-0 start-0 m-2">Video</span>' : '';
-
-    let imageContent;
-    if (isPremium && imageCount > 1) {
-        imageContent = createImageCarousel(imageSrcs, card.id);
-    } else {
-        imageContent = `<img src="${Array.isArray(imageSrcs) ? imageSrcs[0] : imageSrcs}" class="card-img-top" alt="${title}" style="height: 120px; object-fit: cover;">`;
-    }
-
-    const whatsappButton = beneficiosAplicados.includes('checkWhatsapp') ? 
-        `<a href="https://wa.me/1234567890" class="btn btn-success btn-sm mt-2" target="_blank">Contactar por WhatsApp</a>` : '';
-
-    card.innerHTML = `
-    <div class="card h-100" style="width: 100%;">
-        ${premiumBadge}
-        ${imageBadge}
-        ${videoBadge}
-        ${imageContent}
-        <div class="card-body p-2">
-            <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
-            <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
-            <p class="card-text" style="font-size: 0.9rem;"><b>Precio:</b> S/${price}</p>
-            <div class="description-wrapper">
-                <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
-            </div>
-            ${whatsappButton}
-            <br>
-            <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-danger delete-button">Eliminar</button>
-                <button class="btn btn-sm btn-outline-primary edit-button">Editar</button>
-            </div>
-        </div>
-    </div>
-    `;
-
-    card.querySelector('.delete-button').addEventListener('click', function () {
-        if (confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
-            card.remove();
+        reader.onload = function (e) {
+            const postContainer = document.getElementById('postContainer');
+            const card = createCard(title, description, e.target.result, category, price, null);
+            postContainer.appendChild(card);
             updateNoPostsMessage();
-        }
-    });
+            document.getElementById('postForm').reset();
 
-    card.querySelector('.edit-button').addEventListener('click', function () {
-        if (isPremium) {
-            fillPremiumEditModal(card.id, beneficiosAplicados);
-            const editModal = new bootstrap.Modal(document.getElementById('editPremiumModal'));
-            editModal.show();
-        } else {
-            fillEditModal(card.id);
-            const editModal = new bootstrap.Modal(document.getElementById('editModal2'));
-            editModal.show();
-        }
-    });
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addPostModal'));
+            modal.hide();
+        };
 
-    return card;
-}
-// Función para actualizar el botón "Añadir Publicación"
-function actualizarBotonAnadirPublicacion() {
-    const addPostButton = document.querySelector('.add-post-button');
-    if (addPostButton) {
-        if (beneficiosSeleccionados.length > 0) {
-            addPostButton.textContent = 'Añadir Publicación con Beneficios';
-            addPostButton.setAttribute('data-bs-target', '#addCustomPostModal');
-        } else {
-            addPostButton.textContent = 'Añadir Publicación';
-            addPostButton.setAttribute('data-bs-target', '#addPostModal');
-        }
+        reader.readAsDataURL(imageFile);
+    } else {
+        alert('Por favor, completa todos los campos.');
     }
-}
-// Crear un nuevo modal para publicaciones con beneficios personalizados
-function crearModalPublicacionPersonalizada() {
-    const modal = document.createElement('div');
-    modal.className = 'modal fade';
-    modal.id = 'addCustomPostModal';
-    modal.setAttribute('tabindex', '-1');
-    modal.setAttribute('aria-labelledby', 'addCustomPostModalLabel');
-    modal.setAttribute('aria-hidden', 'true');
-
-    modal.innerHTML = `
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addCustomPostModalLabel">Nueva Publicación con Beneficios</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="customPostForm">
-                        <div class="mb-3">
-                            <label for="customPostTitle" class="form-label">Título</label>
-                            <input type="text" class="form-control" id="customPostTitle" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="customPostDescription" class="form-label">Descripción</label>
-                            <textarea class="form-control" id="customPostDescription" rows="3" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="customPostCategory" class="form-label">Categoría</label>
-                            <select class="form-select" id="customPostCategory" required>
-                                <option value="" disabled selected>Selecciona una categoría</option>
-                                <option value="vehiculos">Vehículos</option>
-                                <option value="inmuebles">Inmuebles</option>
-                                <option value="trabajo">Trabajo</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="customPostPrice" class="form-label">Precio</label>
-                            <input type="number" class="form-control" id="customPostPrice" required>
-                        </div>
-                        <div id="customBenefitsContainer"></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="saveCustomPostButton">Guardar Publicación</button>
-                </div>
-            </div>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-}
-
-// Función para actualizar el contenido del modal de publicación personalizada
-function actualizarModalPublicacionPersonalizada() {
-    const benefitsContainer = document.getElementById('customBenefitsContainer');
-    benefitsContainer.innerHTML = '';
-
-    beneficiosSeleccionados.forEach(beneficioId => {
-        const beneficio = beneficios.find(b => b.id === beneficioId);
-        if (beneficio) {
-            if (beneficio.id === 'checkDescription') {
-                benefitsContainer.innerHTML += `
-                    <div class="mb-3">
-                        <label for="customPostImages" class="form-label">Imágenes (máximo 5)</label>
-                        <input type="file" class="form-control" id="customPostImages" accept="image/*" multiple>
-                    </div>
-                `;
-            } else if (beneficio.id === 'checkTitle') {
-                benefitsContainer.innerHTML += `
-                    <div class="mb-3">
-                        <label for="customPostVideo" class="form-label">Video</label>
-                        <input type="file" class="form-control" id="customPostVideo" accept="video/*">
-                    </div>
-                `;
-            }
-        }
-    });
-}
-
-  // Función para actualizar el modal con los beneficios seleccionados
-function actualizarModalBeneficios() {
-    const beneficiosSeleccionados = document.querySelectorAll('.custom-checkbox:checked');
-    const contenedorBeneficios = document.getElementById('beneficiosSeleccionados');
-    const precioTotalModal = document.getElementById('precioTotalModal');
-    
-    contenedorBeneficios.innerHTML = '';
-    let precioTotal = 0;
-
-    beneficiosSeleccionados.forEach(checkbox => {
-        const beneficio = beneficios.find(b => b.id === checkbox.id);
-        if (beneficio) {
-            const beneficioElement = document.createElement('div');
-            beneficioElement.className = 'form-check';
-            beneficioElement.innerHTML = `
-                <input class="form-check-input" type="checkbox" value="${beneficio.precio}" id="modal${beneficio.id}" checked>
-                <label class="form-check-label" for="modal${beneficio.id}">${beneficio.label}</label>
-            `;
-            contenedorBeneficios.appendChild(beneficioElement);
-            precioTotal += beneficio.precio;
-
-            beneficioElement.querySelector('input').addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    precioTotal += beneficio.precio;
-                } else {
-                    precioTotal -= beneficio.precio;
-                }
-                precioTotalModal.textContent = `S/${precioTotal}`;
-                
-                document.getElementById(beneficio.id).checked = e.target.checked;
-                actualizarPrecioTotal();
-            });
-        }
-    });
-
-    precioTotalModal.textContent = `S/${precioTotal}`;
-}
-
-// Función para actualizar el precio total en la tarjeta principal
-function actualizarPrecioTotal() {
-    const checkboxes = document.querySelectorAll('.custom-checkbox');
-    let total = 0;
-    checkboxes.forEach(checkbox => {
-        if (checkbox.checked) {
-            total += parseFloat(checkbox.value);
-        }
-    });
-    document.getElementById('total-price').textContent = `S/${total}`;
-}
-
-  
-  // Función para actualizar el precio total en la tarjeta principal
-  function actualizarPrecioTotal() {
-    const checkboxes = document.querySelectorAll('.custom-checkbox');
-    let total = 0;
-    checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        total += parseFloat(checkbox.value);
-      }
-    });
-    document.getElementById('total-price').textContent = `S/${total}`;
-  }
-  
-  // Inicialización
-document.addEventListener('DOMContentLoaded', () => {
-    crearModalBeneficios();
-    crearModalPublicacionPersonalizada();
-    actualizarBotonAnadirPublicacion();
-
-    const botonEscogidos = document.querySelector('.custom-plan-button');
-    botonEscogidos.setAttribute('data-bs-toggle', 'modal');
-    botonEscogidos.setAttribute('data-bs-target', '#beneficiosModal');
-    botonEscogidos.addEventListener('click', actualizarModalBeneficios);
-
-    document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            actualizarPrecioTotal();
-            actualizarModalBeneficios();
-        });
-    });
-
-    document.getElementById('confirmarBeneficios').addEventListener('click', () => {
-        beneficiosSeleccionados = Array.from(document.querySelectorAll('.custom-checkbox:checked')).map(cb => cb.id);
-        actualizarBotonAnadirPublicacion();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('beneficiosModal'));
-        modal.hide();
-    });
-
-    document.querySelector('.add-post-button').addEventListener('click', () => {
-        if (beneficiosSeleccionados.length > 0) {
-            actualizarModalPublicacionPersonalizada();
-        }
-    });
-
-    actualizarPrecioTotal();
 });
