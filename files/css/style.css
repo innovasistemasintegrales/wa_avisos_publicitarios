@@ -251,7 +251,29 @@ body{
 }
 /* CSS para Cliente*/
 
+.profile-image-container {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
 
+  .image-wrapper {
+    width: 100%;
+    padding-top: 100%; /* Esto crea un contenedor cuadrado */
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%; /* Esto hace el contenedor circular */
+    margin-bottom: 10px;
+  }
+
+  .profile-avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto asegura que la imagen cubra todo el espacio sin distorsionarse */
+  }
 .image-preview {
     display: flex;
     flex-wrap: wrap;
@@ -367,9 +389,9 @@ body{
     border-radius: var(--btn-radius); /* Bordes redondeados */
 }
 .btn-edit {
-    background-color: transparent; 
+    background-color: var(--color1); 
     border: 2px solid var(--color1); /* Borde con color principal */
-    color: var(--color1); 
+    color: var(--text-color); 
     padding: 10px 20px; /* Espaciado interno */
     border-radius: var(--btn-radius); /* Bordes redondeados */
     font-size: 1rem; /* Tamaño de fuente */
@@ -402,8 +424,7 @@ body{
 
 
 .add-post-button {
-    background-color: transparent; 
-    border: 2px solid var(--color1); 
+    background-color: var(--color1); 
     color: black; 
     font-size: 1.2rem; 
     padding: 5px 20px; 
@@ -413,12 +434,6 @@ body{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-.add-post-button:hover {
-    background-color: var(--color1); /* Color en hover */
-    color: white; /* Texto blanco al hacer hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más profunda al hacer hover */
-    transform: translateY(-2px); /* Ligeramente levanta el botón al hacer hover */
-}
 
 .product-item {
     margin: 0; /* Elimina el margen entre las tarjetas */
@@ -434,7 +449,6 @@ body{
 }
 
 #noPostsMessage {
-    background-color: var(--color3); /* Color de fondo */
     border-radius: var(--btn-radius); /* Bordes redondeados */
     padding: 15px 20px; /* Aumentado el espaciado interno para darle más aire */
     margin-top: 10px; /* Más espacio superior */
@@ -446,8 +460,10 @@ body{
     text-align: center; /* Centra el texto */
     margin: 10px auto; /* Centra el mensaje vertical y horizontalmente */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suave animación en hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    border: 2px solid var(--color1); /* Ajusta el color al que prefieras */
 }
+
 
 #noPostsMessage:hover {
     transform: translateY(-5px); /* Efecto de levantamiento */

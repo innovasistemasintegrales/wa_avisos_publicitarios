@@ -28,12 +28,13 @@
 
     <div class="row content-row">
       <!-- Panel Izquierdo -->
-      <div class="col-12 col-sm-3 left-panel"> <!-- Cambiado a col-12 para ocupar todo el ancho en móviles -->
+      <div class="col-12 col-sm-3 left-panel">
         <div class="text-center profile-image-container">
-          <img id="profileImagePreview" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            class="avatar rounded-circle img-thumbnail profile-avatar" alt="avatar">
+          <div class="image-wrapper">
+            <img id="profileImagePreview" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-avatar"
+              alt="avatar">
+          </div>
           <h6>Foto de Perfil</h6>
-         
         </div>
 
         <br><br>
@@ -65,8 +66,6 @@
             </button>
           </li>
         </ul>
-
-
 
         <br>
       </div>
@@ -191,18 +190,20 @@
                     <div class="mb-3">
                       <label for="profileImageUpload" class="form-label">Imagen de Perfil</label>
                       <input type="file" class="form-control text-center profile-image-upload" id="profileImageUpload"
-                      accept="image/*">
+                        accept="image/*">
                     </div>
                   </form>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary cancel-button" data-bs-dismiss="modal">Cancelar</button>
-                  <button type="button" class="btn btn-success save-button" data-bs-dismiss="modal" id="saveChangesButton">Guardar Cambios</button>
-
+                  <button type="button" class="btn btn-secondary cancel-button"
+                    data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-success save-button" data-bs-dismiss="modal"
+                    id="saveChangesButton">Guardar Cambios</button>
                 </div>
               </div>
             </div>
           </div>
+
           <!-- Tab Publicaciones -->
           <div class="tab-pane fade show active" id="messages" role="tabpanel" aria-labelledby="messages-tab">
             <h4>Mis Publicaciones</h4>
@@ -279,15 +280,14 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="addPremiumPostModalLabel">Nueva Publicación Premium
-                    </h5>
+                    <h5 class="modal-title" id="addPremiumPostModalLabel">Nueva Publicación Premium</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                     <form id="premiumPostForm" class="premium-post-form">
                       <div class="mb-3">
                         <label for="premiumPostTitle" class="form-label">Título</label>
-                        <input type="text" class="form-control input-field" id="premiumPostTitle"
+                        <input type="text" class="form-control input-field"   id="premiumPostTitle"
                           placeholder="Escribe el título" required>
                       </div>
                       <div class="mb-3">
@@ -300,18 +300,20 @@
                         </select>
                       </div>
                       <div class="mb-3">
-                        <label for="premiumPostImages" class="form-label">Agregar Imágenes (máx.
-                          5)</label>
+                        <label for="premiumPostImages" class="form-label">Agregar Imágenes (máx. 5)</label>
                         <input type="file" class="form-control input-field" id="premiumPostImages"
                           accept=".png, .jpg, .jpeg" multiple required>
-                        <small class="form-text text-muted">Puedes seleccionar hasta 5 imágenes
-                          (PNG o JPG).</small>
+                        <small class="form-text text-muted">Puedes seleccionar hasta 5 imágenes (PNG o JPG).</small>
                         <div id="imagePreview" class="image-preview"></div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="premiumPostVideo" class="form-label">Video</label>
+                        <input type="file" class="form-control" id="premiumPostVideo" accept="video/*">
                       </div>
                       <div class="mb-3">
                         <label for="premiumPostPrice" class="form-label">Precio</label>
                         <input type="number" class="form-control input-field" id="premiumPostPrice"
-                          placeholder="Ingresa el precio" min="0">
+                          placeholder="Ingresa el precio" min="0" required>
                       </div>
                       <div class="mb-3">
                         <label for="premiumPostDescription" class="form-label">Descripción</label>
@@ -323,13 +325,11 @@
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary save-premium-post-button" data-bs-dismiss="modal"
-                      id="savePremiumPostButton">Guardar Publicación
-                      Premium</button>
+                      id="savePremiumPostButton">Guardar Publicación Premium</button>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
 
           <!-- Tab Cambio de Plan -->
@@ -377,7 +377,7 @@
                     <li style="margin-bottom: 10px;">• Colocar un máximo de 5 imágenes por Aviso
                     </li>
                     <li style="margin-bottom: 10px;">• Colocar un video por cada aviso</li>
-                    <li style="margin-bottom: 10px;">• Acceso Dierecto al Whatsap</li>
+                    <li style="margin-bottom: 10px;">• Acceso Directo al Whatsap</li>
                     <li>• Búsquedas Avanzadas</li>
                   </ul>
                 </div>
@@ -396,7 +396,7 @@
                     <span class="fs-7 d-none d-md-inline">Escogidos</span>
                     <span class="fs-10 d-inline d-md-none">Plan</span>
                   </a>
-            
+
                   <!-- Elementos de la tarjeta con checkboxes -->
                   <div class="custom-plan-features mt-3">
                     <div class="form-check">
@@ -406,7 +406,8 @@
                     <br>
                     <div class="form-check">
                       <input class="form-check-input custom-checkbox" type="checkbox" value="5" id="checkDescription">
-                      <label class="form-check-label" for="checkDescription">Colocar un máximo de 5 imágenes por Aviso</label>
+                      <label class="form-check-label" for="checkDescription">Colocar un máximo de 5 imágenes por
+                        Aviso</label>
                     </div>
                     <br>
                     <div class="form-check">
@@ -418,7 +419,6 @@
                       <input class="form-check-input custom-checkbox" type="checkbox" value="8" id="checkWhatsapp">
                       <label class="form-check-label" for="checkWhatsapp">Acceso Directo a Whatsap</label>
                     </div>
-
                     <br>
                     <div class="form-check">
                       <input class="form-check-input custom-checkbox" type="checkbox" value="6" id="checkDuration">
@@ -463,16 +463,17 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
-          <!-- Bootstrap 5 JS -->
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-            crossorigin="anonymous"></script>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-          <script src="files/js/cliente.js"></script>
-
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="files/js/cliente.js"></script>
 </body>
 
 </html>
