@@ -17,6 +17,11 @@
     padding: 10px 0;
 }
 
+.product-title,
+.product-img {
+    cursor: pointer;
+}
+
 .catalog .modal-dialog {
     display: flex;
     align-items: center;
@@ -160,6 +165,13 @@
     color: white;
 }
 
+/* Efecto hover para los botones de vista */
+.catalog .view-options .btn:hover {
+    background-color: var(--hover-color); /* Cambia el color de fondo */
+    color: white; /* Cambia el color del texto */
+    border: none; /* Elimina el borde */
+}
+
 /* Botones principales */
 .catalog #filterButton,
 .catalog .btn-custom,
@@ -219,7 +231,6 @@
 
 .catalog .product-item:hover {
     transform: translateY(-10px);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Grid view styling */
@@ -359,7 +370,7 @@
     position: relative;
     cursor: pointer;
     transition: background-color 0.3s ease, border-color 0.3s ease;
-}
+} 
 
 .product-checkbox:checked {
     background-color: var(--hover-color);

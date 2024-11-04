@@ -23,43 +23,47 @@
 
 <div class="catalog">
     <div class="d-flex">
-        <!-- Sidebar -->
-        <div id="sidebar" class="text-black p-3 mt-5 hide">
-            <ul class="list-unstyled">
-                <!-- Categorías -->
-                <li class="mb-3">
-                    <h5 class="fw-bold">Categorías</h5>
-                    <ul class="list-unstyled ms-3">
-                        <li><a href="#" class="text"><i class="bi bi-car-front"></i> Vehículos</a></li>
-                        <li><a href="#" class="text"><i class="bi bi-briefcase"></i> InnovaTrabajos</a></li>
-                        <li><a href="#" class="text"><i class="bi bi-house-door"></i> Inmueble</a></li>
-                        <li><a href="#" class="text"><i class="bi bi-tools"></i> Oficios</a></li>
-                        <li><a href="#" class="text"><i class="bi bi-three-dots"></i> ETC</a></li>
-                    </ul>
-                </li>
+        <!-- Sidebar convertido en offcanvas con el ID #sidebar -->
+        <div class="offcanvas offcanvas-start text-black" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+            <div class="offcanvas-header">
+            </div>
+            <div class="offcanvas-body p-3">
+                <!-- Contenido del sidebar -->
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <h5 class="fw-bold">Categorías</h5>
+                        <ul class="list-unstyled ms-3">
+                            <li><a href="#" class="text"><i class="bi bi-car-front"></i> Vehículos</a></li>
+                            <li><a href="#" class="text"><i class="bi bi-briefcase"></i> InnovaTrabajos</a></li>
+                            <li><a href="#" class="text"><i class="bi bi-house-door"></i> Inmueble</a></li>
+                            <li><a href="#" class="text"><i class="bi bi-tools"></i> Oficios</a></li>
+                            <li><a href="#" class="text"><i class="bi bi-three-dots"></i> ETC</a></li>
+                        </ul>
+                    </li>
 
-                <!-- Vistas -->
-                <li class="mb-3">
-                    <h5 class="fw-bold">Vistas</h5>
-                    <div class="view-options ms-3">
-                        <button id="gridViewBtn" class="btn btn-dark btn-outline-light">
-                            <i class="bi bi-grid-fill"></i> Cuadrícula
-                        </button>
-                        <button id="listViewBtn" class="btn btn-dark btn-outline-light">
-                            <i class="bi bi-list"></i> Lista
-                        </button>
-                    </div>
-                </li>
+                    <!-- Más contenido -->
+                    <li class="mb-3">
+                        <h5 class="fw-bold">Vistas</h5>
+                        <div class="view-options ms-3">
+                            <button id="gridViewBtn" class="btn btn-dark btn-outline-light">
+                                <i class="bi bi-grid-fill"></i> Cuadrícula
+                            </button>
+                            <button id="listViewBtn" class="btn btn-dark btn-outline-light">
+                                <i class="bi bi-list"></i> Lista
+                            </button>
+                        </div>
+                    </li>
 
-                <!-- Descargas -->
-                <li class="mb-3">
-                    <h5 class="fw-bold">Descargar</h5>
-                    <ul class="list-unstyled ms-3">
-                        <li><a href="#" class="text no-highlight" id="downloadPdf">Avisos por PDF</a></li>
-                        <li><a href="#" class="text no-highlight" id="downloadExcel">Avisos por Excel</a></li>
-                    </ul>
-                </li>
-            </ul>
+                    <!-- Descargas -->
+                    <li class="mb-3">
+                        <h5 class="fw-bold">Descargar</h5>
+                        <ul class="list-unstyled ms-3">
+                            <li><a href="#" class="text no-highlight" id="downloadPdf">Avisos por PDF</a></li>
+                            <li><a href="#" class="text no-highlight" id="downloadExcel">Avisos por Excel</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div id="overlay" class="overlay"></div>
@@ -85,84 +89,19 @@
 
             <!-- Vehículos Category -->
             <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item vehículos">
-                <div class="card h-100" data-product-name="Camioneta Nissan" data-product-description="Auto semi nuevo, poco kilometraje" data-product-image="https://via.placeholder.com/150" data-product-price="S/.60,000">
-                    <img src="https://via.placeholder.com/150" class="card-img-top product-img" alt="Camioneta Nissan">
+                <div class="card h-100" data-product-name="Camioneta Nissan" data-product-description="Auto semi nuevo, poco kilometraje" data-product-image="images/rec/150x150.png" data-product-price="S/.60,000">
+                    <img src="files/rec/150x150.png" class="card-img-top product-img" alt="Camioneta Nissan">
                     <div class="card-body">
                         <input type="checkbox" class="product-checkbox form-check-input">
                         <p class="card-price fw-bold text-success">S/.60,000</p>
                         <h5 class="card-title product-title">Camioneta Nissan</h5>
                         <p class="card-text">Auto semi nuevo, poco kilometraje</p>
                         <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                            <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp" title="WhatsApp"></a>
+                            <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill" title="Llamar"></a>
+                            <a href="#" class="btn btn-sm btn-outline-primary bi bi-facebook" title="Facebook"></a>
+                            <a href="#" class="btn btn-sm btn-outline-dark bi bi-twitter-x" title="Twitter"></a>
 
-            <!-- InnovaTrabajos Category -->
-            <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item innovatrabajos">
-                <div class="card h-100" data-product-name="Asistente Administrativo" data-product-description="Trabajo en oficina, experiencia mínima" data-product-image="https://via.placeholder.com/150" data-product-price="S/.3,000/mes">
-                    <img src="https://via.placeholder.com/150" class="card-img-top product-img" alt="Asistente Administrativo">
-                    <div class="card-body">
-                        <input type="checkbox" class="product-checkbox form-check-input">
-                        <p class="card-price fw-bold text-success">S/.3,000/mes</p>
-                        <h5 class="card-title product-title">Asistente Administrativo</h5>
-                        <p class="card-text">Trabajo en oficina, experiencia mínima</p>
-                        <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                            <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Inmueble Category -->
-            <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item inmueble">
-                <div class="card h-100" data-product-name="Departamento en Lima" data-product-description="Ubicación céntrica, excelente vista" data-product-image="https://via.placeholder.com/150" data-product-price="S/.500,000">
-                    <img src="https://via.placeholder.com/150" class="card-img-top product-img" alt="Departamento en Lima">
-                    <div class="card-body">
-                        <input type="checkbox" class="product-checkbox form-check-input">
-                        <p class="card-price fw-bold text-success">S/.500,000</p>
-                        <h5 class="card-title product-title">Departamento en Lima</h5>
-                        <p class="card-text">Ubicación céntrica, excelente vista</p>
-                        <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                            <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Oficios Category -->
-            <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item oficios">
-                <div class="card h-100" data-product-name="Servicio de Plomería" data-product-description="Reparaciones a domicilio" data-product-image="https://via.placeholder.com/150" data-product-price="S/.150">
-                    <img src="https://via.placeholder.com/150" class="card-img-top product-img" alt="Servicio de Plomería">
-                    <div class="card-body">
-                        <input type="checkbox" class="product-checkbox form-check-input">
-                        <p class="card-price fw-bold text-success">S/.150</p>
-                        <h5 class="card-title product-title">Servicio de Plomería</h5>
-                        <p class="card-text">Reparaciones a domicilio</p>
-                        <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                            <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ETC Category -->
-            <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item etc">
-                <div class="card h-100" data-product-name="Curso de Inglés Online" data-product-description="Clases virtuales, todos los niveles" data-product-image="https://via.placeholder.com/150" data-product-price="S/.400">
-                    <img src="https://via.placeholder.com/150" class="card-img-top product-img" alt="Curso de Inglés Online">
-                    <div class="card-body">
-                        <input type="checkbox" class="product-checkbox form-check-input">
-                        <p class="card-price fw-bold text-success">S/.400</p>
-                        <h5 class="card-title product-title">Curso de Inglés Online</h5>
-                        <p class="card-text">Clases virtuales, todos los niveles</p>
-                        <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                            <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
                         </div>
                     </div>
                 </div>
@@ -189,8 +128,18 @@
                     <p id="productModalDescription">Descripción</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" id="modalWhatsApp" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                    <a href="#" id="modalCall" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
+                    <a href="#" id="modalWhatsApp" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="#" id="modalCall" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-telephone-fill"></i> Llamar
+                    </a>
+                    <a href="#" id="modalFacebook" class="btn btn-sm btn-outline-primary color=blue">
+                        <i class="bi bi-facebook"></i> Facebook
+                    </a>
+                    <a href="#" id="modalTwitter" class="btn btn-sm btn-outline-dark">
+                        <i class="bi bi-twitter-x"></i> Twitter
+                    </a>
                 </div>
             </div>
         </div>
