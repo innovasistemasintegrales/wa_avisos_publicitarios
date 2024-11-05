@@ -174,3 +174,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+// Seleccionar el botón de reportar anuncio y el modal de reporte
+const reportButton = document.getElementById('reportButton');
+const reportModal = new bootstrap.Modal(document.getElementById('reportModal'));
+
+// Añadir evento al botón de reportar anuncio
+reportButton.addEventListener('click', function () {
+    // Mostrar el modal de reporte cuando se hace clic en el botón
+    reportModal.show();
+});
