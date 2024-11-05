@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="files/css/style.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css"
     rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 
 <body>
@@ -309,6 +311,7 @@
                       <div class="mb-3">
                         <label for="premiumPostVideo" class="form-label">Video</label>
                         <input type="file" class="form-control" id="premiumPostVideo" accept="video/*">
+                        <video id="premiumPostVideoPreview" controls class="mt-2 w-100" style="max-height: 200px; display: none;"></video>
                       </div>
                       <div class="mb-3">
                         <label for="premiumPostPrice" class="form-label">Precio</label>
@@ -319,6 +322,14 @@
                         <label for="premiumPostDescription" class="form-label">Descripción</label>
                         <textarea class="form-control input-field" id="premiumPostDescription" rows="3"
                           placeholder="Escribe una descripción" required></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="editPremiumPhone" class="form-label">Número de Teléfono</label>
+                        <div class="input-group">
+                          <input type="tel" class="form-control input-field" id="editPremiumPhone" placeholder="Ingresa tu número de teléfono">
+                          <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
+                        </div>
+                        <small class="form-text text-muted">Tu número se mostrará con el ícono de WhatsApp en el anuncio.</small>
                       </div>
                     </form>
                   </div>

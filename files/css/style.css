@@ -402,10 +402,10 @@ body{
 }
 
 .btn-edit:hover {
-    background-color: var(--color1); /* Relleno al hacer hover */
-    color: white; /* Texto blanco en hover */
-    transform: translateY(-2px); /* Levantamiento en hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más profunda en hover */
+    background-color: var(--color1); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
 }
 
 
