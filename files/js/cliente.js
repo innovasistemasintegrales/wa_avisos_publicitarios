@@ -1,4 +1,3 @@
-// Función para crear una tarjeta de publicación
 function createCard(title, description, imageSrcs, category, price, id, isPremium = false, videoSrc = null, phoneNumber = null) {
     const card = document.createElement('div');
     card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
@@ -375,7 +374,7 @@ function updatePlanButtons() {
     });
 }
 
-// Añade esta función al principio de tu archivo :
+// Añade esta función al principio de tu archivo cliente.js:
 function checkFormElements() {
     const requiredElements = [
         'premiumPostForm',
@@ -388,11 +387,11 @@ function checkFormElements() {
         'premiumPostPhone'
     ];
 
-    const missingElements = requiredElements.filter(elementId => !document.getElementById(elementId));
-
-    if (missingElements.length > 0) {
-        console.warn(`The following elements are missing from the DOM: ${missingElements.join(', ')}`);
-    }
+    requiredElements.forEach(elementId => {
+        if (!document.getElementById(elementId)) {
+            console.error(`El elemento con id "${elementId}" no se encontró en el DOM`);
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -463,7 +462,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const price = document.getElementById('premiumPostPrice')?.value;
             const imageFiles = document.getElementById('premiumPostImages')?.files;
             const videoFile = document.getElementById('premiumPostVideo')?.files[0];
-            const phoneNumber = document.getElementById('premiumPostPhone')?.value;
+            const phoneNumber = document.getElementById('editPremiumPhone')?.value; // Update here
 
             if (title && description && category && price && imageFiles && imageFiles.length > 0) {
                 if (imageFiles.length > 5) {
@@ -609,6 +608,7 @@ function fillPremiumEditModal(cardId) {
         videoPreview.style.display = 'none';
     }
 
+    // Actualizar esta parte para cargar correctamente el número de teléfono
     const phoneElement = card.querySelector('.card-text a[href^="https://wa.me/"]');
     if (phoneElement) {
         document.getElementById('editPremiumPhone').value = phoneElement.textContent.trim();
@@ -767,7 +767,6 @@ function updateCardMedia(card, images, videoSrc) {
         videoIndicator.setAttribute('aria-label', 'Video');
         carouselIndicators.appendChild(videoIndicator);
     }
-
     // Actualizar el badge de imágenes
     const imageBadge = card.querySelector('.badge.bg-info');
     if (imageBadge) {
