@@ -1,3 +1,14 @@
+function validateImageCount(images, context = 'new') {
+    if (images.length > 5) {
+        alert(`Puedes seleccionar un máximo de 5 imágenes por ${context === 'new' ? 'publicación' : 'edición'}.`);
+        return false;
+    }
+    if (images.length === 0) {
+        alert('Debes seleccionar al menos una imagen.');
+        return false;
+    }
+    return true;
+}
 function createCard(title, description, imageSrcs, category, price, id, isPremium = false, videoSrc = null, phoneNumber = null) {
     const card = document.createElement('div');
     card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
@@ -395,20 +406,32 @@ function checkFormElements() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    checkFormElements();
     const imageInput = document.getElementById('premiumPostImages');
     const imagePreview = document.getElementById('imagePreview');
     const savePremiumPostButton = document.getElementById('savePremiumPostButton');
     let selectedImages = [];
 
+    // Función para reiniciar la selección de imágenes
+    function resetImageSelection() {
+        selectedImages = [];
+        imagePreview.innerHTML = '';
+        imageInput.value = '';
+    }
+
     imageInput.addEventListener('change', function(event) {
         const files = Array.from(event.target.files);
         
-        if (selectedImages.length + files.length > 5) {
-            alert('Puedes seleccionar un máximo de 5 imágenes.');
+        // Reiniciar selectedImages si está vacío
+        if (imagePreview.children.length === 0) {
+            selectedImages = [];
+        }
+        
+        if (files.length > 5) {
+            alert('Puedes seleccionar un máximo de 5 imágenes por publicación.');
+            this.value = '';
             return;
         }
-
+    
         files.forEach(file => {
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
@@ -419,7 +442,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectedImages.push(file);
             }
         });
-
+    
         updateImageInput();
     });
 
@@ -456,69 +479,68 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         const form = document.getElementById('premiumPostForm');
         if (form && form.checkValidity()) {
-            const title = document.getElementById('premiumPostTitle')?.value;
-            const description = document.getElementById('premiumPostDescription')?.value;
-            const category = document.getElementById('premiumPostCategory')?.value;
-            const price = document.getElementById('premiumPostPrice')?.value;
-            const imageFiles = document.getElementById('premiumPostImages')?.files;
-            const videoFile = document.getElementById('premiumPostVideo')?.files[0];
-            const phoneNumber = document.getElementById('editPremiumPhone')?.value; // Update here
-
+            const title = document.getElementById('premiumPostTitle').value;
+            const description = document.getElementById('premiumPostDescription').value;
+            const category = document.getElementById('premiumPostCategory').value;
+            const price = document.getElementById('premiumPostPrice').value;
+            const imageFiles = document.getElementById('premiumPostImages').files;
+            const videoFile = document.getElementById('premiumPostVideo').files[0];
+            const phoneNumber = document.getElementById('editPremiumPhone').value;
+    
             if (title && description && category && price && imageFiles && imageFiles.length > 0) {
-                if (imageFiles.length > 5) {
-                    alert('Por favor, selecciona un máximo de 5 imágenes.');
+                if (!validateImageCount(Array.from(imageFiles))) {
                     return;
                 }
-
-                const imageSrcs = [];
-                let loadedImages = 0;
-                let videoSrc = null;
-
-                const processMedia = () => {
-                    if (loadedImages === imageFiles.length && (videoFile === undefined || videoSrc !== null)) {
-                        const postContainer = document.getElementById('postContainer');
-                        const card = createCard(title, description, imageSrcs, category, price, null, true, videoSrc, phoneNumber);
-                        postContainer.appendChild(card);
-                        updateNoPostsMessage();
-                        form.reset();
-                        document.getElementById('imagePreview').innerHTML = '';
-                        document.getElementById('premiumPostVideoPreview').style.display = 'none';
-                        document.getElementById('premiumPostVideoPreview').src = '';
-
-                        const modal = bootstrap.Modal.getInstance(document.getElementById('addPremiumPostModal'));
-                        modal.hide();
-                    }
-                };
-
-                for (let i = 0; i < imageFiles.length; i++) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        imageSrcs.push(e.target.result);
-                        loadedImages++;
-                        processMedia();
-                    };
-                    reader.readAsDataURL(imageFiles[i]);
+      
+            const imageSrcs = [];
+            let loadedImages = 0;
+            let videoSrc = null;
+      
+            const processMedia = () => {
+                if (loadedImages === imageFiles.length && (videoFile === undefined || videoSrc !== null)) {
+                  const postContainer = document.getElementById('postContainer');
+                  const card = createCard(title, description, imageSrcs, category, price, null, true, videoSrc, phoneNumber);
+                  postContainer.appendChild(card);
+                  updateNoPostsMessage();
+                  form.reset();
+                  document.getElementById('imagePreview').innerHTML = '';
+                  document.getElementById('premiumPostVideoPreview').style.display = 'none';
+                  document.getElementById('premiumPostVideoPreview').src = '';
+                  document.getElementById('editPremiumPhone').value = ''; 
+                  const modal = bootstrap.Modal.getInstance(document.getElementById('addPremiumPostModal'));
+                  modal.hide();
                 }
-
-                if (videoFile) {
-                    const videoReader = new FileReader();
-                    videoReader.onload = function (e) {
-                        videoSrc = e.target.result;
-                        processMedia();
-                    };
-                    videoReader.readAsDataURL(videoFile);
-                } else {
-                    processMedia();
-                }
-            } else {
-                alert('Por favor, completa todos los campos requeridos y selecciona al menos una imagen (máximo 5).');
+              };
+      
+            for (let i = 0; i < imageFiles.length; i++) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                imageSrcs.push(e.target.result);
+                loadedImages++;
+                processMedia();
+              };
+              reader.readAsDataURL(imageFiles[i]);
             }
+      
+            if (videoFile) {
+              const videoReader = new FileReader();
+              videoReader.onload = function (e) {
+                videoSrc = e.target.result;
+                processMedia();
+              };
+              videoReader.readAsDataURL(videoFile);
+            } else {
+              processMedia();
+            }
+          } else {
+            alert('Por favor, completa todos los campos requeridos y selecciona al menos una imagen (máximo 5).');
+          }
         } else if (form) {
-            form.reportValidity();
+          form.reportValidity();
         } else {
-            console.error('El formulario premiumPostForm no se encontró en el DOM');
+          console.error('El formulario premiumPostForm no se encontró en el DOM');
         }
-    });
+      });
 
     // Inicialización
     updateNoPostsMessage();
@@ -608,14 +630,13 @@ function fillPremiumEditModal(cardId) {
         videoPreview.style.display = 'none';
     }
 
-    // Actualizar esta parte para cargar correctamente el número de teléfono
     const phoneElement = card.querySelector('.card-text a[href^="https://wa.me/"]');
     if (phoneElement) {
-        document.getElementById('editPremiumPhone').value = phoneElement.textContent.trim();
+      document.getElementById('editPremiumPhone').value = phoneElement.textContent.trim();
     } else {
-        document.getElementById('editPremiumPhone').value = '';
+      document.getElementById('editPremiumPhone').value = '';
     }
-
+  
     editModal.dataset.currentCard = cardId;
 }
 
@@ -649,12 +670,13 @@ document.getElementById('editPremiumImageUpload').addEventListener('change', fun
     const imageContainer = document.getElementById('editPremiumImageContainer');
     const currentImages = imageContainer.children.length;
 
-    files.forEach((file, index) => {
-        if (currentImages + index >= 5) {
-            alert('Has alcanzado el límite máximo de 5 imágenes.');
-            return;
-        }
+    if (currentImages + files.length > 5) {
+        alert('El número total de imágenes no puede exceder 5.');
+        this.value = ''; // Limpiar la selección de archivos
+        return;
+    }
 
+    files.forEach((file, index) => {
         const reader = new FileReader();
         reader.onload = function(e) {
             addImageToEditPremiumModal(e.target.result, currentImages + index);
@@ -677,57 +699,65 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
     const newVideoFile = document.getElementById('editPremiumVideo').files[0];
     const newPhoneNumber = document.getElementById('editPremiumPhone').value.trim();
 
-    if (newTitle && newDescription && newCategory && newPrice && newImages.length > 0) {
-        card.querySelector('.card-title').textContent = newTitle;
-        card.querySelector('.card-text:nth-child(2)').innerHTML = `<b>Categoría:</b> ${newCategory}`;
-        card.querySelector('.card-text:nth-child(3)').innerHTML = `<b>Precio:</b> S/${newPrice}`;
-        card.querySelector('.description-container').textContent = truncateDescription(newDescription, 3);
-        card.setAttribute('data-full-description', newDescription);
-        card.setAttribute('data-images', JSON.stringify(newImages));
-
-        if (newVideoFile) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                card.setAttribute('data-video', e.target.result);
-                updateCardMedia(card, newImages, e.target.result);
-            };
-            reader.readAsDataURL(newVideoFile);
-        } else {
-            updateCardMedia(card, newImages, card.getAttribute('data-video'));
-        }
-
-        if (newPhoneNumber) {
-            const phoneContent = `
-              <p class="card-text" style="font-size: 0.9rem;">
-                <a href="https://wa.me/${newPhoneNumber}" target="_blank" class="text-decoration-none">
-                  <i class="fab fa-whatsapp text-success"></i> ${newPhoneNumber}
-                </a>
-              </p>
-            `;
-            const existingPhoneContent = card.querySelector('.card-text a[href^="https://wa.me/"]');
-            if (existingPhoneContent) {
-              existingPhoneContent.parentElement.outerHTML = phoneContent;
-            } else {
-              card.querySelector('.card-body').insertAdjacentHTML('afterbegin', phoneContent);
-            }
-        } else {
-            const existingPhoneContent = card.querySelector('.card-text a[href^="https://wa.me/"]');
-            if (existingPhoneContent) {
-              existingPhoneContent.parentElement.remove();
-            }
-        }
-
-
-        showConfirmationMessage(card);
-
-        const modalInstance = bootstrap.Modal.getInstance(editModal);
-        if (modalInstance) {
-            modalInstance.hide();
-        }
-    } else {
-        alert('Por favor, completa todos los campos y asegúrate de tener al menos una imagen.');
+    if (!validateImageCount(newImages)) {
+        return;
     }
-});
+
+    if (newTitle && newDescription && newCategory && newPrice && newImages.length > 0) {
+
+      // Actualizar los datos de la card
+      card.querySelector('.card-title').textContent = newTitle;
+      card.querySelector('.card-text:nth-child(2)').innerHTML = `<b>Categoría:</b> ${newCategory}`;
+      card.querySelector('.card-text:nth-child(3)').innerHTML = `<b>Precio:</b> S/${newPrice}`;
+      card.querySelector('.description-container').textContent = truncateDescription(newDescription, 3);
+      card.setAttribute('data-full-description', newDescription);
+      card.setAttribute('data-images', JSON.stringify(newImages));
+      card.setAttribute('data-phone', newPhoneNumber);
+  
+      // Actualizar el video si se ha cambiado
+      if (newVideoFile) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          card.setAttribute('data-video', e.target.result);
+          updateCardMedia(card, newImages, e.target.result);
+        };
+        reader.readAsDataURL(newVideoFile);
+      } else {
+        updateCardMedia(card, newImages, card.getAttribute('data-video'));
+      }
+  
+      // Actualizar el número de teléfono
+      updatePhoneNumber(card, newPhoneNumber);
+  
+      showConfirmationMessage(card);
+  
+      const modalInstance = bootstrap.Modal.getInstance(editModal);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+    } else {
+      alert('Por favor, completa todos los campos y asegúrate de tener al menos una imagen.');
+    }
+  });
+  
+  function updatePhoneNumber(card, phoneNumber) {
+    let phoneElement = card.querySelector('.card-text a[href^="https://wa.me/"]');
+    if (phoneNumber) {
+      if (!phoneElement) {
+        phoneElement = document.createElement('p');
+        phoneElement.className = 'card-text';
+        phoneElement.style.fontSize = '0.9rem';
+        card.querySelector('.card-body').appendChild(phoneElement);
+      }
+      phoneElement.innerHTML = `
+        <a href="https://wa.me/${phoneNumber}" target="_blank" class="text-decoration-none">
+          <i class="fab fa-whatsapp text-success"></i> ${phoneNumber}
+        </a>
+      `;
+    } else if (phoneElement) {
+      phoneElement.remove();
+    }
+  }
 
 // Función para actualizar el contenido multimedia de la tarjeta
 function updateCardMedia(card, images, videoSrc) {
