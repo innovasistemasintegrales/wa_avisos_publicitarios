@@ -1,22 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innova</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" integrity="sha512-xnP2tOaCJnzp2d2IqKFcxuOiVCbuessxM6wuiolT9eeEJCyy0Vhcwa4zQvdrZNVqlqaxXhHqsSV1Ww7T2jSCUQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Usuarios Registrados</title>
     <link rel="stylesheet" href="files/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
 </head>
-<body>
-    <div>
-        <span class="">soy Admin</span>
+<body class="admin">
+    <div class="sidebar">
+        <div class="profile">
+            <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
+            <h2>Jean Carlos</h2>
+            <p>Administrador</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" id="usuarios-tab"><i class="bi bi-people"></i> Usuarios</a></li>
+                <li><a href="#" id="categorias-tab"><i class="bi bi-tags"></i> Categorías</a></li>
+                <li><a href="#" id="reportes-tab"><i class="bi bi-exclamation-triangle"></i> Reportes</a></li>
+            </ul>
+        </nav>
+        <button class="logout"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</button>
     </div>
-    
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <div class="main-content">
+        <!-- Sección Usuarios -->
+        <section id="usuarios-section">
+            <h1>Usuarios Registrados</h1>
+            <div class="search-container">
+                <input type="text" placeholder="Buscar por nombre o apellido">
+                <button class="search-button">&#128269;</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>DNI</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Correo Electrónico</th>
+                        <th>Número de Teléfono</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Roberto Carlos</td>
+                        <td>Cutipa Perez</td>
+                        <td>73565432</td>
+                        <td>02/09/2024</td>
+                        <td>robertocarloscu@gmail.com</td>
+                        <td>+123456789</td>
+                        <td><button class="view-button">&#128065;</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="footer-text">Mostrando 6 de 1920 registros</p>
+        </section>
+
+        <!-- Sección Categorías -->
+        <section id="categorias-section" style="display: none;">
+            <h1>Categorías</h1>
+            <button class="add-button">Agregar Nueva Categoría</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Cantidad de Anuncios</th>
+                        <th>Fecha de Creación</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Vehículos</td>
+                        <td>Vehículos de primer o segunda mano</td>
+                        <td>150</td>
+                        <td>01/01/2022</td>
+                        <td>
+                            <button class="view-button">&#128065;</button>
+                            <button class="edit-button">&#9998;</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+
+        <!-- Sección Reportes -->
+        <section id="reportes-section" style="display: none;">
+            <h1>Reportes</h1>
+            <div class="report-filter">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Anuncio Reportado</th>
+                        <th>Anunciante</th>
+                        <th>Cantidad de Reportes</th>
+                        <th>Motivo Más Común</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Camioneta Nissan</td>
+                        <td>John Doe</td>
+                        <td>5</td>
+                        <td>Fraude</td>
+                        <td><button class="view-button">&#128065;</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>        
+    </div>
+
     <script src="files/js/script.js"></script>
 </body>
 </html>
