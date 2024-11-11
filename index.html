@@ -17,6 +17,7 @@
         </div>
         <div>
             <a href="#" class="btn btn-custom">Publicar</a>
+            <a href="#" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#addProductModal">Agregar Anuncio</a>
         </div>
     </header>
 </div>
@@ -144,6 +145,53 @@
     </div>
 </div>
 
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Agregar Nuevo Anuncio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addProductForm">
+                    <div class="mb-3">
+                        <label for="productName" class="form-label">Nombre del Producto</label>
+                        <input type="text" class="form-control" id="productName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productPrice" class="form-label">Precio</label>
+                        <input type="text" class="form-control" id="productPrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productDescription" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="productDescription" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productImage" class="form-label">Imagen del Producto</label>
+                        <input type="file" class="form-control" id="productImage" accept="image/*" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Redes Sociales</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="socialWhatsApp">
+                            <label class="form-check-label" for="socialWhatsApp">WhatsApp</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="socialFacebook">
+                            <label class="form-check-label" for="socialFacebook">Facebook</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="socialTwitter">
+                            <label class="form-check-label" for="socialTwitter">Twitter</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Anuncio</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal para mostrar el anuncio -->
 <div class="catalog">
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
@@ -161,17 +209,13 @@
                     <p id="productModalDescription">Descripción</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" id="modalWhatsApp" class="btn btn-sm btn-outline-success">
-                        <i class="bi bi-whatsapp"></i> WhatsApp
+                    <a href="#" id="modalWhatsApp" class="btn btn-sm btn-outline-success bi bi-whatsapp"></i> WhatsApp
                     </a>
-                    <a href="#" id="modalCall" class="btn btn-sm btn-outline-primary">
-                        <i class="bi bi-telephone-fill"></i> Llamar
+                    <a href="#" id="modalCall" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"></i> Llamar
                     </a>
-                    <a href="#" id="modalFacebook" class="btn btn-sm btn-outline-primary color=blue">
-                        <i class="bi bi-facebook"></i> Facebook
+                    <a href="#" id="modalFacebook" class="btn btn-sm btn-outline-primary bi bi-facebook"></i> Facebook
                     </a>
-                    <a href="#" id="modalTwitter" class="btn btn-sm btn-outline-dark">
-                        <i class="bi bi-twitter-x"></i> Twitter
+                    <a href="#" id="modalTwitter" class="btn btn-sm btn-outline-dark bi bi-twitter-x"></i> Twitter
                     </a>
                 </div>
             </div>

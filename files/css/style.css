@@ -681,3 +681,22 @@
   .admin .add-button:focus {
     outline: none;
   }
+
+  .modal-header, .modal-footer {
+    border-bottom: none;
+    border-top: none;
+}
+.card-price {
+    color: #28a745; /* Verde para el precio */
+}
+.product-item .card {
+    border: 1px solid #ddd;
+    transition: transform 0.3s;
+}
+.product-item .card:hover {
+    transform: scale(1.05);
+}
+.product-img {
+    object-fit: cover;
+    height: 150px;
+}

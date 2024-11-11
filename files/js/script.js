@@ -184,3 +184,51 @@ reportButton.addEventListener('click', function () {
     // Mostrar el modal de reporte cuando se hace clic en el botón
     reportModal.show();
 });
+
+document.getElementById('addProductForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Obtener los datos del formulario
+    const productName = document.getElementById('productName').value;
+    const productPrice = document.getElementById('productPrice').value;
+    const productDescription = document.getElementById('productDescription').value;
+    const productImage = document.getElementById('productImage').files[0];
+    
+    // Redes sociales seleccionadas
+    const socialLinks = {
+        whatsapp: document.getElementById('socialWhatsApp').checked,
+        facebook: document.getElementById('socialFacebook').checked,
+        twitter: document.getElementById('socialTwitter').checked,
+    };
+
+    // Crear el contenedor del anuncio
+    const newProduct = document.createElement('div');
+    newProduct.classList.add('col-12', 'col-md-4', 'col-sm-6', 'col-lg-3', 'product-item', 'vehículos');
+
+    // Crear la tarjeta de anuncio
+    const card = `
+        <div class="card h-100">
+            <img src="${URL.createObjectURL(productImage)}" class="card-img-top product-img" alt="${productName}">
+            <div class="card-body">
+                <input type="checkbox" class="product-checkbox form-check-input">
+                <p class="card-price fw-bold text-success">${productPrice}</p>
+                <h5 class="card-title product-title">${productName}</h5>
+                <p class="card-text">${productDescription}</p>
+                <div class="d-flex justify-content-between">
+                    ${socialLinks.whatsapp ? `<a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp" title="WhatsApp"></a>` : ''}
+                    ${socialLinks.facebook ? `<a href="#" class="btn btn-sm btn-outline-primary bi bi-facebook" title="Facebook"></a>` : ''}
+                    ${socialLinks.twitter ? `<a href="#" class="btn btn-sm btn-outline-dark bi bi-twitter" title="Twitter"></a>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+    newProduct.innerHTML = card;
+
+    // Agregar el anuncio al contenedor principal
+    document.getElementById('VehicleContainer').appendChild(newProduct);
+
+    // Cerrar el modal y limpiar el formulario
+    const addProductModal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
+    addProductModal.hide();
+    document.getElementById('addProductForm').reset();
+});
