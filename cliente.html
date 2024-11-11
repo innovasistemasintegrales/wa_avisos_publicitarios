@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="files/css/style.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css"
     rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
 
@@ -159,35 +159,38 @@
                   <form id="editForm">
                     <div class="mb-3">
                       <label for="edit_first_name" class="form-label">Nombre</label>
-                      <input type="text" class="form-control" id="edit_first_name">
+                      <input type="text" class="form-control" id="edit_first_name" minlength="5" maxlength="50"
+                        required>
                     </div>
                     <div class="mb-3">
                       <label for="edit_last_name" class="form-label">Apellido</label>
-                      <input type="text" class="form-control" id="edit_last_name">
+                      <input type="text" class="form-control" id="edit_last_name" minlength="2" maxlength="50" required>
                     </div>
                     <div class="mb-3">
                       <label for="edit_dni" class="form-label">DNI</label>
-                      <input type="text" class="form-control" id="edit_dni">
+                      <input type="text" class="form-control" id="edit_dni" pattern="\d{8,10}"
+                        title="Debe tener entre 8 y 10 dígitos" required>
                     </div>
                     <div class="mb-3">
                       <label for="edit_birth_date" class="form-label">Fecha de Nacimiento</label>
-                      <input type="date" class="form-control" id="edit_birth_date">
+                      <input type="date" class="form-control" id="edit_birth_date" max="2005-12-31" required>
                     </div>
                     <div class="mb-3">
                       <label for="edit_occupation" class="form-label">Ocupación</label>
-                      <input type="text" class="form-control" id="edit_occupation">
+                      <input type="text" class="form-control" id="edit_occupation" maxlength="50">
                     </div>
                     <div class="mb-3">
                       <label for="edit_education" class="form-label">Estudios</label>
-                      <input type="text" class="form-control" id="edit_education">
+                      <input type="text" class="form-control" id="edit_education" maxlength="100">
                     </div>
                     <div class="mb-3">
                       <label for="edit_phone" class="form-label">Teléfono</label>
-                      <input type="text" class="form-control" id="edit_phone">
+                      <input type="text" class="form-control" id="edit_phone" pattern="\d{10}"
+                        title="Debe tener 10 dígitos" required>
                     </div>
                     <div class="mb-3">
                       <label for="edit_email" class="form-label">Correo Electrónico</label>
-                      <input type="email" class="form-control" id="edit_email">
+                      <input type="email" class="form-control" id="edit_email" maxlength="100" required>
                     </div>
                     <div class="mb-3">
                       <label for="profileImageUpload" class="form-label">Imagen de Perfil</label>
@@ -199,13 +202,12 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary cancel-button"
                     data-bs-dismiss="modal">Cancelar</button>
-                  <button type="button" class="btn btn-success save-button" data-bs-dismiss="modal"
+                  <button type="submit" form="editForm" class="btn btn-success save-button"
                     id="saveChangesButton">Guardar Cambios</button>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- Tab Publicaciones -->
           <div class="tab-pane fade show active" id="messages" role="tabpanel" aria-labelledby="messages-tab">
             <h4>Mis Publicaciones</h4>
@@ -243,9 +245,11 @@
                         <label for="postCategory" class="form-label">Categoría</label>
                         <select class="form-select input-field" id="postCategory" required>
                           <option value="" disabled selected>Selecciona una categoría</option>
-                          <option value="vehiculos">Vehículos</option>
-                          <option value="inmuebles">Inmuebles</option>
-                          <option value="trabajo">Trabajo</option>
+                          <option value="Vehiculos">Vehículos</option>
+                          <option value="Inmuebles">Inmuebles</option>
+                          <option value="Oficios">Oficios</option>
+                          <option value="InnovaTrabajos">InnovaTrabajos</option>
+
                         </select>
                       </div>
                       <div class="mb-3">
@@ -289,7 +293,7 @@
                     <form id="premiumPostForm" class="premium-post-form">
                       <div class="mb-3">
                         <label for="premiumPostTitle" class="form-label">Título</label>
-                        <input type="text" class="form-control input-field"   id="premiumPostTitle"
+                        <input type="text" class="form-control input-field" id="premiumPostTitle"
                           placeholder="Escribe el título" required>
                       </div>
                       <div class="mb-3">
@@ -311,7 +315,8 @@
                       <div class="mb-3">
                         <label for="premiumPostVideo" class="form-label">Video</label>
                         <input type="file" class="form-control" id="premiumPostVideo" accept="video/*">
-                        <video id="premiumPostVideoPreview" controls class="mt-2 w-100" style="max-height: 200px; display: none;"></video>
+                        <video id="premiumPostVideoPreview" controls class="mt-2 w-100"
+                          style="max-height: 200px; display: none;"></video>
                       </div>
                       <div class="mb-3">
                         <label for="premiumPostPrice" class="form-label">Precio</label>
@@ -326,10 +331,12 @@
                       <div class="mb-3">
                         <label for="editPremiumPhone" class="form-label">Número de Teléfono</label>
                         <div class="input-group">
-                          <input type="tel" class="form-control input-field" id="editPremiumPhone" placeholder="Ingresa tu número de teléfono">
+                          <input type="tel" class="form-control input-field" id="editPremiumPhone"
+                            placeholder="Ingresa tu número de teléfono">
                           <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
                         </div>
-                        <small class="form-text text-muted">Tu número se mostrará con el ícono de WhatsApp en el anuncio.</small>
+                        <small class="form-text text-muted">Tu número se mostrará con el ícono de WhatsApp en el
+                          anuncio.</small>
                       </div>
                     </form>
                   </div>

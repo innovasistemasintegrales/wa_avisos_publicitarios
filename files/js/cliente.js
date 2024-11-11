@@ -1,3 +1,15 @@
+// Variable para almacenar el plan actual
+let currentPlan = "Gratis";
+
+// Objeto para almacenar los beneficios seleccionados del plan personalizado
+let customBenefits = {
+    video: false,
+    multipleImages: false,
+    extendedDuration: false,
+    whatsappAccess: false,
+    advancedSearch: false
+};
+
 function validateImageCount(images, context = 'new') {
     if (images.length > 5) {
         alert(`Puedes seleccionar un máximo de 5 imágenes por ${context === 'new' ? 'publicación' : 'edición'}.`);
@@ -9,6 +21,7 @@ function validateImageCount(images, context = 'new') {
     }
     return true;
 }
+
 function createCard(title, description, imageSrcs, category, price, id, isPremium = false, videoSrc = null, phoneNumber = null) {
     const card = document.createElement('div');
     card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
@@ -71,7 +84,7 @@ function createCard(title, description, imageSrcs, category, price, id, isPremiu
     });
 
     card.querySelector('.edit-button').addEventListener('click', function () {
-        if (isPremium) {
+        if (isPremium || currentPlan === "Personalizado") {
             fillPremiumEditModal(card.id);
             const editModal = new bootstrap.Modal(document.getElementById('editPremiumModal'));
             editModal.show();
@@ -85,7 +98,6 @@ function createCard(title, description, imageSrcs, category, price, id, isPremiu
     return card;
 }
 
-// Función para truncar la descripción a un número máximo de líneas
 function truncateDescription(text, maxLines) {
     const words = text.split(' ');
     let result = '';
@@ -101,7 +113,6 @@ function truncateDescription(text, maxLines) {
     return result.trim();
 }
 
-// Listener para el botón 'savePostButton'
 document.getElementById('savePostButton').addEventListener('click', function () {
     const title = document.getElementById('postTitle').value;
     const description = document.getElementById('postDescription').value;
@@ -129,7 +140,6 @@ document.getElementById('savePostButton').addEventListener('click', function () 
     }
 });
 
-// Función para actualizar la foto de perfil
 function updateProfilePicture(imageSrc) {
     const profilePicture = document.getElementById('profilePicture');
     if (profilePicture) {
@@ -137,7 +147,6 @@ function updateProfilePicture(imageSrc) {
     }
 }
 
-// Agregar modal de edición al DOM con campo de categoría y precio
 document.body.insertAdjacentHTML('beforeend', `
     <div class="modal fade" id="editModal2" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -180,7 +189,6 @@ document.body.insertAdjacentHTML('beforeend', `
     </div>
 `);
 
-// Función para llenar el modal de edición
 function fillEditModal(cardId) {
     const card = document.getElementById(cardId);
     const editModal = document.getElementById('editModal2');
@@ -194,7 +202,6 @@ function fillEditModal(cardId) {
     editModal.dataset.currentCard = cardId;
 }
 
-// Guardar cambios desde el modal de edición
 document.getElementById('saveEditButton').addEventListener('click', function () {
     const editModal = document.getElementById('editModal2');
     const cardId = editModal.dataset.currentCard;
@@ -233,7 +240,6 @@ document.getElementById('saveEditButton').addEventListener('click', function () 
     }
 });
 
-// Función para mostrar el mensaje de confirmación
 function showConfirmationMessage(card) {
     const message = document.createElement('div');
     message.textContent = 'Su edición ya está realizada';
@@ -256,7 +262,6 @@ function showConfirmationMessage(card) {
     }, 3000);
 }
 
-// Función para actualizar el mensaje de "No hay publicaciones"
 function updateNoPostsMessage() {
     const postContainer = document.getElementById('postContainer');
     const noPostsMessage = document.getElementById('noPostsMessage');
@@ -267,7 +272,6 @@ function updateNoPostsMessage() {
     }
 }
 
-// Función para manejar la carga de la imagen de perfil
 function handleProfileImageUpload() {
     const input = document.getElementById('profileImageUpload');
     const preview = document.getElementById('profileImagePreview');
@@ -287,35 +291,29 @@ function handleProfileImageUpload() {
     });
 }
 
-// Variable para almacenar el plan actual
-let currentPlan = "Gratis";
-
-// Agregar event listeners a los botones de plan
-document.querySelectorAll('.plan-button').forEach(button => {
+document.querySelectorAll('.plan-button, .custom-plan-button').forEach(button => {
     button.addEventListener('click', function(e) {
         e.preventDefault();
-        const newPlan = this.closest('.card').querySelector('.plan-title').textContent;
+        const newPlan = this.closest('.card').querySelector('.card-title').textContent;
         changePlan(newPlan);
     });
 });
 
-// Función para actualizar el uso del modal basado en el plan actual
 function updateModalUsage() {
     const addPostButton = document.querySelector('.add-post-button');
     if (addPostButton) {
         addPostButton.setAttribute('data-bs-target', 
-            currentPlan === "Plus" ? '#addPremiumPostModal' : '#addPostModal');
+            currentPlan === "Plus" ? '#addPremiumPostModal' : 
+            currentPlan === "Personalizado" ? '#addCustomPostModal' : '#addPostModal');
     }
 }
 
-// Función para cambiar el plan
 function changePlan(newPlan) {
     currentPlan = newPlan;
     updatePlanButtons();
     updateModalUsage();
 }
 
-// Función para crear un carrusel de imágenes y video
 function createMediaCarousel(imageSrcs, videoSrc, cardId) {
     if (!Array.isArray(imageSrcs) || imageSrcs.length === 0) {
         return '<img src="/placeholder.svg" class="card-img-top" alt="Placeholder" style="height: 120px; object-fit: cover;">';
@@ -356,7 +354,7 @@ function createMediaCarousel(imageSrcs, videoSrc, cardId) {
                 ${carouselItems}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                <span  class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
@@ -367,25 +365,25 @@ function createMediaCarousel(imageSrcs, videoSrc, cardId) {
     `;
 }
 
-// Función para actualizar los botones de plan
 function updatePlanButtons() {
-    const buttons = document.querySelectorAll('.plan-button');
+    const buttons = document.querySelectorAll('.plan-button, .custom-plan-button');
     buttons.forEach(button => {
-        const planName = button.closest('.card').querySelector('.plan-title').textContent;
+        const planName = button.closest('.card').querySelector('.card-title').textContent;
         const isCurrentPlan = planName === currentPlan;
         
-        if (button.querySelector('.fs-8')) {
-            button.querySelector('.fs-8').textContent = isCurrentPlan ? "Tu Plan Actual" : "Gratis";
-        } else if (button.querySelector('.fs-5')) {
-            button.querySelector('.fs-5').textContent = isCurrentPlan ? "Tu Plan Actual" : "Mejora tu plan a Premium";
+        let buttonText;
+        if (button.classList.contains('custom-plan-button')) {
+            buttonText = isCurrentPlan ? "Tu Plan Actual" : "Activar Plan Personalizado";
+        } else {
+            buttonText = isCurrentPlan ? "Tu Plan Actual" : (planName === "Gratis" ? "Plan Gratis" : "Mejora tu plan a Premium");
         }
         
+        button.querySelector('span').textContent = buttonText;
         button.classList.toggle('btn-success', isCurrentPlan);
         button.classList.toggle('btn-secondary', !isCurrentPlan);
     });
 }
 
-// Añade esta función al principio de tu archivo cliente.js:
 function checkFormElements() {
     const requiredElements = [
         'premiumPostForm',
@@ -411,7 +409,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const savePremiumPostButton = document.getElementById('savePremiumPostButton');
     let selectedImages = [];
 
-    // Función para reiniciar la selección de imágenes
     function resetImageSelection() {
         selectedImages = [];
         imagePreview.innerHTML = '';
@@ -421,7 +418,6 @@ document.addEventListener('DOMContentLoaded', function() {
     imageInput.addEventListener('change', function(event) {
         const files = Array.from(event.target.files);
         
-        // Reiniciar selectedImages si está vacío
         if (imagePreview.children.length === 0) {
             selectedImages = [];
         }
@@ -474,7 +470,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Modificar el evento para guardar una publicación premium
     document.getElementById('savePremiumPostButton').addEventListener('click', function(event) {
         event.preventDefault();
         const form = document.getElementById('premiumPostForm');
@@ -542,14 +537,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
 
-    // Inicialización
     updateNoPostsMessage();
     handleProfileImageUpload();
     updatePlanButtons();
     updateModalUsage();
 });
 
-// Agregar el nuevo modal de edición premium al DOM
 document.body.insertAdjacentHTML('beforeend', `
     <div class="modal fade" id="editPremiumModal" tabindex="-1" aria-labelledby="editPremiumModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -601,7 +594,6 @@ document.body.insertAdjacentHTML('beforeend', `
     </div>
 `);
 
-// Función para llenar el modal de edición premium
 function fillPremiumEditModal(cardId) {
     const card = document.getElementById(cardId);
     const editModal = document.getElementById('editPremiumModal');
@@ -640,7 +632,6 @@ function fillPremiumEditModal(cardId) {
     editModal.dataset.currentCard = cardId;
 }
 
-// Función para agregar una imagen al modal de edición premium
 function addImageToEditPremiumModal(src, index) {
     const imageContainer = document.getElementById('editPremiumImageContainer');
     const imgWrapper = document.createElement('div');
@@ -664,7 +655,6 @@ function addImageToEditPremiumModal(src, index) {
     imageContainer.appendChild(imgWrapper);
 }
 
-// Evento para subir nuevas imágenes en el modal premium
 document.getElementById('editPremiumImageUpload').addEventListener('change', function(event) {
     const files = Array.from(event.target.files);
     const imageContainer = document.getElementById('editPremiumImageContainer');
@@ -672,7 +662,7 @@ document.getElementById('editPremiumImageUpload').addEventListener('change', fun
 
     if (currentImages + files.length > 5) {
         alert('El número total de imágenes no puede exceder 5.');
-        this.value = ''; // Limpiar la selección de archivos
+        this.value = '';
         return;
     }
 
@@ -685,7 +675,6 @@ document.getElementById('editPremiumImageUpload').addEventListener('change', fun
     });
 });
 
-// Evento para guardar cambios en la tarjeta premium
 document.getElementById('savePremiumEditButton').addEventListener('click', function () {
     const editModal = document.getElementById('editPremiumModal');
     const cardId = editModal.dataset.currentCard;
@@ -704,8 +693,6 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
     }
 
     if (newTitle && newDescription && newCategory && newPrice && newImages.length > 0) {
-
-      // Actualizar los datos de la card
       card.querySelector('.card-title').textContent = newTitle;
       card.querySelector('.card-text:nth-child(2)').innerHTML = `<b>Categoría:</b> ${newCategory}`;
       card.querySelector('.card-text:nth-child(3)').innerHTML = `<b>Precio:</b> S/${newPrice}`;
@@ -714,7 +701,6 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
       card.setAttribute('data-images', JSON.stringify(newImages));
       card.setAttribute('data-phone', newPhoneNumber);
   
-      // Actualizar el video si se ha cambiado
       if (newVideoFile) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -726,7 +712,6 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
         updateCardMedia(card, newImages, card.getAttribute('data-video'));
       }
   
-      // Actualizar el número de teléfono
       updatePhoneNumber(card, newPhoneNumber);
   
       showConfirmationMessage(card);
@@ -740,7 +725,7 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
     }
   });
   
-  function updatePhoneNumber(card, phoneNumber) {
+function updatePhoneNumber(card, phoneNumber) {
     let phoneElement = card.querySelector('.card-text a[href^="https://wa.me/"]');
     if (phoneNumber) {
       if (!phoneElement) {
@@ -757,9 +742,8 @@ document.getElementById('savePremiumEditButton').addEventListener('click', funct
     } else if (phoneElement) {
       phoneElement.remove();
     }
-  }
+}
 
-// Función para actualizar el contenido multimedia de la tarjeta
 function updateCardMedia(card, images, videoSrc) {
     const carouselInner = card.querySelector('.carousel-inner');
     carouselInner.innerHTML = '';
@@ -797,7 +781,6 @@ function updateCardMedia(card, images, videoSrc) {
         videoIndicator.setAttribute('aria-label', 'Video');
         carouselIndicators.appendChild(videoIndicator);
     }
-    // Actualizar el badge de imágenes
     const imageBadge = card.querySelector('.badge.bg-info');
     if (imageBadge) {
         imageBadge.textContent = images.length > 1 ? `${images.length} imágenes` : '1 imagen';
@@ -809,16 +792,15 @@ function updateCardMedia(card, images, videoSrc) {
     }
 }
 
-// Agregar evento para previsualizar el video en el modal de creación
 document.getElementById('premiumPostVideo').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const videoPreview = document.getElementById('premiumPostVideoPreview');
     
     if (file) {
-                const reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = function(e) {
             videoPreview.src = e.target.result;
-                        videoPreview.style.display = 'block';
+            videoPreview.style.display = 'block';
         };
         reader.readAsDataURL(file);
     } else {
@@ -827,7 +809,6 @@ document.getElementById('premiumPostVideo').addEventListener('change', function(
     }
 });
 
-// Agregar evento para previsualizar el video en el modal de edición
 document.getElementById('editPremiumVideo').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const videoPreview = document.getElementById('editPremiumVideoPreview');
@@ -845,9 +826,7 @@ document.getElementById('editPremiumVideo').addEventListener('change', function(
     }
 });
 
-// Editar Datos de Perfil
 document.addEventListener('DOMContentLoaded', () => {
-    // Obtener los elementos de los campos de edición y los campos principales
     const editFormFields = {
         first_name: document.getElementById('edit_first_name'),
         last_name: document.getElementById('edit_last_name'),
@@ -870,20 +849,17 @@ document.addEventListener('DOMContentLoaded', () => {
         email: document.getElementById('email')
     };
 
-    // Cargar los datos actuales del formulario principal en el formulario de edición al abrir el modal
     document.getElementById('editModal').addEventListener('show.bs.modal', () => {
         for (const field in editFormFields) {
             editFormFields[field].value = mainFormFields[field].value;
         }
     });
 
-    // Guardar cambios y actualizar los campos en el formulario principal
     document.getElementById('saveChangesButton').addEventListener('click', () => {
         for (const field in editFormFields) {
             mainFormFields[field].value = editFormFields[field].value;
         }
 
-        // Manejar la imagen de perfil
         const profileImageUpload = document.getElementById('profileImageUpload');
         const profileImagePreview = document.getElementById('profileImagePreview');
         const imageFiles = profileImageUpload.files;
@@ -892,9 +868,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
 
             reader.onload = function (e) {
-                // Actualiza la imagen de perfil en el modal
                 profileImagePreview.src = e.target.result;
-                // Actualiza la imagen de perfil del usuario
                 updateProfilePicture(e.target.result);
             };
 
@@ -902,7 +876,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Manejar el cambio de imagen en el modal
     const modalImageUpload = document.getElementById('profileImageUpload');
     modalImageUpload.addEventListener('change', function() {
         const file = this.files[0];
@@ -918,23 +891,155 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-//Escoge tus Beneficios
-// Seleccionar todos los checkboxes
 const checkboxes = document.querySelectorAll('.custom-checkbox');
 const totalPriceElement = document.getElementById('total-price');
 
-// Función para actualizar el precio
 function updatePrice() {
   let total = 0;
   checkboxes.forEach((checkbox) => {
     if (checkbox.checked) {
       total += parseFloat(checkbox.value);
+      customBenefits[checkbox.id.replace('check', '').toLowerCase()] = true;
+    } else {
+      customBenefits[checkbox.id.replace('check', '').toLowerCase()] = false;
     }
   });
   totalPriceElement.textContent = `S/${total}`;
 }
 
-// Añadir evento a cada checkbox para actualizar el precio cuando se selecciona o deselecciona
 checkboxes.forEach((checkbox) => {
   checkbox.addEventListener('change', updatePrice);
+});
+
+function createCustomPostModal() {
+    const modalHTML = `
+        <div class="modal fade" id="addCustomPostModal" tabindex="-1" aria-labelledby="addCustomPostModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addCustomPostModalLabel">Nueva Publicación Personalizada</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="customPostForm">
+                            <div class="mb-3">
+                                <label for="customPostTitle" class="form-label">Título</label>
+                                <input type="text" class="form-control" id="customPostTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="customPostDescription" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="customPostDescription" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="customPostCategory" class="form-label">Categoría</label>
+                                <select class="form-select" id="customPostCategory" required>
+                                    <option value="" disabled selected>Selecciona una categoría</option>
+                                    <option value="vehiculos">Vehículos</option>
+                                    <option value="inmuebles">Inmuebles</option>
+                                    <option value="trabajo">Trabajo</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="customPostPrice" class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="customPostPrice" required>
+                            </div>
+                            ${customBenefits.multipleImages ? `
+                            <div class="mb-3">
+                                <label for="customPostImages" class="form-label">Imágenes (máx. 5)</label>
+                                <input type="file" class="form-control" id="customPostImages" accept="image/*" multiple>
+                            </div>
+                            ` : `
+                            <div class="mb-3">
+                                <label for="customPostImage" class="form-label">Imagen</label>
+                                <input type="file" class="form-control" id="customPostImage" accept="image/*" required>
+                            </div>
+                            `}
+                            ${customBenefits.video ? `
+                            <div class="mb-3">
+                                <label for="customPostVideo" class="form-label">Video</label>
+                                <input type="file" class="form-control" id="customPostVideo" accept="video/*">
+                            </div>
+                            ` : ''}
+                            ${customBenefits.whatsappAccess ? `
+                            <div class="mb-3">
+                                <label for="customPostPhone" class="form-label">Número de WhatsApp</label>
+                                <input type="tel" class="form-control" id="customPostPhone">
+                            </div>
+                            ` : ''}
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="saveCustomPostButton">Guardar Publicación</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    createCustomPostModal();
+    
+    document.getElementById('saveCustomPostButton').addEventListener('click', function() {
+        const form = document.getElementById('customPostForm');
+        if (form.checkValidity()) {
+            const title = document.getElementById('customPostTitle').value;
+            const description = document.getElementById('customPostDescription').value;
+            const category = document.getElementById('customPostCategory').value;
+            const price = document.getElementById('customPostPrice').value;
+            const imageFiles = customBenefits.multipleImages ? document.getElementById('customPostImages').files : document.getElementById('customPostImage').files;
+            const videoFile = customBenefits.video ? document.getElementById('customPostVideo').files[0] : null;
+            const phoneNumber = customBenefits.whatsappAccess ? document.getElementById('customPostPhone').value : null;
+
+            if (title && description && category && price && imageFiles.length > 0) {
+                if (!validateImageCount(Array.from(imageFiles))) {
+                    return;
+                }
+
+                const imageSrcs = [];
+                let loadedImages = 0;
+                let videoSrc = null;
+
+                const processMedia = () => {
+                    if (loadedImages === imageFiles.length && (!videoFile || videoSrc !== null)) {
+                        const postContainer = document.getElementById('postContainer');
+                        const card = createCard(title, description, imageSrcs, category, price, null, true, videoSrc, phoneNumber);
+                        postContainer.appendChild(card);
+                        updateNoPostsMessage();
+                        form.reset();
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('addCustomPostModal'));
+                        modal.hide();
+                    }
+                };
+
+                for (let i = 0; i < imageFiles.length; i++) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        imageSrcs.push(e.target.result);
+                        loadedImages++;
+                        processMedia();
+                    };
+                    reader.readAsDataURL(imageFiles[i]);
+                }
+
+                if (videoFile) {
+                    const videoReader = new FileReader();
+                    videoReader.onload = function (e) {
+                        videoSrc = e.target.result;
+                        processMedia();
+                    };
+                    videoReader.readAsDataURL(videoFile);
+                } else {
+                    processMedia();
+                }
+            } else {
+                alert('Por favor, completa todos los campos requeridos y selecciona al menos una imagen.');
+            }
+        } else {
+            form.reportValidity();
+        }
+    });
 });

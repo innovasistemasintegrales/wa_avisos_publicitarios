@@ -7,58 +7,68 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="files/css/style.css">
-</head>
+</head>  
 <body>
-<div class = catalog>
+<div class="catalog">
     <header class="header-custom p-3 shadow-sm d-flex justify-content-between align-items-center fixed-top">
         <div class="d-flex align-items-center">
-            <button class="btn btn-dark btn-lg" id="sidebarToggle">☰</button>
-            <img src="images/logo.png" alt="Innova" class="ms-3 mb-0" style="max-width: 150px; height: auto;">
+            <button class="btn btn-lg" id="sidebarToggle">☰</button>
+            <img src="files/rec/innova.png" alt="Innova" class="ms-3 mb-0" style="max-width: 150px; height: auto;">
         </div>
         <div>
-            <a href="login.html" class="btn btn-custom">Publicar</a>
+            <a href="#" class="btn btn-custom">Publicar</a>
         </div>
     </header>
 </div>
 
-<div class = catalog>
+<div class="catalog">
     <div class="d-flex">
-        <div id="sidebar" class="text-black p-3 mt-5 hide">
-            <h4 class="text-center mb-4">MENU</h4>
-            <ul class="list-unstyled">
-                <li class="mb-3">
-                    <span class="fw-bold">Categorías</span>
-                    <ul class="list-unstyled ms-3">
-                        <li><a href="#" class="text-black"><i class="bi bi-car-front"></i> Vehículos</a></li>
-                        <li><a href="#" class="text-black"><i class="bi bi-briefcase"></i> InnovaTrabajos</a></li>
-                        <li><a href="#" class="text-black"><i class="bi bi-house-door"></i> Inmueble</a></li>
-                        <li><a href="#" class="text-black"><i class="bi bi-tools"></i> Oficios</a></li>
-                        <li><a href="#" class="text-black"><i class="bi bi-three-dots"></i> ETC</a></li>
-                    </ul>
-                </li>
-                <li class="mb-3">
-                    <span class="fw-bold">Vistas</span>
-                    <div class="view-options ms-3">
-                        <button id="gridViewBtn" class="btn btn-dark btn-outline-light">
-                            <i class="bi bi-grid-fill"></i> Cuadrícula
-                        </button>
-                        <button id="listViewBtn" class="btn btn-dark btn-outline-light">
-                            <i class="bi bi-list"></i> Lista
-                        </button>
-                    </div>
-                </li>
-                <li>
-                    <span class="fw-bold">Descargas</span>
-                    <ul class="list-unstyled ms-3">
-                        <li><a href="#" class="text-black">Avisos PDF y Excel</a></li>
-                        <li><a href="#" class="text-black">Categorías</a></li>
-                    </ul>
-                </li>
-            </ul>
+        <!-- Sidebar convertido en offcanvas con el ID #sidebar -->
+        <div class="offcanvas offcanvas-start text-black" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+            <div class="offcanvas-header">
+            </div>
+            <div class="offcanvas-body p-3">
+                <!-- Contenido del sidebar -->
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <h5 class="fw-bold">Categorías</h5>
+                        <ul class="list-unstyled ms-3">
+                            <li><a href="#" class="text"><i class="bi bi-car-front"></i> Vehículos</a></li>
+                            <li><a href="#" class="text"><i class="bi bi-briefcase"></i> InnovaTrabajos</a></li>
+                            <li><a href="#" class="text"><i class="bi bi-house-door"></i> Inmueble</a></li>
+                            <li><a href="#" class="text"><i class="bi bi-tools"></i> Oficios</a></li>
+                            <li><a href="#" class="text"><i class="bi bi-three-dots"></i> ETC</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Más contenido -->
+                    <li class="mb-3">
+                        <h5 class="fw-bold">Vistas</h5>
+                        <div class="view-options ms-3">
+                            <button id="gridViewBtn" class="btn btn-dark btn-outline-light">
+                                <i class="bi bi-grid-fill"></i> Cuadrícula
+                            </button>
+                            <button id="listViewBtn" class="btn btn-dark btn-outline-light">
+                                <i class="bi bi-list"></i> Lista
+                            </button>
+                        </div>
+                    </li>
+
+                    <!-- Descargas -->
+                    <li class="mb-3">
+                        <h5 class="fw-bold">Descargar</h5>
+                        <ul class="list-unstyled ms-3">
+                            <li><a href="#" class="text no-highlight" id="downloadPdf">Avisos por PDF</a></li>
+                            <li><a href="#" class="text no-highlight" id="downloadExcel">Avisos por Excel</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div id="overlay" class="overlay"></div>
 
+        <!-- Main Content -->
         <div class="container-fluid p-4" id="main-content">
             <div class="container-fluid mt-5">
                 <div class="row justify-content-between align-items-center">
@@ -69,112 +79,108 @@
                         </form>
                     </div>
                     <div class="col-12 col-md-3 mb-3 d-flex justify-content-end">
-                        <button class="btn btn-custom" id="filterButton">Filtrar</button>
+                        <button class="btn btn-custom" id="filterButton">Descargar Anuncios</button>
                     </div>
                 </div>
             </div>
 
-            <div id="productContainer" class="row grid-view">
+        <!-- Products (Grid / List view) -->
+        <div id="VehicleContainer" class="row grid-view">
 
-                <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Camioneta Nissan">
-                        <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="selectProduct1">
-                                <label class="form-check-label" for="selectProduct1">Seleccionar</label>
-                            </div>
-                            <h5 class="card-title">Camioneta Nissan</h5>
-                            <p class="card-text">Auto semi nuevo, poco kilometraje</p>
-                            <p class="card-text"><b>Teléfono:</b> 944972856</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                                <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                            </div>
+            <!-- Vehículos Category -->
+            <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item vehículos">
+                <div class="card h-100" data-product-name="Camioneta Nissan" data-product-description="Auto semi nuevo, poco kilometraje" data-product-image="images/rec/150x150.png" data-product-price="S/.60,000">
+                    <img src="files/rec/150x150.png" class="card-img-top product-img" alt="Camioneta Nissan">
+                    <button class="btn btn-danger position-absolute top-0 start-0 m-2" id="reportButton" title="Reportar Anuncio">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </button>
+                    <div class="card-body">
+                        <input type="checkbox" class="product-checkbox form-check-input">
+                        <p class="card-price fw-bold text-success">S/.60,000</p>
+                        <h5 class="card-title product-title">Camioneta Nissan</h5>
+                        <p class="card-text">Auto semi nuevo, poco kilometraje</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp" title="WhatsApp"></a>
+                            <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill" title="Llamar"></a>
+                            <a href="#" class="btn btn-sm btn-outline-primary bi bi-facebook" title="Facebook"></a>
+                            <a href="#" class="btn btn-sm btn-outline-dark bi bi-twitter-x" title="Twitter"></a>
+
                         </div>
                     </div>
                 </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Nissan Frontier">
-                        <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="selectProduct2">
-                                <label class="form-check-label" for="selectProduct2">Seleccionar</label>
-                            </div>
-                            <h5 class="card-title">Nissan Frontier</h5>
-                            <p class="card-text">Año 2018, pocos kilómetros</p>
-                            <p class="card-text"><b>Teléfono:</b> 933746234</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                                <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                            </div>
-                        </div>
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportModalLabel">Reportar Anuncio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="reportForm">
+                    <div class="mb-3">
+                        <label for="reportReason" class="form-label">Motivo del Reporte</label>
+                        <select class="form-select" id="reportReason" required>
+                            <option value="">Seleccionar motivo...</option>
+                            <option value="Fraude">Fraude</option>
+                            <option value="Información falsa">Información falsa</option>
+                            <option value="Contenido inapropiado">Contenido inapropiado</option>
+                        </select>
                     </div>
+                    <!-- Captcha de Google -->
+                    <div class="g-recaptcha" data-sitekey="TU_CLAVE_DE_SITIO"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" form="reportForm">Enviar Reporte</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para mostrar el anuncio -->
+<div class="catalog">
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="modal-title" id="productModalLabel">Título del anuncio</h5>
+                        <p id="productModalPrice" class="fw-bold text-success mb-0"></p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-                <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Toyota Hilux">
-                        <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="selectProduct3">
-                                <label class="form-check-label" for="selectProduct3">Seleccionar</label>
-                            </div>
-                            <h5 class="card-title">Toyota Hilux</h5>
-                            <p class="card-text">Año 2020, excelente estado</p>
-                            <p class="card-text"><b>Teléfono:</b> 912837462</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                                <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-body">
+                    <img src="" alt="" id="productModalImage" class="img-fluid mb-3">
+                    <p id="productModalDescription">Descripción</p>
                 </div>
-
-                <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Ford Ranger">
-                        <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="selectProduct4">
-                                <label class="form-check-label" for="selectProduct4">Seleccionar</label>
-                            </div>
-                            <h5 class="card-title">Ford Ranger</h5>
-                            <p class="card-text">Año 2019, en excelente estado.</p>
-                            <p class="card-text"><b>Teléfono:</b> 991234567</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                                <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Ford Ranger">
-                        <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="selectProduct5">
-                                <label class="form-check-label" for="selectProduct5">Seleccionar</label>
-                            </div>
-                            <h5 class="card-title">Ford Ranger</h5>
-                            <p class="card-text">Año 2019, en excelente estado.</p>
-                            <p class="card-text"><b>Teléfono:</b> 991234567</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="#" class="btn btn-sm btn-outline-success bi bi-whatsapp"> WhatsApp</a>
-                                <a href="#" class="btn btn-sm btn-outline-primary bi bi-telephone-fill"> Llamar</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <a href="#" id="modalWhatsApp" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="#" id="modalCall" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-telephone-fill"></i> Llamar
+                    </a>
+                    <a href="#" id="modalFacebook" class="btn btn-sm btn-outline-primary color=blue">
+                        <i class="bi bi-facebook"></i> Facebook
+                    </a>
+                    <a href="#" id="modalTwitter" class="btn btn-sm btn-outline-dark">
+                        <i class="bi bi-twitter-x"></i> Twitter
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="files/js/script.js"></script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="files/js/script.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 </html>
