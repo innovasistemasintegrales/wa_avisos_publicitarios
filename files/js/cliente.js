@@ -181,7 +181,7 @@ document.body.insertAdjacentHTML('beforeend', `
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="saveEditButton">Guardar cambios</button>
+                    <button type="button" class="btn btn-primary" id="saveEditButton">Guardar Cambios</button>
                 </div>
             </div>
         </div>
@@ -586,7 +586,7 @@ document.body.insertAdjacentHTML('beforeend', `
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="savePremiumEditButton">Guardar cambios</button>
+                    <button type="button" class="btn btn-primary " id="savePremiumEditButton">Guardar Cambios</button>
                 </div>
             </div>
         </div>
