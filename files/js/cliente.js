@@ -1,5 +1,4 @@
 let currentPlan = "Gratis";
-
 // Objeto para almacenar los beneficios seleccionados del plan personalizado
 let customBenefits = {
     video: false,
@@ -30,6 +29,8 @@ function createCard(title, description, imageSrcs, category, price, id, isPremiu
     if (videoSrc) {
         card.setAttribute('data-video', videoSrc);
     }
+
+    const creationDate = new Date().toLocaleString(); // Obtiene la fecha y hora actual
 
     const premiumBadge = isPremium ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Premium</span>' : '';
     const imageCount = Array.isArray(imageSrcs) ? imageSrcs.length : 1;
@@ -66,6 +67,7 @@ function createCard(title, description, imageSrcs, category, price, id, isPremiu
             <div class="description-wrapper">
                 <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
             </div>
+            <p class="card-text" style="font-size: 0.8rem;"><b>Creado:</b> ${creationDate}</p>
             <br>
             <div class="d-flex justify-content-between">
                 <button class="btn btn-sm btn-outline-danger delete-button">Eliminar</button>
@@ -831,8 +833,7 @@ document.addEventListener('DOMContentLoaded', () => {
         last_name: document.getElementById('edit_last_name'),
         dni: document.getElementById('edit_dni'),
         birth_date: document.getElementById('edit_birth_date'),
-        occupation: document.getElementById('edit_occupation'),
-        education: document.getElementById('edit_education'),
+   
         phone: document.getElementById('edit_phone'),
         email: document.getElementById('edit_email')
     };
@@ -842,8 +843,7 @@ document.addEventListener('DOMContentLoaded', () => {
         last_name: document.getElementById('last_name'),
         dni: document.getElementById('dni'),
         birth_date: document.getElementById('birth_date'),
-        occupation: document.getElementById('occupation'),
-        education: document.getElementById('education'),
+  
         phone: document.getElementById('phone'),
         email: document.getElementById('email')
     };
@@ -855,8 +855,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('saveChangesButton').addEventListener('click', () => {
-        for (const field in editFormFields) {
-            mainFormFields[field].value = editFormFields[field].value;
+        // Verificar si todos los campos requeridos están llenos
+        const allFieldsFilled = Object.values(editFormFields).every(field => field.value.trim() !== '');
+    
+        if (allFieldsFilled) {
+            for (const field in editFormFields) {
+                mainFormFields[field].value = editFormFields[field].value;
+            }
+            // Aquí podrías agregar código para enviar los datos al servidor
+            alert('Todos los campos han sido actualizados.');
+            // Cerrar el modal
+            bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+        } else {
+            alert('Por favor, completa todos los campos antes de guardar.');
         }
 
         const profileImageUpload = document.getElementById('profileImageUpload');

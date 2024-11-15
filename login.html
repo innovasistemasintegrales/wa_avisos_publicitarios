@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Innova</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="files/css/style.css">
 </head>
+
 <body>
     <img class="wave login-wave" src="images/wave.png">
     <div class="container login-container">
@@ -18,7 +21,7 @@
             <form action="cliente.html" method="GET" class="login-form">
                 <img class="logo-innova login-logo" src="images/logo.png">
                 <h1 class="title login-title">Bienvenido a Innova Clasificados</h1>
-                
+
                 <!-- Campo de Usuario -->
                 <div class="mb-3 login-input-group">
                     <label for="username" class="form-label login-label">Usuario</label>
@@ -31,62 +34,90 @@
                     <input type="password" class="form-control login-input" id="password" required>
                 </div>
 
-            
 
-                <a href="#" data-bs-toggle="modal" data-bs-target="#registrationModal" class="login-register-link">¿No tienes Cuenta? Registrarse</a>
+
+                <a href="#" data-bs-toggle="modal" data-bs-target="#registrationModal" class="login-register-link">¿No
+                    tienes Cuenta? Registrarse</a>
                 <button type="submit" class="login-submit-btn">Iniciar Sesión</button>
             </form>
         </div>
     </div>
 
     <!-- Modal de Registro -->
-<div class="modal fade" id="registrationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable"> <!-- Clase del modal scrollable -->
-        <div class="modal-content login-modal-content">
-            <div class="modal-header login-modal-header">
-                <h5 class="modal-title login-modal-title" id="registrationModalLabel">Registro</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body login-modal-body">
-                <form class="login-registration-form">
-                    <div class="mb-3 login-input-group">
-                        <label for="dni" class="form-label login-label">DNI o Carnet de Extranjería</label>
-                        <input type="text" class="form-control login-input" id="dni" required>
-                    </div>
-                    <div class="mb-3 login-input-group">
-                        <label for="firstname" class="form-label login-label">Nombre</label>
-                        <input type="text" class="form-control login-input" id="firstname" required>
-                    </div>
-                    <div class="mb-3 login-input-group">
-                        <label for="lastname" class="form-label login-label">Apellido</label>
-                        <input type="text" class="form-control login-input" id="lastname" required>
-                    </div>
-                    <div class="mb-3 login-input-group">
-                        <label for="registerPassword" class="form-label login-label">Contraseña</label>
-                        <input type="password" class="form-control login-input" id="registerPassword" required>
-                    </div>
-                    <div class="mb-3 login-input-group">
-                        <label for="birthdate" class="form-label login-label">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control login-input" id="birthdate" required>
-                    </div>
-                    <div class="mb-3 login-input-group">
-                        <label for="email" class="form-label login-label">Correo Electrónico</label>
-                        <input type="email" class="form-control login-input" id="email" required>
-                    </div>
-                    <div class="mb-3 login-input-group">
-                        <label for="phone" class="form-label login-label">Número de Teléfono</label>
-                        <input type="tel" class="form-control login-input" id="phone" required>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer login-modal-footer">
-                <button type="button" class="btn btn-primary login-submit-btn">Registrarse</button>
+    <div class="modal fade" id="registrationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="registrationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content login-modal-content">
+                <div class="modal-header login-modal-header">
+                    <h5 class="modal-title login-modal-title" id="registrationModalLabel">Registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body login-modal-body">
+                    <form class="login-registration-form" id="registrationForm" novalidate>
+                        <div class="mb-3 login-input-group">
+                            <label for="dni" class="form-label login-label">DNI o Carnet de Extranjería</label>
+                            <input type="text" class="form-control login-input" id="dni" minlength="8" maxlength="12"
+                                pattern="[0-9]+" required title="El DNI debe contener entre 8 y 12 dígitos numéricos.">
+                            <div class="invalid-feedback">El DNI debe contener  8 dígitos numéricos.</div>
+                        </div>
+                        <div class="mb-3 login-input-group">
+                            <label for="firstname" class="form-label login-label">Nombre</label>
+                            <input type="text" class="form-control login-input" id="firstname" maxlength="50"
+                                pattern="^[A-Za-zÀ-ÿ\u00f1\u00d1\s]+$" required
+                                title="El nombre debe contener solo letras y espacios (máximo 50 caracteres).">
+                            <div class="invalid-feedback">El nombre debe contener solo letras y espacios (máximo 50
+                                caracteres).</div>
+                        </div>
+                        <div class="mb-3 login-input-group">
+                            <label for="lastname" class="form-label login-label">Apellido</label>
+                            <input type="text" class="form-control login-input" id="lastname" maxlength="50"
+                                pattern="^[A-Za-zÀ-ÿ\u00f1\u00d1\s]+$" required
+                                title="El apellido debe contener solo letras y espacios (máximo 50 caracteres).">
+                            <div class="invalid-feedback">El apellido debe contener solo letras y espacios (máximo 50
+                                caracteres).</div>
+                        </div>
+                        <div class="mb-3 login-input-group">
+                            <label for="registerPassword" class="form-label login-label">Contraseña</label>
+                            <input type="password" class="form-control login-input" id="registerPassword" minlength="8"
+                                maxlength="20" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&#]).{8,}" required
+                                title="La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una minúscula, un número y un carácter especial.">
+                            <div class="invalid-feedback">La contraseña debe tener al menos 8 caracteres, incluyendo una
+                                letra mayúscula, una minúscula, un número y un carácter especial.</div>
+                        </div>
+                        <div class="mb-3 login-input-group">
+                            <label for="birthdate" class="form-label login-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control login-input" id="birthdate" required>
+                            <div class="invalid-feedback">Debes tener al menos 18 años para registrarte.</div>
+                        </div>
+                        <div class="mb-3 login-input-group">
+                            <label for="email" class="form-label login-label">Correo Electrónico</label>
+                            <input type="email" class="form-control login-input" id="email" maxlength="100" required>
+                            <div class="invalid-feedback">Introduce un correo electrónico válido.</div>
+                        </div>
+                        <div class="mb-3 login-input-group">
+                            <label for="phone" class="form-label login-label">Número de Teléfono</label>
+                            <input type="tel" class="form-control login-input" id="phone" minlength="9" maxlength="15"
+                                pattern="^[0-9]+$" required
+                                title="El número de teléfono debe contener solo dígitos (entre 9 y 15 caracteres).">
+                            <div class="invalid-feedback">El número de teléfono debe contener solo dígitos (entre 9 y 15
+                                caracteres).</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer login-modal-footer">
+                    <button type="button" class="btn btn-primary login-submit-btn"
+                        onclick="validateForm()">Registrarse</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="files/js/script.js"></script>
 </body>
+
 </html>
