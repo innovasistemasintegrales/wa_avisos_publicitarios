@@ -16,8 +16,7 @@
             <img src="files/rec/innova.png" alt="Innova" class="ms-3 mb-0" style="max-width: 150px; height: auto;">
         </div>
         <div>
-            <a href="#" class="btn btn-custom">Publicar</a>
-            <a href="#" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#addProductModal">Agregar Anuncio</a>
+            <a href="login.html" class="btn btn-custom">Publicar</a>
         </div>
     </header>
 </div>
@@ -92,8 +91,6 @@
             <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item vehículos">
                 <div class="card h-100" data-product-name="Camioneta Nissan" data-product-description="Auto semi nuevo, poco kilometraje" data-product-image="images/rec/150x150.png" data-product-price="S/.60,000">
                     <img src="files/rec/150x150.png" class="card-img-top product-img" alt="Camioneta Nissan">
-                    <button class="btn btn-danger position-absolute top-0 start-0 m-2" id="reportButton" title="Reportar Anuncio">
-                        <i class="bi bi-exclamation-triangle-fill"></i>
                     </button>
                     <div class="card-body">
                         <input type="checkbox" class="product-checkbox form-check-input">
@@ -110,83 +107,6 @@
                     </div>
                 </div>
             </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reportModalLabel">Reportar Anuncio</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="reportForm">
-                    <div class="mb-3">
-                        <label for="reportReason" class="form-label">Motivo del Reporte</label>
-                        <select class="form-select" id="reportReason" required>
-                            <option value="">Seleccionar motivo...</option>
-                            <option value="Fraude">Fraude</option>
-                            <option value="Información falsa">Información falsa</option>
-                            <option value="Contenido inapropiado">Contenido inapropiado</option>
-                        </select>
-                    </div>
-                    <!-- Captcha de Google -->
-                    <div class="g-recaptcha" data-sitekey="TU_CLAVE_DE_SITIO"></div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" form="reportForm">Enviar Reporte</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addProductModalLabel">Agregar Nuevo Anuncio</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addProductForm">
-                    <div class="mb-3">
-                        <label for="productName" class="form-label">Nombre del Producto</label>
-                        <input type="text" class="form-control" id="productName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="productPrice" class="form-label">Precio</label>
-                        <input type="text" class="form-control" id="productPrice" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="productDescription" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="productDescription" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="productImage" class="form-label">Imagen del Producto</label>
-                        <input type="file" class="form-control" id="productImage" accept="image/*" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Redes Sociales</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="socialWhatsApp">
-                            <label class="form-check-label" for="socialWhatsApp">WhatsApp</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="socialFacebook">
-                            <label class="form-check-label" for="socialFacebook">Facebook</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="socialTwitter">
-                            <label class="form-check-label" for="socialTwitter">Twitter</label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Agregar Anuncio</button>
-                </form>
             </div>
         </div>
     </div>
