@@ -252,13 +252,15 @@ body{
 
 /* CSS para Cliente*/
 
-.profile-image-container {
+/* CSS para Cliente */
+
+.cliente .profile-image-container {
   width: 100%;
   max-width: 200px;
   margin: 0 auto;
 }
 
-.image-wrapper {
+.cliente .image-wrapper {
   width: 100%;
   padding-top: 100%; /* Esto crea un contenedor cuadrado */
   position: relative;
@@ -267,7 +269,7 @@ body{
   margin-bottom: 10px;
 }
 
-.profile-avatar {
+.cliente .profile-avatar {
   position: absolute;
   top: 0;
   left: 0;
@@ -275,24 +277,28 @@ body{
   height: 100%;
   object-fit: cover; /* Esto asegura que la imagen cubra todo el espacio sin distorsionarse */
 }
-.image-preview {
+
+.cliente .image-preview {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
-.image-preview-item {
+
+.cliente .image-preview-item {
   position: relative;
   width: 100px;
   height: 100px;
 }
-.image-preview-item img {
+
+.cliente .image-preview-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 4px;
 }
-.remove-image {
+
+.cliente .remove-image {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -303,93 +309,91 @@ body{
   font-size: 12px;
   cursor: pointer;
 }
-.card {
+
+.cliente .card {
   margin-top: 20px;
 }
-#postContainer {
+
+.cliente #postContainer {
   margin-top: 20px;
 }
-.cancel-button {
+
+.cliente .cancel-button {
   background-color: transparent;
   border: 2px solid var(--color2);
   color: var(--color2);
 }
 
-.cancel-button:hover {
+.cliente .cancel-button:hover {
   background-color: var(--color2); 
   color: white; 
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
-  border: 2px solid var(--background-color)}
-
-.save-button {
-  background-color: transparent;
-  border: 2px solid var(--color1);
-  color: var(--color1);}
-
-.save-button:hover {
-  background-color: var(--color1); 
-  color: white; 
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
-  border: 2px solid var(--color1)}
-
-.edit-button{
-  background-color: transparent;
-  border: 2px solid var(--color1);
-  color: var(--color1); 
-}
-.edit-button:hover {
-  background-color: var(--color1); 
-  color: white; 
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
-  border: 2px solid var(--color1)
+  border: 2px solid var(--background-color);
 }
 
-.close-button {
-  background-color: transparent;
-  border: 2px solid var(--color2);
-  color: var(--color2); 
-}
-
-.close-button:hover {
-  background-color: var(--color2); 
-  color: white; 
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
-  border: 2px solid var(--background-color)
-}
-.close-button {
-  background-color: transparent;
-  border: 2px solid var(--color2);
-  color: var(--color2); 
-}
-
-.close-button:hover {
-  background-color: var(--color2); 
-  color: white; 
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
-  border: 2px solid var(--background-color)
-}
-.save-post-button{
+.cliente .save-button {
   background-color: transparent;
   border: 2px solid var(--color1);
   color: var(--color1);
 }
-.save-post-button:hover {
+
+.cliente .save-button:hover {
   background-color: var(--color1); 
   color: white; 
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
-  border: 2px solid var(--color1)
+  border: 2px solid var(--color1);
 }
-.plan-button {
+
+.cliente .edit-button {
+  background-color: transparent;
+  border: 2px solid var(--color1);
+  color: var(--color1); 
+}
+
+.cliente .edit-button:hover {
+  background-color: var(--color1); 
+  color: white; 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+  border: 2px solid var(--color1);
+}
+
+.cliente .close-button {
+  background-color: transparent;
+  border: 2px solid var(--color2);
+  color: var(--color2); 
+}
+
+.cliente .close-button:hover {
+  background-color: var(--color2); 
+  color: white; 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+  border: 2px solid var(--background-color);
+}
+
+.cliente .save-post-button {
+  background-color: transparent;
+  border: 2px solid var(--color1);
+  color: var(--color1);
+}
+
+.cliente .save-post-button:hover {
+  background-color: var(--color1); 
+  color: white; 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+  border: 2px solid var(--color1);
+}
+
+.cliente .plan-button {
   border: 1px solid var(--color1); /* Borde con color definido */
   border-radius: var(--btn-radius); /* Bordes redondeados */
 }
-.btn-edit {
+
+.cliente .btn-edit {
   background-color: var(--color1); 
   border: 2px solid var(--color1); /* Borde con color principal */
   color: var(--text-color); 
@@ -402,29 +406,27 @@ body{
   transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.btn-edit:hover {
+.cliente .btn-edit:hover {
   background-color: var(--color1); 
   color: white; 
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
 }
 
-
-.nav-button {
+.cliente .nav-button {
   background-color: transparent; 
   color: black; 
   transition: background-color 0.3s ease, color 0.3s ease;
   margin-bottom: 10px; /* Espacio entre los botones */
 }
 
-.nav-button.active,
-.nav-button:hover {
+.cliente .nav-button.active,
+.cliente .nav-button:hover {
   background-color: var(--color1); 
   color: white; 
 }
 
-
-.add-post-button {
+.cliente .add-post-button {
   background-color: var(--color1); 
   color: black; 
   font-size: 1.2rem; 
@@ -435,13 +437,12 @@ body{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-
-.product-item {
+.cliente .product-item {
   margin: 0; /* Elimina el margen entre las tarjetas */
   padding: 0; /* Asegúrate de que no haya padding extra */
 }
 
-.description-container {
+.cliente .description-container {
   display: -webkit-box;
   -webkit-line-clamp: 3; /* Número de líneas permitidas */
   line-clamp: 3;
@@ -450,7 +451,7 @@ body{
   text-overflow: ellipsis;
 }
 
-#noPostsMessage {
+.cliente #noPostsMessage {
   border-radius: var(--btn-radius); /* Bordes redondeados */
   padding: 15px 20px; /* Aumentado el espaciado interno para darle más aire */
   margin-top: 10px; /* Más espacio superior */
@@ -466,59 +467,57 @@ body{
   border: 2px solid var(--color1); /* Ajusta el color al que prefieras */
 }
 
-
-#noPostsMessage:hover {
+.cliente #noPostsMessage:hover {
   transform: translateY(-5px); /* Efecto de levantamiento */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más intensa en hover */
 }
 
 /* Responsividad */
 @media (max-width: 768px) {
-  #noPostsMessage {
+  .cliente #noPostsMessage {
       max-width: 90%; /* Ancho ajustado para pantallas pequeñas */
       font-size: 0.9rem; /* Reducir tamaño de fuente en pantallas pequeñas */
       padding: 12px 15px; /* Ajuste de padding */
   }
 }
 
-
-.plan-card, .custom-plan-card {
+.cliente .plan-card, .cliente .custom-plan-card {
   max-width: 400px; /* Ajusta el ancho máximo */
   width: 100%; /* Para asegurarte de que ocupe el 100% de su contenedor */
   border-radius: 15px; /* Esquinas redondeadas más pronunciadas */
   transition: transform 0.3s, box-shadow 0.3s; /* Transición para efectos al pasar el mouse */
 }
 
-.plan-card:hover, .custom-plan-card:hover {
+.cliente .plan-card:hover, .cliente .custom-plan-card:hover {
   transform: translateY(-5px); 
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
 }
 
-.plan-title {
+.cliente .plan-title {
   font-size: 1.5rem; 
 }
 
-.plan-feature {
+.cliente .plan-feature {
   background-color: #f8f9fa; /* Color de fondo para resaltar características */
   border: 1px solid #dee2e6; /* Borde sutil */
   border-radius: 10px; /* Esquinas redondeadas */
 }
 
-.custom-plan-card {
+.cliente .custom-plan-card {
   background-color: #ffffff; /* Fondo blanco para personalización */
   border: 1px solid #ced4da; /* Borde sutil */
 }
 
-.logo-col {
+.cliente .logo-col {
   background-color: var(--background-color);
-  
 }
 
-.sidebar{
-background-color: white
+.cliente .sidebar {
+  background-color: white;
 }
-.title-col{
-background-color: var(--background-color);
+
+.cliente .title-col {
+  background-color: var(--background-color);
 }
 
 /*estilos para index*/
