@@ -1354,7 +1354,7 @@ body{
 .admin table {
   border-collapse: collapse;
   margin-bottom: 10px;
-  border: 2px solid #00B74A;
+  border: 2px solid #ddd;
   background-color: #fff;
   table-layout: auto; /* Permite que las celdas se ajusten automáticamente */
   margin: 0 auto; /* Centra la tabla si es más pequeña que el contenedor */
@@ -1412,8 +1412,8 @@ body{
   margin-top: auto;
   padding: 10px 20px;
   background: transparent;
-  color: red;
-  border: 1px solid red; /* Borde rojo */
+  color: var(--color2);
+  border: 1px solid var(--color2); /* Borde rojo */
   cursor: pointer;
   width: 100%;
   text-align: left;
@@ -1423,7 +1423,7 @@ body{
 }
 
 .admin .logout:hover {
-  background-color: red;
+  background-color: var(--color2);
   color: white;
   border-color: darkred; /* Cambia el color del borde al pasar el ratón */
 }
