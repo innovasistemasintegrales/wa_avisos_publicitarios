@@ -7,7 +7,7 @@
     --color1:#00B74A;
     --color2:#D50032;
     --color3:#32CD32;
-    --hover-color: #006b50;
+    --hover-color: #00b74a;
     --background-color: #B0BEC5;
     --text-color: #000000;
     --font-family: 'Poppins', sans-serif;
@@ -249,8 +249,6 @@ body{
 	background-color: var(--color)
     
 }
-
-/* CSS para Cliente*/
 
 /* CSS para Cliente */
 
@@ -878,12 +876,12 @@ body{
 }
 
 /* Hide product checkboxes by default */
-.product-checkbox {
+.catalog .product-checkbox {
     display: none;
 }
 
 /* Styling for product checkboxes when they are shown */
-.product-checkbox {
+.catalog .product-checkbox {
     appearance: none; /* Remove default checkbox style */
     width: 20px;
     height: 20px;
@@ -895,12 +893,12 @@ body{
     transition: background-color 0.3s ease, border-color 0.3s ease;
 } 
 
-.product-checkbox:checked {
+.catalog .product-checkbox:checked {
     background-color: var(--hover-color);
     border-color: var(--hover-color);
 }
 
-.product-checkbox:after {
+.catalog .product-checkbox:after {
     content: '';
     position: absolute;
     top: 3px;
@@ -914,42 +912,86 @@ body{
     transition: opacity 0.3s ease;
 }
 
-.product-checkbox:checked:after {
+.catalog .product-checkbox:checked:after {
     opacity: 1;
 }
 
-.product-checkbox:hover {
+.catalog .product-checkbox:hover {
     background-color: var(--hover-color);
     border-color: var(--hover-color);
 }
 
 /* Estilos globales (fuentes, márgenes, etc.) */
-* {
-    font-family: Arial, sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Estilos para el contenedor admin */
-  .admin {
-    display: flex;
-    background-color: #f9f9f9;
-    color: #333;
-  }
-  
-/* Sidebar */
+:root {
+  --hover-color: #00B74A;
+  --background-color: #D9DED8;
+  --text-color: #333;
+  --font-family: 'Poppins', sans-serif;
+  --btn-radius: 8px;
+}
+
+/* Aplicar estilos globales */
+.admin body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+}
+
+/* Estilos para el contenedor admin */
+.admin {
+  display: flex;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  flex-wrap: wrap; /* Esto permite que los elementos se acomoden mejor en pantallas pequeñas */
+}
+
+.admin .sidebar .profile .avatar-container {
+  width: 100%;
+  max-width: 250px; /* Aumenta el tamaño máximo */
+  margin: 0 auto; /* Centra horizontalmente */
+}
+
+.admin .sidebar .profile .image-wrapper {
+  width: 100%;
+  padding-top: 100%; /* Mantiene un contenedor cuadrado */
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%; /* Mantiene la forma circular */
+  margin-bottom: 15px; /* Añade un pequeño margen debajo */
+}
+
+.admin .sidebar .profile .avatar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Se asegura de que la imagen llene el contenedor sin deformarse */
+  border-radius: 50%; /* Hace que la imagen también sea circular */
+  border: 5px solid #CCCCCC; /* Ajusta el grosor del borde si es necesario */
+}
+
+.admin .sidebar .profile h2 {
+  font-size: 2rem; /* Ajusta el tamaño del nombre para complementar el nuevo tamaño del avatar */
+  margin-top: 15px;
+}
+
+.admin .sidebar .profile p {
+  font-size: 1rem;
+  color: #777;
+}
+
 .admin .sidebar {
-  width: 220px;
-  background-color: #FFFFFF;
-  color: #333;
+  width: 300px;
+  background-color: white;
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Asegura que todo el contenido del sidebar esté centrado */
   padding: 20px;
   height: 100vh;
-  border: 1px solid #E0E0E0;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -971,7 +1013,7 @@ body{
 .admin .profile h2 {
   font-size: 18px;
   margin-bottom: 5px;
-  color: #333;
+  color: var(--text-color);
 }
 
 .admin .profile p {
@@ -997,17 +1039,17 @@ body{
 }
 
 .admin nav ul li a {
-  color: #333;
+  color: var(--text-color);
   text-decoration: none;
   padding: 12px 20px;
   display: flex;
   align-items: center;
   font-size: 16px;
   background: transparent;
-  border-radius: 8px;
+  border-radius: var(--btn-radius);
   transition: background 0.3s;
   justify-content: left;
-  border: 1px solid #E0E0E0;
+  border: 0px solid #E0E0E0;
   font-weight: 500;
 }
 
@@ -1017,47 +1059,32 @@ body{
 }
 
 .admin nav ul li a:hover {
-  background-color: #F5F5F5;
+  background-color: var(--hover-color);
+  color: white;
 }
 
 .admin nav ul li a.active {
-  background-color: #00B74A;
+  background-color: var(--hover-color);
   color: white;
-  border: 1px solid #00B74A;
 }
 
-.admin nav ul li a.active:hover {
-  background-color: #00B74A;
-}
-  
-  /* Estilo para el hover y la sección activa */
-  .admin .button-container {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #E0E0E0;
-    border-radius: 8px;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    background-color: #FFFFFF;
-  }
-  
 /* Botón de cierre de sesión */
 .admin .logout {
   margin-top: auto;
   padding: 10px 20px;
   background: transparent;
-  color: #333;
-  border: none;
+  color: var(--text-color);
+  border: 1px solid #E0E0E0;
   cursor: pointer;
   width: 100%;
   text-align: left;
-  border-radius: 5px;
+  border-radius: var(--btn-radius);
   font-size: 16px;
   transition: background 0.3s;
 }
 
 .admin .logout:hover {
-  background-color: #00B74A;
+  background-color: red;
   color: white;
 }
 
@@ -1068,24 +1095,24 @@ body{
   gap: 10px;
   width: 100%;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: var(--btn-radius);
   background-color: #FFFFFF;
 }
 
 /* Estilos para los botones en el contenedor */
 .admin .button-container a {
-  color: #333;
+  color: var(--text-color);
   text-decoration: none;
   padding: 12px 20px;
   display: flex;
   align-items: center;
   font-size: 16px;
   background: transparent;
-  border-radius: 8px;
+  border-radius: var(--btn-radius);
   transition: background 0.3s;
   justify-content: left;
   font-weight: 500;
-  border: none; /* Elimina el borde de los botones */
+  border: 1px solid transparent;
 }
 
 .admin .button-container a i {
@@ -1094,160 +1121,309 @@ body{
 }
 
 /* Efecto hover para los botones */
-.admin .button-container a:hover {
-  background-color: #F5F5F5;
-}
-
+.admin .button-container a:hover,
 .admin .button-container a.active {
-  background-color: #00B74A;
+  background-color: var(--hover-color);
   color: white;
 }
 
-.admin .button-container a.active:hover {
-  background-color: #00B74A;
+/* Contenido principal */
+.admin .main-content {
+  flex: 1;
+  padding: 20px 40px;
+  background-color: #ffffff;
 }
 
-  /* Contenido principal */
+.admin .main-content h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+/* Caja de búsqueda */
+.admin .search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin .search-container input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: var(--btn-radius) 0 0 var(--btn-radius);
+  outline: none;
+}
+
+.admin .search-container .search-button {
+  padding: 10px;
+  background-color: var(--hover-color);
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 0 var(--btn-radius) var(--btn-radius) 0;
+}
+
+/* Mejora de diseño de tablas */
+.admin table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.admin table th,
+.admin table td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin table th {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin table td {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+/* Botones de acción en tablas */
+.admin button.view-button,
+.admin button.edit-button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+}
+
+.admin button.view-button:hover,
+.admin button.edit-button:hover {
+  background-color: var(--hover-color);
+  color: white;
+}
+
+/* Botón de Editar en Categorías */
+.admin .edit-button {
+  background-color: var(--hover-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--btn-radius);
+}
+
+.admin .edit-button:hover {
+  background-color: #008c3a;
+}
+
+/* Texto de pie en tablas */
+.admin .footer-text {
+  text-align: left;
+  font-size: 14px;
+  color: #777;
+  margin-top: 20px;
+}
+
+/* Estilo para el botón Agregar Nueva Categoría */
+.admin .add-button {
+  padding: 12px 20px;
+  background-color: var(--hover-color);
+  color: white;
+  border: none;
+  border-radius: var(--btn-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin .add-button:hover {
+  background-color: #008c3a;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.admin .add-button i {
+  font-size: 20px;
+}
+
+.admin .add-button:focus {
+  outline: none;
+}
+
+/* Media Queries para Pantallas Pequeñas */
+@media (max-width: 768px) {
+  /* Hacer que el sidebar ocupe todo el ancho en pantallas pequeñas */
+  .admin .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+  }
+
+  /* Cambiar la disposición del contenedor principal a vertical */
+  .admin {
+    flex-direction: column;
+  }
+
+  /* Asegurarse de que el contenido principal tenga el 100% de altura */
   .admin .main-content {
-    flex: 1;
-    padding: 20px 40px;
-    background-color: #ffffff;
+    width: 100%;
+    padding: 20px;
   }
-  
+
+  /* Ajustar el tamaño de las fuentes y márgenes */
   .admin .main-content h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #3a3a3a;
-  }
-  
-  /* Caja de búsqueda */
-  .admin .search-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .admin .search-container input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px 0 0 5px;
-    outline: none;
-  }
-  
-  .admin .search-container .search-button {
-    padding: 10px;
-    background-color: #4caf50;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 0 5px 5px 0;
-  }
-  
-  /* Mejora de diseño de tablas */
-  .admin table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  }
-  
-  .admin table th,
-  .admin table td {
-    padding: 12px 10px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .admin table th {
-    font-size: 14px;
-    font-weight: 600;
-  }
-  
-  .admin table td {
-    font-size: 14px;
-    color: #444;
-  }
-  
-  /* Botones de acción en tablas */
-  .admin button.view-button,
-  .admin button.edit-button {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .admin button.view-button:hover,
-  .admin button.edit-button:hover {
-    background-color: #00B74A;
-    color: white;
-  }
-  
-  /* Botón de Editar en Categorías */
-  .admin .edit-button {
-    background-color: #00B74A;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-  }
-  
-  .admin .edit-button:hover {
-    background-color: #008c3a;
-  }
-  
-  /* Texto de pie en tablas */
-  .admin .footer-text {
-    text-align: left;
-    font-size: 14px;
-    color: #777;
-    margin-top: 20px;
-  }
-  
-  /* Mejora en botones de navegación y sesión */
-  .admin nav ul li a.active,
-  .admin nav ul li a:hover,
-  .admin .logout:hover {
-    background-color: #00B74A;
-    color: white;
-  }
-  
-  /* Efecto de hover para el botón de cerrar sesión */
-  .admin .logout:hover {
-    background-color: red;
-    color: white;
-  }
-  
-  /* Estilo para el botón Agregar Nueva Categoría */
-  .admin .add-button {
-    padding: 12px 20px;
-    background-color: #00B74A;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .admin .add-button:hover {
-    background-color: #008c3a;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .admin .add-button i {
     font-size: 20px;
   }
-  
-  .admin .add-button:focus {
-    outline: none;
+
+  .admin nav ul li a {
+    font-size: 14px;
+    padding: 10px 15px;
   }
+
+  .admin .button-container a {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .admin table th, .admin table td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  /* Ajustar la caja de búsqueda */
+  .admin .search-container {
+    flex-direction: column;
+  }
+
+  .admin .search-container input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .admin .search-container .search-button {
+    width: 100%;
+  }
+
+  /* Cambiar el botón de agregar a pantalla completa */
+  .admin .add-button {
+    width: 100%;
+    padding: 10px 15px;
+  }
+
+  /* Asegurarse de que los botones de acción sean más pequeños */
+  .admin button.view-button,
+  .admin button.edit-button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin .sidebar {
+    width: 100%;
+    height: auto;
+  }
+
+  .admin .avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .admin .profile h2 {
+    font-size: 16px;
+  }
+
+  .admin .profile p {
+    font-size: 12px;
+  }
+
+  .admin .logout {
+    padding: 8px 16px;
+  }
+}
+
+.admin table {
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  border: 2px solid #00B74A;
+  background-color: #fff;
+  table-layout: auto; /* Permite que las celdas se ajusten automáticamente */
+  margin: 0 auto; /* Centra la tabla si es más pequeña que el contenedor */
+}
+
+.admin table th,
+.admin table td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin table th {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin table td {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+
+/* Media Queries para Pantallas Pequeñas */
+@media (max-width: 768px) {
+  .admin table {
+    width: 100%;
+    overflow-x: auto; /* Asegura que la tabla se pueda desplazar horizontalmente en pantallas pequeñas */
+    display: block; /* Permite que la tabla tenga desplazamiento horizontal */
+    box-sizing: border-box; /* Asegura que el contenido no se desborde */
+  }
+
+  .admin table th, .admin table td {
+    font-size: 12px;
+    padding: 8px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+    box-sizing: border-box; /* Asegura que la tabla se ajuste correctamente */
+  }
+
+  .admin table th, .admin table td {
+    font-size: 12px;
+    padding: 6px 4px;
+  }
+}
+
+/* Botón de cierre de sesión */
+.admin .logout {
+  margin-top: auto;
+  padding: 10px 20px;
+  background: transparent;
+  color: red;
+  border: 1px solid red; /* Borde rojo */
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  border-radius: var(--btn-radius);
+  font-size: 16px;
+  transition: all 0.3s; /* Transición para un efecto suave */
+}
+
+.admin .logout:hover {
+  background-color: red;
+  color: white;
+  border-color: darkred; /* Cambia el color del borde al pasar el ratón */
+}
