@@ -925,7 +925,7 @@ body{
 :root {
   --hover-color: #00B74A;
   --background-color: #D9DED8;
-  --text-color: #333;
+  --text-color: #000000;
   --font-family: 'Poppins', sans-serif;
   --btn-radius: 8px;
 }
@@ -985,6 +985,7 @@ body{
 
 .admin .sidebar {
   width: 300px;
+  font-family: var(--font-family);
   background-color: white;
   color: var(--text-color);
   display: flex;
@@ -1039,23 +1040,24 @@ body{
 }
 
 .admin nav ul li a {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
   color: var(--text-color);
   text-decoration: none;
   padding: 12px 20px;
-  display: flex;
-  align-items: center;
-  font-size: 16px;
   background: transparent;
   border-radius: var(--btn-radius);
   transition: background 0.3s;
-  justify-content: left;
   border: 0px solid #E0E0E0;
-  font-weight: 500;
+  font-weight: 400;
+  border-radius: 4px;
 }
 
 .admin nav ul li a i {
-  margin-right: 10px;
+  margin-right: 10px; /* Quita espacio lateral */
   font-size: 18px;
+  margin-bottom: 0px;
 }
 
 .admin nav ul li a:hover {
@@ -1101,16 +1103,15 @@ body{
 
 /* Estilos para los botones en el contenedor */
 .admin .button-container a {
-  color: var(--text-color);
-  text-decoration: none;
-  padding: 12px 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px 20px;
   font-size: 16px;
   background: transparent;
   border-radius: var(--btn-radius);
   transition: background 0.3s;
-  justify-content: left;
   font-weight: 500;
   border: 1px solid transparent;
 }
@@ -1285,7 +1286,7 @@ body{
   }
 
   .admin nav ul li a {
-    font-size: 14px;
+    font-size: 1rem;
     padding: 10px 15px;
   }
 
@@ -1412,8 +1413,8 @@ body{
   margin-top: auto;
   padding: 10px 20px;
   background: transparent;
-  color: var(--color2);
-  border: 1px solid var(--color2); /* Borde rojo */
+  color: red;
+  border: 1px solid red; /* Borde rojo */
   cursor: pointer;
   width: 100%;
   text-align: left;
@@ -1423,7 +1424,27 @@ body{
 }
 
 .admin .logout:hover {
-  background-color: var(--color2);
+  background-color: red;
   color: white;
   border-color: darkred; /* Cambia el color del borde al pasar el ratón */
+}
+
+/* Asegúrate de usar un selector más específico si es necesario */
+.modal-footer .btn-primary {
+  background-color: #00B74A !important; /* Forzar el color verde con !important */
+  border: 1px solid #009c3f;
+}
+
+.modal-footer .btn-primary:hover {
+  background-color: #009c3f !important; /* Forzar el cambio de color al pasar el ratón */
+}
+
+/* Si tienes un botón secundario (Cerrar), también puedes cambiarlo */
+.modal-footer .btn-secondary {
+  background-color: #ccc;
+  border: 1px solid #999;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #bbb;
 }
