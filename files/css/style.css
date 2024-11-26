@@ -1045,7 +1045,7 @@ body{
   justify-content: center; /* Centra horizontalmente */
   color: var(--text-color);
   text-decoration: none;
-  padding: 12px 20px;
+  padding: 10px 10px;
   background: transparent;
   border-radius: var(--btn-radius);
   transition: background 0.3s;
@@ -1229,6 +1229,11 @@ body{
   margin-top: 20px;
 }
 
+.save-profile{
+  background-color: var(--hover-color);
+  
+}
+
 /* Estilo para el botón Agregar Nueva Categoría */
 .admin .add-button {
   padding: 12px 20px;
@@ -1259,7 +1264,6 @@ body{
 .admin .add-button:focus {
   outline: none;
 }
-
 /* Media Queries para Pantallas Pequeñas */
 @media (max-width: 768px) {
   /* Hacer que el sidebar ocupe todo el ancho en pantallas pequeñas */
@@ -1292,7 +1296,7 @@ body{
 
   .admin .button-container a {
     font-size: 14px;
-    padding: 10px 15px;
+    padding: 12px 15px;
   }
 
   .admin table th, .admin table td {
