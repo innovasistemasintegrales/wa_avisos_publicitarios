@@ -1,0 +1,27 @@
+{
+  "name": "wa_avisos_publicitarios",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  },
+  "author": "Innova Sistemas Integrales",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.1",
+    "express-handlebars": "^8.0.1",
+    "express-myconnection": "^1.0.4",
+    "express-session": "^1.18.1",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.16",
+    "nodemon": "^3.1.7",
+    "socket.io": "^4.8.1"
+  }
+}
