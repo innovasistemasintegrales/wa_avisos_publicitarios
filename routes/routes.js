@@ -33,12 +33,14 @@ router.get('/', (req,res) => {
         res.render('index');
     } */
 });
-
+router.get('/index', (req,res) =>{
+    res.render('index');
+});
 router.get('/login', (req,res) =>{
     res.render('login');
 });
-router.get('/administrador', (req,res) =>{
-    res.render('administrador');
+router.get('/admin', (req,res) =>{
+    res.render('admin');
 });
 router.get('/cliente', (req,res) =>{
     res.render('cliente');

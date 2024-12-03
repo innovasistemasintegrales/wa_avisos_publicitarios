@@ -1,1 +1,1518 @@
-/* Estilos */
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+:root {
+  --color1:#00b74a;
+  --color2:#D50032;
+  --color3:#32CD32;
+  --color4:#b2b3b2;
+  --hover-color: #00b74a;
+  --background-color: #D9DED8;
+  --text-color: #000000;
+  --text-color-2: #FFFFFF;
+  --font-family: 'Poppins', sans-serif;
+  --btn-radius: 5px;
+}
+
+/*Estilos para Index*/
+
+
+.catalog .product-title,
+.catalog .product-img {
+    cursor: pointer;
+}
+
+.catalog .modal-dialog {
+    display: flex;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.catalog .modal-content {
+    margin: auto;
+}
+
+/* Modal styles */
+.catalog .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.catalog .header-custom {
+    background: linear-gradient(135deg, var(--background-color), var(--color4));
+    color: var(--text-color-2);
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.catalog .header-custom img {
+    max-height: 50px;
+}
+
+.catalog .modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.catalog .modal-body {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.catalog .modal-body img {
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.catalog #productModalDescription {
+    flex: 1;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.catalog .modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
+.catalog .header-custom {
+    background-color: var(--background-color);
+}
+
+.catalog #main-content {
+    margin-left: 0;
+    margin-top: 2rem;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Sidebar styling */
+.catalog #sidebar {
+    width: 250px;
+    min-height: 100vh;
+    position: fixed;
+    top: 80px;
+    left: -250px;
+    z-index: 1000;
+    background-color: var(--background-color);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s ease-in-out;
+    padding-top: 1rem;
+}
+
+.catalog #sidebar.show {
+    left: 0;
+}
+
+.catalog #sidebar h4 {
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+.catalog #sidebar ul {
+    padding-left: 0;
+}
+
+.catalog #sidebar ul li a i {
+    margin-right: 8px;
+    color: var(--text-color);
+}
+
+/* Botones de categorías en el sidebar */
+.catalog #sidebar ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+    padding: 7px 20px;
+    border-radius: 0;
+    border: 1px solid transparent;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+}
+
+/* Categorías activas */
+.catalog #sidebar ul li a.active,
+.catalog #sidebar ul li a:hover {
+    background-color: var(--hover-color);
+    color: var(--text-color);
+    border: none;
+}
+
+.catalog #sidebar ul li a.active i,
+.catalog #sidebar ul li a:hover i {
+    color: var(--text-color);
+}
+
+/* Excluir enlaces de descargas del estilo activo */
+.catalog #sidebar ul li a.no-highlight,
+.catalog #sidebar ul li a.no-highlight:hover {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+/* Permitir desplazamiento en el sidebar */
+.sidebar-container {
+    max-height: 100vh; /* Ocupa toda la altura de la ventana */
+    overflow-y: auto; /* Habilitar scroll vertical */
+    position: fixed; /* Para asegurarlo en la pantalla */
+}
+
+/* Botones de vista (cuadrícula y lista) sin border-radius */
+.catalog .view-options .btn {
+    border-radius: 0;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Botones de vista activos */
+.catalog .view-options .btn.active {
+    background-color: var(--hover-color);
+    color: var(--text-color);
+}
+
+/* Efecto hover para los botones de vista */
+.catalog .view-options .btn:hover {
+    background-color: var(--hover-color); /* Cambia el color de fondo */
+    color: var(--text-color); /* Cambia el color del texto */
+    border: none; /* Elimina el borde */
+}
+
+/* Botones principales */
+.catalog #filterButton,
+.catalog .btn-custom,
+#searchButton {
+    border-radius: var(--btn-radius);
+    padding: 10px 20px;
+    border: 1px solid var(--text-color);
+    background-color: var(--hover-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover específico para los botones principales */
+.catalog #filterButton:hover,
+.catalog .btn-custom:hover,
+#searchButton:hover {
+    background-color: var(--hover-color);
+    color: white;
+    border: none;
+}
+
+/* Grid y List view */
+.catalog .grid-view .product-item,
+.catalog .list-view .product-item {
+    display: none;
+}
+
+.catalog .product-item.show {
+    display: block;
+}
+
+@media (max-width: 320px) {
+    #publishButton {
+        padding: 5px; /* Reduce el padding */
+        font-size: 14px; /* Ajusta el tamaño de fuente */
+        width: 40px; /* Define un ancho fijo */
+        height: 40px; /* Define una altura fija */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden; /* Esconde el texto extra si lo hubiera */
+    }
+
+    /* Agrega una flecha hacia arriba */
+    #publishButton::before {
+        content: "↑"; /* Reemplaza el texto con una flecha */
+        font-size: 16px; /* Tamaño de la flecha */
+        color: var(--text-color); /* Color consistente */
+    }
+
+    /* Si el texto original está en un <span>, ocúltalo */
+    #publishButton span {
+        display: none;
+    }
+}
+
+/* Responsive styling */
+@media (min-width: 768px) {
+    .catalog #filterButton {
+        width: auto;
+    }
+}
+
+/* Product Item Styling */
+.catalog .product-item {
+    display: none;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    box-sizing: border-box;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.catalog .product-item.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.catalog .product-item:hover {
+    transform: translateY(-10px);
+}
+
+/* Grid view styling */
+.catalog .grid-view .product-item {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 30px);
+}
+
+.catalog .grid-view .card {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.catalog .grid-view img {
+    width: 100%;
+    height: auto;
+}
+
+/* List view styling */
+.catalog .list-view {
+    display: flex;
+    flex-direction: column;
+}
+
+.catalog .list-view .product-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.catalog .list-view .card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 460%;
+    height: auto;
+}
+
+.catalog .list-view img {
+    width: 200px;
+    height: auto;
+    margin-right: 15px;
+}
+
+/* Grid view adjustments based on screen size */
+@media (min-width: 992px) {
+    .catalog .grid-view .product-item {
+        flex: 0 0 calc(25% - 30px);
+        max-width: calc(25% - 30px);
+        margin: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .catalog .grid-view .product-item {
+        flex: 0 0 calc(33.33% - 30px);
+        max-width: calc(33.33% - 30px);
+        margin: 15px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .catalog .grid-view .product-item {
+        flex: 0 0 calc(50% - 30px);
+        max-width: calc(50% - 30px);
+        margin: 15px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .catalog .grid-view .product-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: 15px;
+    }
+}
+
+/* Overlay styling */
+.catalog .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: none;
+    z-index: 900;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.catalog .overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+/* Utility classes */
+.catalog .hide {
+    display: none !important;
+}
+
+.catalog #sidebar.show {
+    display: block !important;
+}
+
+.catalog #filterButton {
+    width: 100%;
+    border-radius: var(--btn-radius);
+    border: 1px solid black;
+    background-color: var(--hover-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.catalog .btn-custom:hover {
+    background-color: var(--hover-color);
+    color: white;
+}
+
+/* Hide product checkboxes by default */
+.catalog .product-checkbox {
+    display: none;
+}
+
+/* Styling for product checkboxes when they are shown */
+.catalog .product-checkbox {
+    appearance: none; /* Remove default checkbox style */
+    width: 20px;
+    height: 20px;
+    background-color: var(--background-color);
+    border: 2px solid var(--text-color);
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+} 
+
+.catalog .product-checkbox:checked {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+}
+
+.catalog .product-checkbox:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.catalog .product-checkbox:checked:after {
+    opacity: 1;
+}
+
+.catalog .product-checkbox:hover {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+}
+
+/* Estilo base para los botones de redes sociales */
+.catalog .social-button {
+    border-radius: var(--btn-radius);
+    padding: 7px 10px;
+    border: 1px solid transparent;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover más grisáceo */
+.catalog .social-button:hover {
+    background-color: #cccccc; /* Color grisáceo para el fondo */
+    color: var(--text-color); /* Asegura que el texto sea legible */
+    border: 1px solid #aaaaaa; /* Borde ligeramente más oscuro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Suaviza el hover con sombra */
+}
+
+/* Asegura que los botones sociales tengan un tamaño consistente */
+.catalog .modal-footer .social-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px; /* Ajusta según necesites */
+    font-size: 14px; /* Tamaño del texto */
+    text-decoration: none; /* Sin subrayado */
+    margin: 0 5px; /* Separación entre botones */
+}
+
+/* Ajusta el tamaño de los íconos dentro de los botones */
+.catalog .modal-footer .social-button img {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px; /* Espacio entre el ícono y el texto */
+}
+
+/* Elimina la línea debajo del texto */
+.catalog .modal-footer .social-button:hover {
+    text-decoration: none;
+}
+
+/*Estilos para Login*/
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-wave{
+	
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	z-index: -1;
+}
+
+.login-container{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap :7rem;
+    padding: 0 2rem;
+}
+
+.login-img{
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.login-content{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	text-align: center;
+}
+
+.login-img img{
+	width: 500px;
+}
+
+.login-form{
+	width: 360px;
+}
+
+.login-content img{
+    height: 100px;
+}
+
+.login-content h2{
+	margin: 15px 0;
+	color: #333;
+	text-transform: uppercase;
+	font-size: 2.9rem;
+}
+
+.login-input-div{
+	position: relative;
+    display: grid;
+    grid-template-columns: 7% 93%;
+    margin: 25px 0;
+    padding: 5px 0;
+    border-bottom: 2px solid #d9d9d9;
+}
+
+.login-input-div.one{
+	margin-top: 0;
+}
+
+.login-i{
+	color: #d9d9d9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.login-i i{
+	transition: .3s;
+}
+
+.login-input-div > div{
+    position: relative;
+	height: 45px;
+}
+
+.login-input-div > div > h5{
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #999;
+	font-size: 18px;
+	transition: .3s;
+}
+
+.login-input-div:before, .login-input-div:after{
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	width: 0%;
+	height: 2px;
+	background-color: var(--color1);
+	transition: .4s;
+}
+
+.login-input-div:before{
+	right: 50%;
+}
+
+.login-input-div:after{
+	left: 50%;
+}
+
+.login-input-div.focus:before, .login-input-div.focus:after{
+	width: 50%;
+}
+
+.login-input-div.focus > div > h5{
+	top: -5px;
+	font-size: 15px;
+}
+
+.login-input-div.focus > .login-i > i{
+	color: #38d39f;
+}
+
+.login-input-div > div > input{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	background: none;
+	padding: 0.5rem 0.7rem;
+	font-size: 1.2rem;
+	color: #555;
+	font-family: 'poppins', sans-serif;
+}
+
+.login-input-div.pass{
+	margin-bottom: 4px;
+}
+
+.login-register-link{
+	display: block;
+	text-align: right;
+	text-decoration: none;
+	color: #999;
+	font-size: 0.9rem;
+	transition: .3s;
+}
+
+.login-register-link:hover{
+	color: var(--color1);
+}
+
+.login-submit-btn {
+    display: block;
+    width: 100%;
+    height: 50px;
+    border-radius: var(--btn-radius); 
+    outline: none;
+    border: none;
+    background-color: var(--color1); /* Relleno con color primario */
+    font-size: 1.2rem;
+    color: #fff;
+    font-family: var(--font-family); 
+    text-transform: uppercase;
+    margin: 1rem 0;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-submit-btn:hover {
+    background-color: var(--hover-color); /* Color de fondo en hover */
+    transform: translateY(-2px); /* Efecto de levantar ligeramente el botón */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Aumentar la sombra en hover */
+}
+
+.login-modal-dialog {
+    max-width: 405px; /* Ajusta según sea necesario */
+    width: 100%; /* Permite que el modal ocupe el 100% de su contenedor */
+    margin: auto; /* Centra el modal */
+}
+
+@media screen and (max-width: 1050px) {
+    .login-container {
+        grid-gap: 5rem;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .login-form {
+        width: 90%; /* Ajuste el ancho del formulario para que se adapte mejor */
+    }
+
+    .login-content h2 {
+        font-size: 2.4rem;
+        margin: 8px 0;
+    }
+
+    .login-img img {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+    .login-img {
+        display: none;
+    }
+
+    .login-wave {
+        display: none;
+    }
+
+    .login-content {
+        justify-content: center;
+    }
+
+    /* Centrar el contenido del modal */
+    .login-modal-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra horizontalmente */
+    }
+}
+
+.left-panel{
+	background-color: var(--color)
+    
+}
+
+/* Estilos para Cliente */
+
+/* CSS para Cliente */
+
+.cliente .profile-image-container {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  
+  .cliente .image-wrapper {
+    width: 100%;
+    padding-top: 100%; /* Esto crea un contenedor cuadrado */
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%; /* Esto hace el contenedor circular */
+    margin-bottom: 10px;
+  }
+  
+  .cliente .profile-avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto asegura que la imagen cubra todo el espacio sin distorsionarse */
+  }
+  
+  .cliente .image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .cliente .image-preview-item {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .cliente .image-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .cliente .remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  .cliente .card {
+    margin-top: 20px;
+  }
+  
+  .cliente #postContainer {
+    margin-top: 20px;
+  }
+  
+  .cliente .cancel-button {
+    background-color: transparent;
+    border: 2px solid var(--color2);
+    color: var(--color2);
+  }
+  
+  .cliente .cancel-button:hover {
+    background-color: var(--color2); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--background-color);
+  }
+  
+  .cliente .save-button {
+    background-color: transparent;
+    border: 2px solid var(--color1);
+    color: var(--color1);
+  }
+  
+  .cliente .save-button:hover {
+    background-color: var(--color1); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--color1);
+  }
+  
+  .cliente .edit-button {
+    background-color: transparent;
+    border: 2px solid var(--color1);
+    color: var(--color1); 
+  }
+  
+  .cliente .edit-button:hover {
+    background-color: var(--color1); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--color1);
+  }
+  
+  .cliente .close-button {
+    background-color: transparent;
+    border: 2px solid var(--color2);
+    color: var(--color2); 
+  }
+  
+  .cliente .close-button:hover {
+    background-color: var(--color2); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--background-color);
+  }
+  
+  .cliente .save-post-button {
+    background-color: transparent;
+    border: 2px solid var(--color1);
+    color: var(--color1);
+  }
+  
+  .cliente .save-post-button:hover {
+    background-color: var(--color1); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    border: 2px solid var(--color1);
+  }
+  
+  .cliente .plan-button {
+    border: 1px solid var(--color1); /* Borde con color definido */
+    border-radius: var(--btn-radius); /* Bordes redondeados */
+  }
+  
+  .cliente .btn-edit {
+    background-color: var(--color1); 
+    border: 2px solid var(--color1); /* Borde con color principal */
+    color: var(--text-color); 
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: var(--btn-radius); /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-family: var(--font-family); /* Fuente definida */
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .cliente .btn-edit:hover {
+    background-color: var(--hover-color); 
+    color: white; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+  }
+  
+  .cliente .nav-button {
+    background-color: transparent; 
+    color: black; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 10px; /* Espacio entre los botones */
+  }
+  
+  .cliente .nav-button.active,
+  .cliente .nav-button:hover {
+    background-color: var(--hover-color); 
+    color: white; 
+  }
+  
+  .cliente .add-post-button {
+    background-color: var(--hover-color); 
+    color: black; 
+    font-size: 1.2rem; 
+    padding: 5px 20px; 
+    border-radius: var(--btn-radius); 
+    cursor: pointer;
+    transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .cliente .product-item {
+    margin: 0; /* Elimina el margen entre las tarjetas */
+    padding: 0; /* Asegúrate de que no haya padding extra */
+  }
+  
+  .cliente .description-container {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número de líneas permitidas */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .cliente #noPostsMessage {
+    border-radius: var(--btn-radius); /* Bordes redondeados */
+    padding: 15px 20px; /* Aumentado el espaciado interno para darle más aire */
+    margin-top: 10px; /* Más espacio superior */
+    color: var(--text-color); /* Color del texto */
+    font-weight: bold; /* Negrita */
+    font-size: 1rem; /* Tamaño de fuente ligeramente mayor */
+    width: 100%; /* Ancho completo por defecto */
+    max-width: 400px; /* Ancho máximo ajustado para pantallas más grandes */
+    text-align: center; /* Centra el texto */
+    margin: 10px auto; /* Centra el mensaje vertical y horizontalmente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    border: 2px solid var(--color1); /* Ajusta el color al que prefieras */
+  }
+  
+  .cliente #noPostsMessage:hover {
+    transform: translateY(-5px); /* Efecto de levantamiento */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más intensa en hover */
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .cliente #noPostsMessage {
+        max-width: 90%; /* Ancho ajustado para pantallas pequeñas */
+        font-size: 0.9rem; /* Reducir tamaño de fuente en pantallas pequeñas */
+        padding: 12px 15px; /* Ajuste de padding */
+    }
+  }
+  
+  .cliente .plan-card, .cliente .custom-plan-card {
+    max-width: 400px; /* Ajusta el ancho máximo */
+    width: 100%; /* Para asegurarte de que ocupe el 100% de su contenedor */
+    border-radius: 15px; /* Esquinas redondeadas más pronunciadas */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transición para efectos al pasar el mouse */
+  }
+  
+  .cliente .plan-card:hover, .cliente .custom-plan-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .cliente .plan-title {
+    font-size: 1.5rem; 
+  }
+  
+  .cliente .plan-feature {
+    background-color: #f8f9fa; /* Color de fondo para resaltar características */
+    border: 1px solid #dee2e6; /* Borde sutil */
+    border-radius: 10px; /* Esquinas redondeadas */
+  }
+  
+  .cliente .custom-plan-card {
+    background-color: #ffffff; /* Fondo blanco para personalización */
+    border: 1px solid #ced4da; /* Borde sutil */
+  }
+  
+  .cliente .logo-col {
+    background-color: var(--background-color);
+  }
+  
+  .cliente .sidebar {
+    background-color: white;
+  }
+  
+  .cliente .title-col {
+    background-color: var(--background-color);
+  }
+
+  /*Estilos para admin*/
+
+.admin body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+  }
+  
+  /* Estilos para el contenedor admin */
+  .admin {
+    display: flex;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    flex-wrap: wrap; /* Esto permite que los elementos se acomoden mejor en pantallas pequeñas */
+  }
+  
+  .admin .sidebar .profile .avatar-container {
+    width: 100%;
+    max-width: 250px; /* Aumenta el tamaño máximo */
+    margin: 0 auto; /* Centra horizontalmente */
+  }
+  
+  .admin .sidebar .profile .image-wrapper {
+    width: 100%;
+    padding-top: 100%; /* Mantiene un contenedor cuadrado */
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%; /* Mantiene la forma circular */
+    margin-bottom: 15px; /* Añade un pequeño margen debajo */
+  }
+  
+  .admin .sidebar .profile .avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Se asegura de que la imagen llene el contenedor sin deformarse */
+    border-radius: 50%; /* Hace que la imagen también sea circular */
+    border: 5px solid #CCCCCC; /* Ajusta el grosor del borde si es necesario */
+  }
+  
+  .admin .sidebar .profile h2 {
+    font-size: 2rem; /* Ajusta el tamaño del nombre para complementar el nuevo tamaño del avatar */
+    margin-top: 15px;
+  }
+  
+  .admin .sidebar .profile p {
+    font-size: 1rem;
+    color: #777;
+  }
+  
+  .admin .sidebar {
+    width: 300px;
+    font-family: var(--font-family);
+    background-color: white;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Asegura que todo el contenido del sidebar esté centrado */
+    padding: 20px;
+    height: 100vh;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para el perfil */
+  .admin .profile {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .admin .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 3px solid #CCCCCC;
+    object-fit: cover;
+  }
+  
+  .admin .profile h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: var(--text-color);
+  }
+  
+  .admin .profile p {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  /* Navegación del sidebar */
+  .admin nav {
+    width: 100%;
+    border: none;
+  }
+  
+  .admin nav ul {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+  }
+  
+  .admin nav ul li {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .admin nav ul li a {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 10px 10px;
+    background: transparent;
+    border-radius: var(--btn-radius);
+    transition: background 0.3s;
+    border: 0px solid #E0E0E0;
+    font-weight: 400;
+    border-radius: 4px;
+  }
+  
+  .admin nav ul li a i {
+    margin-right: 10px; /* Quita espacio lateral */
+    font-size: 18px;
+    margin-bottom: 0px;
+  }
+  
+  .admin nav ul li a:hover {
+    background-color: var(--hover-color);
+    color: white;
+  }
+  
+  .admin nav ul li a.active {
+    background-color: var(--hover-color);
+    color: white;
+  }
+  
+  /* Botón de cierre de sesión */
+  .admin .logout {
+    margin-top: auto;
+    padding: 10px 20px;
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid #E0E0E0;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border-radius: var(--btn-radius);
+    font-size: 16px;
+    transition: background 0.3s;
+  }
+  
+  .admin .logout:hover {
+    background-color: red;
+    color: white;
+  }
+  
+  /* Contenedor de botones del sidebar */
+  .admin .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--btn-radius);
+    background-color: #FFFFFF;
+  }
+  
+  /* Estilos para los botones en el contenedor */
+  .admin .button-container a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 16px;
+    background: transparent;
+    border-radius: var(--btn-radius);
+    transition: background 0.3s;
+    font-weight: 500;
+    border: 1px solid transparent;
+  }
+  
+  .admin .button-container a i {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+  /* Efecto hover para los botones */
+  .admin .button-container a:hover,
+  .admin .button-container a.active {
+    background-color: var(--hover-color);
+    color: white;
+  }
+  
+  /* Contenido principal */
+  .admin .main-content {
+    flex: 1;
+    padding: 20px 40px;
+    background-color: #ffffff;
+  }
+  
+  .admin .main-content h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+  }
+  
+  /* Caja de búsqueda */
+  .admin .search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .admin .search-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: var(--btn-radius) 0 0 var(--btn-radius);
+    outline: none;
+  }
+  
+  .admin .search-container .search-button {
+    padding: 10px;
+    background-color: var(--hover-color);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 var(--btn-radius) var(--btn-radius) 0;
+  }
+  
+  /* Mejora de diseño de tablas */
+  .admin table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .admin table th,
+  .admin table td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .admin table th {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .admin table td {
+    font-size: 14px;
+    color: var(--text-color);
+  }
+  
+  /* Botones de acción en tablas */
+  .admin button.view-button,
+  .admin button.edit-button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: var(--btn-radius);
+    cursor: pointer;
+  }
+  
+  .admin button.view-button:hover,
+  .admin button.edit-button:hover {
+    background-color: var(--hover-color);
+    color: var(--text-color-2);
+  }
+  
+  /* Botón de Editar en Categorías */
+  .admin .edit-button {
+    background-color: var(--hover-color);
+    color: var(--text-color-2);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--btn-radius);
+  }
+  
+  .admin .edit-button:hover {
+    background-color: #008c3a;
+  }
+  
+  /* Texto de pie en tablas */
+  .admin .footer-text {
+    text-align: left;
+    font-size: 14px;
+    color: #777;
+    margin-top: 20px;
+  }
+  
+  .save-profile{
+    background-color: var(--hover-color);
+    
+  }
+  
+  /* Estilo para el botón Agregar Nueva Categoría */
+  .admin .add-button {
+    padding: 12px 20px;
+    background-color: var(--hover-color);
+    color: white;
+    border: none;
+    border-radius: var(--btn-radius);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin .add-button:hover {
+    background-color: #008c3a;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .admin .add-button i {
+    font-size: 20px;
+  }
+  
+  .admin .add-button:focus {
+    outline: none;
+  }
+  /* Media Queries para Pantallas Pequeñas */
+  @media (max-width: 768px) {
+    /* Hacer que el sidebar ocupe todo el ancho en pantallas pequeñas */
+    .admin .sidebar {
+      width: 100%;
+      height: auto;
+      padding: 10px;
+    }
+  
+    /* Cambiar la disposición del contenedor principal a vertical */
+    .admin {
+      flex-direction: column;
+    }
+  
+    /* Asegurarse de que el contenido principal tenga el 100% de altura */
+    .admin .main-content {
+      width: 100%;
+      padding: 20px;
+    }
+  
+    /* Ajustar el tamaño de las fuentes y márgenes */
+    .admin .main-content h1 {
+      font-size: 20px;
+    }
+  
+    .admin nav ul li a {
+      font-size: 1rem;
+      padding: 10px 15px;
+    }
+  
+    .admin .button-container a {
+      font-size: 14px;
+      padding: 12px 15px;
+    }
+  
+    .admin table th, .admin table td {
+      padding: 10px 8px;
+      font-size: 12px;
+    }
+  
+    /* Ajustar la caja de búsqueda */
+    .admin .search-container {
+      flex-direction: column;
+    }
+  
+    .admin .search-container input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .admin .search-container .search-button {
+      width: 100%;
+    }
+  
+    /* Cambiar el botón de agregar a pantalla completa */
+    .admin .add-button {
+      width: 100%;
+      padding: 10px 15px;
+    }
+  
+    /* Asegurarse de que los botones de acción sean más pequeños */
+    .admin button.view-button,
+    .admin button.edit-button {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .admin .sidebar {
+      width: 100%;
+      height: auto;
+    }
+  
+    .admin .avatar {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .admin .profile h2 {
+      font-size: 16px;
+    }
+  
+    .admin .profile p {
+      font-size: 12px;
+    }
+  
+    .admin .logout {
+      padding: 8px 16px;
+    }
+  }
+  
+  .admin table {
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    border: 2px solid #ddd;
+    background-color: #fff;
+    table-layout: auto; /* Permite que las celdas se ajusten automáticamente */
+    margin: 0 auto; /* Centra la tabla si es más pequeña que el contenedor */
+  }
+  
+  .admin table th,
+  .admin table td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .admin table th {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .admin table td {
+    font-size: 14px;
+    color: var(--text-color);
+  }
+  
+  
+  /* Media Queries para Pantallas Pequeñas */
+  @media (max-width: 768px) {
+    .admin table {
+      width: 100%;
+      overflow-x: auto; /* Asegura que la tabla se pueda desplazar horizontalmente en pantallas pequeñas */
+      display: block; /* Permite que la tabla tenga desplazamiento horizontal */
+      box-sizing: border-box; /* Asegura que el contenido no se desborde */
+    }
+  
+    .admin table th, .admin table td {
+      font-size: 12px;
+      padding: 8px 6px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .admin table {
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      box-sizing: border-box; /* Asegura que la tabla se ajuste correctamente */
+    }
+  
+    .admin table th, .admin table td {
+      font-size: 12px;
+      padding: 6px 4px;
+    }
+  }
+  
+  /* Botón de cierre de sesión */
+  .admin .logout {
+    margin-top: auto;
+    padding: 10px 20px;
+    background: transparent;
+    color: var(--color2);
+    border: 1px solid var(--color2); /* Borde rojo */
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border-radius: var(--btn-radius);
+    font-size: 16px;
+    transition: all 0.3s; /* Transición para un efecto suave */
+  }
+  
+  .admin .logout:hover {
+    background-color: var(--color2);
+    color: var(--text-color-2);
+    border-color: darkred; /* Cambia el color del borde al pasar el ratón */
+  }
+  
+  /* Asegúrate de usar un selector más específico si es necesario */
+  .admin .modal-footer .btn-primary {
+    background-color: #00B74A !important; /* Forzar el color verde con !important */
+    border: 1px solid #009c3f;
+  }
+  
+  .admin .modal-footer .btn-primary:hover {
+    background-color: #009c3f !important; /* Forzar el cambio de color al pasar el ratón */
+  }
+  
+  /* Si tienes un botón secundario (Cerrar), también puedes cambiarlo */
+  .admin .modal-footer .btn-secondary {
+    background-color: #ccc;
+    border: 1px solid #999;
+  }
+  
+  .admin .modal-footer .btn-secondary:hover {
+    background-color: #bbb;
+  }

@@ -29,7 +29,7 @@ io.of('/index').on('db', (socket)=>{
 io.of('/login').on('db', (socket)=>{
 
 });
-io.of('/administrador').on('db', (socket)=>{
+io.of('/admin').on('db', (socket)=>{
 
 });
 

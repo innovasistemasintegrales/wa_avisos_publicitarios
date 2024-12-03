@@ -1,5 +1,144 @@
-<div>
-    <span>Bienvenidos a index</span>
+<div class="catalog">
+    <header class="header-custom p-3 shadow-sm d-flex justify-content-between align-items-center fixed-top">
+        <div class="d-flex align-items-center">
+            <button class="btn btn-lg" id="sidebarToggle">☰</button>
+            <img src="img/innova.png" alt="Innova" class="ms-3 mb-0" style="max-width: 150px; height: auto;">
+        </div>
+        <div>
+            <div>
+                <a href="login" class="btn btn-custom" id="publishButton">
+                    <span>Publicar</span>
+                </a>
+            </div>
+        </div>
+    </header>
+</div>
+
+<div class="catalog">
+    <div class="d-flex">
+        <!-- Sidebar convertido en un div normal -->
+        <div id="sidebar" class="sidebar-container text-black p-3">
+            <!-- Contenido del sidebar -->
+            <ul class="list-unstyled">
+                <li class="mb-3">
+                    <h5 class="fw-bold">Categorías</h5>
+                    <ul class="list-unstyled ms-3">
+                        <li><a href="#" class="text"><img src="icons/car-front-fill.svg" class="me-2"> Vehículos</a></li>
+                        <li><a href="#" class="text"><img src="icons/briefcase.svg" class="me-2"> InnovaTrabajos</a></li>
+                        <li><a href="#" class="text"><img src="icons/house-door.svg" class="me-2"> Inmueble</a></li>
+                        <li><a href="#" class="text"><img src="icons/tv.svg" class="me-2"> Electronica</a></li>
+                        <li><a href="#" class="text"><img src="icons/three-dots.svg" class="me-2"> ETC</a></li>
+                    </ul>
+                </li>
+
+                <!-- Más contenido -->
+                <li class="mb-3">
+                    <h5 class="fw-bold">Vistas</h5>
+                    <div class="view-options ms-3">
+                        <button id="gridViewBtn" class="btn btn-dark btn-outline-light">
+                            <i class="bi bi-grid-fill"></i> Cuadrícula
+                        </button>
+                        <button id="listViewBtn" class="btn btn-dark btn-outline-light">
+                            <i class="bi bi-list"></i> Lista
+                        </button>
+                    </div>
+                </li>
+
+                <!-- Descargas -->
+                <li class="mb-3">
+                    <h5 class="fw-bold">Descargar</h5>
+                    <ul class="list-unstyled ms-3">
+                        <li><a href="#" class="text no-highlight" id="downloadPdf">Avisos por PDF</a></li>
+                        <li><a href="#" class="text no-highlight" id="downloadExcel">Avisos por Excel</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div id="overlay" class="overlay"></div>
+
+        <!-- Main Content -->
+        <div class="container-fluid p-4" id="main-content">
+            <div class="container-fluid mt-5">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-12 col-md-9 mb-3">
+                        <form class="d-flex" id="vehicleSearchForm">
+                            <input class="form-control me-2" type="search" placeholder="Buscar vehículo" aria-label="Buscar" id="vehicleSearchInput" style="flex: 1;">
+                            <button class="btn btn-custom" type="submit" id="searchButton">Buscar</button>
+                        </form>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex justify-content-end">
+                        <button class="btn btn-custom" id="filterButton">Descargar Anuncios</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products (Grid / List view) -->
+            <div id="VehicleContainer" class="row grid-view">
+                <!-- Vehículos Category -->
+                <div class="col-12 col-md-4 col-sm-6 col-lg-3 product-item vehículos">
+                    <div class="card h-100" data-product-name="Camioneta Nissan" data-product-description="Auto semi nuevo, poco kilometraje" data-product-image="images/rec/150x150.png" data-product-price="S/.60,000">
+                        <img src="img/150x150.png" class="card-img-top product-img" alt="Camioneta Nissan">
+                        <div class="card-body">
+                            <input type="checkbox" class="product-checkbox form-check-input">
+                            <p class="card-price fw-bold text-success">S/.60,000</p>
+                            <h5 class="card-title product-title">Camioneta Nissan</h5>
+                            <p class="card-text">Auto semi nuevo, poco kilometraje</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="#" class="social-button" title="WhatsApp">
+                                    <img src="icons/whatsapp.svg" alt="WhatsApp" style="width: 20px; height: 20px;">
+                                </a>
+                                <a href="#" class="social-button" title="Llamar">
+                                    <img src="icons/telephone-fill.svg" alt="Llamar" style="width: 20px; height: 20px;">
+                                </a>
+                                <a href="#" class="social-button" title="Messenger">
+                                    <img src="icons/messenger.svg" alt="Facebook" style="width: 20px; height: 20px;">
+                                </a>
+                                <a href="#" class="social-button" title="Twitter">
+                                    <img src="icons/twitter-x.svg" alt="Twitter" style="width: 20px; height: 20px;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para mostrar el anuncio -->
+<div class="catalog">
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="modal-title" id="productModalLabel">Título del anuncio</h5>
+                        <p id="productModalPrice" class="fw-bold text-success mb-0"></p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="" id="productModalImage" class="img-fluid mb-3">
+                    <p id="productModalDescription">Descripción</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" id="modalWhatsApp" class="social-button">
+                        <img src="icons/whatsapp.svg" alt="WhatsApp"> WhatsApp
+                    </a>
+                    <a href="#" id="modalCall" class="social-button">
+                        <img src="icons/telephone-fill.svg" alt="Llamar"> Llamar
+                    </a>
+                    <a href="#" id="modalFacebook" class="social-button">
+                        <img src="icons/messenger.svg" alt="Messenger"> Messenger
+                    </a>
+                    <a href="#" id="modalTwitter" class="social-button">
+                        <img src="icons/twitter-x.svg" alt="Twitter"> Twitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="/js/index.js"></script>
