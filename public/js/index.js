@@ -168,11 +168,4 @@ document.addEventListener('DOMContentLoaded', function () {
             showModal(product);
         });
     });
-
-    const reportButton = document.getElementById('reportButton');
-    const reportModal = new bootstrap.Modal(document.getElementById('reportModal'));
-
-    reportButton.addEventListener('click', function () {
-        reportModal.show();
-    });
 });

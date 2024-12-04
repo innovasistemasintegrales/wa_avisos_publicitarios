@@ -720,12 +720,66 @@ body{
 
 .left-panel{
 	background-color: var(--color)
-    
+}
+
+@media screen and (max-width: 320px) {
+  .login-container {
+      grid-template-columns: 1fr; /* Una sola columna */
+      padding: 0; /* Reducir márgenes laterales */
+  }
+
+  .login-content {
+      justify-content: center; /* Centra horizontalmente */
+      align-items: center; /* Centra verticalmente */
+      text-align: center; /* Asegura que el contenido esté centrado */
+      margin: 0 auto; /* Centra el contenido completamente */
+  }
+
+  .login-form {
+      width: 100%; /* Ancho completo */
+      padding: 0 1rem; /* Añade un pequeño margen interno */
+  }
+
+  .login-content img {
+      height: 70px; /* Reduce el tamaño del logo para que encaje mejor */
+  }
+
+  .login-img img {
+      width: 200px; /* Ajusta el ancho de la imagen */
+      margin-bottom: 1rem; /* Añade espacio debajo */
+  }
+
+  .login-title {
+      font-size: 1.5rem; /* Ajusta el tamaño del título */
+  }
+
+  .login-submit-btn {
+      height: 45px; /* Ajusta el tamaño del botón */
+      font-size: 1rem; /* Reduce ligeramente el tamaño de la fuente */
+  }
+
+  .login-register-link {
+      font-size: 0.8rem; /* Reduce el tamaño del texto */
+  }
+
+  .modal-dialog {
+      margin: 1rem; /* Ajusta el margen del modal */
+  }
+
+  .modal-body {
+      padding: 1rem; /* Reduce el espacio interno */
+  }
+
+  .login-modal-body {
+      align-items: stretch; /* Asegura que el contenido del modal esté bien alineado */
+  }
+
+  .login-wave {
+      display: none; /* Oculta la onda decorativa */
+  }
 }
 
 /* Estilos para Cliente */
-
-/* CSS para Cliente */
 
 .cliente .profile-image-container {
     width: 100%;
