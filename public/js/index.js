@@ -1,6 +1,5 @@
 /* Script para frontend */
 const socket = io('/index');
-console.log("Soy el script de front de index");
 
 document.addEventListener('DOMContentLoaded', function () {
     const sidebar = document.getElementById('sidebar');
