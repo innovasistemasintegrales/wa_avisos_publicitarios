@@ -24,7 +24,7 @@ function validateImageCount(images, context = 'new') {
 
 function createCard(title, description, imageSrcs, category, price, id, isPremium = false, videoSrc = null, phoneNumber = null) {
     const card = document.createElement('div');
-    card.classList.add('col-6', 'col-sm-4', 'col-md-3', 'product-item');
+    card.classList.add('col-12', 'col-md-4', 'col-sm-6', 'col-lg-3', 'product-item', 'catalog', 'show');
     card.id = id || 'card-' + Date.now();
     card.setAttribute('data-full-description', description);
     card.setAttribute('data-images', JSON.stringify(imageSrcs));
@@ -32,59 +32,34 @@ function createCard(title, description, imageSrcs, category, price, id, isPremiu
         card.setAttribute('data-video', videoSrc);
     }
 
-    const creationDate = new Date().toLocaleString(); // Obtiene la fecha y hora actual
-
     const premiumBadge = isPremium ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Premium</span>' : '';
-    const imageCount = Array.isArray(imageSrcs) ? imageSrcs.length : 1;
-    const imageBadge = imageCount > 1 ? `<span class="badge bg-info text-dark position-absolute top-0 start-0 m-2">${imageCount} imágenes</span>` : '';
+    const imageUrl = Array.isArray(imageSrcs) ? imageSrcs[0] : imageSrcs;
+    const phoneContent = phoneNumber 
+        ? `<a href="https://wa.me/${phoneNumber}" class="btn btn-outline-success"><i class="bi bi-whatsapp"></i></a>` 
+        : '';
 
-    let mediaContent;
-    if (isPremium) {
-        mediaContent = createMediaCarousel(imageSrcs, videoSrc, card.id);
-    } else {
-        mediaContent = `<img src="${Array.isArray(imageSrcs) ? imageSrcs[0] : imageSrcs}" class="card-img-top" alt="${title}" style="height: 120px; object-fit: cover;">`;
-    }
-
-    let phoneContent = '';
-    if (phoneNumber) {
-        phoneContent = `
-      <p class="card-text" style="font-size: 0.9rem;">
-        <a href="https://wa.me/${phoneNumber}" target="_blank" class="text-decoration-none">
-          <i class="fab fa-whatsapp text-success"></i> ${phoneNumber}
-        </a>
-      </p>
-    `;
-    }
-
-    card.innerHTML = `
-    <div class="card h-100" style="width: 100%;">
-        ${premiumBadge}
-        ${isPremium ? imageBadge : ''}
-        ${mediaContent}
-        <div class="card-body p-2">
-            <h5 class="card-title" style="font-size: 1rem;">${title}</h5>
-            <p class="card-text" style="font-size: 0.9rem;"><b>Categoría:</b> ${category}</p>
-            <p class="card-text" style="font-size: 0.9rem;"><b>Precio:</b> S/${price}</p>
-            ${phoneContent}
-            <div class="description-wrapper">
-                <p class="card-text description-container" style="font-size: 0.8rem;">${truncateDescription(description, 3)}</p>
-            </div>
-            <p class="card-text" style="font-size: 0.8rem;"><b>Creado:</b> ${creationDate}</p>
-            <br>
-            <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-danger delete-button">Eliminar</button>
-                <button class="btn btn-sm btn-outline-primary edit-button">Editar</button>
+        card.innerHTML = `
+        <div class="card h-100">
+            <img src="${imageUrl}" class="card-img-top product-img" alt="${title}" style="object-fit: cover; height: 200px;">
+            <div class="card-body">
+                ${premiumBadge}
+                <p class="card-price fw-bold text-success">S/. ${price}</p>
+                <h5 class="card-title">${title}</h5>
+                <p class="card-description">${description}</p>
+                <div class="d-flex justify-content-between mt-3">
+                    ${phoneContent}
+                    <a href="#" class="btn btn-outline-primary"><i class="bi bi-telephone"></i></a>
+                    <a href="#" class="btn btn-outline-info"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="btn btn-outline-secondary"><i class="bi bi-twitter"></i></a>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-sm btn-outline-primary edit-button">Editar</button>
+                    <button class="btn btn-sm btn-outline-danger delete-button">Eliminar</button>
+                </div>
             </div>
         </div>
-    </div>
     `;
-
-    card.querySelector('.delete-button').addEventListener('click', function () {
-        if (confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
-            card.remove();
-            updateNoPostsMessage();
-        }
-    });
 
     card.querySelector('.edit-button').addEventListener('click', function () {
         if (isPremium || currentPlan === "Personalizado") {
@@ -95,6 +70,13 @@ function createCard(title, description, imageSrcs, category, price, id, isPremiu
             fillEditModal(card.id);
             const editModal = new bootstrap.Modal(document.getElementById('editModal2'));
             editModal.show();
+        }
+    });
+
+    card.querySelector('.delete-button').addEventListener('click', function () {
+        if (confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
+            card.remove();
+            updateNoPostsMessage();
         }
     });
 
